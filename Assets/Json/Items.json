@@ -1,0 +1,25 @@
+{
+  "Items": 
+  [
+    {
+      "id": "TestConsumable",
+      "type": "potion",
+      "weight": 0,
+      "maxEA": 10,
+      "category": [],
+      "addSkill": [],
+      "val": []
+    },
+    {
+      "id": "TestAccessory",
+      "type": "accessory",
+      "weight": 1,
+      "maxEA": 0,
+      "category": [
+        "TestItem"
+      ],
+      "addSkill": [],
+      "val": []
+    }
+  ]
+}

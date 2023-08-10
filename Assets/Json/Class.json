@@ -1,0 +1,946 @@
+{
+  "Class": 
+  [
+    {
+      "id": "Swordsman",
+      "weapon": [
+        "sword"
+      ],
+      "exp": 45,
+      "masterskill": [
+        "PowerSmash"
+      ],
+      "HPUp": 0.08,
+      "SPUp": 0,
+      "StrUp": 0.01,
+      "AtkUp": 0.08,
+      "RynUp": 0,
+      "SpdUp": 0,
+      "DexUp": 0.13,
+      "DefUp": 0.04,
+      "ResUp": 0
+    },
+    {
+      "id": "SwordMaster",
+      "weapon": [
+        "sword"
+      ],
+      "exp": 68,
+      "masterskill": [
+        "SpiritualEyes"
+      ],
+      "HPUp": 0.1,
+      "SPUp": 0,
+      "StrUp": 0.02,
+      "AtkUp": 0.1,
+      "RynUp": 0.01,
+      "SpdUp": 0.01,
+      "DexUp": 0.15,
+      "DefUp": 0.02,
+      "ResUp": 0
+    },
+    {
+      "id": "SwordDeity",
+      "weapon": [
+        "sword"
+      ],
+      "exp": 86,
+      "masterskill": [
+        "SlashHalfSpirit"
+      ],
+      "HPUp": 0.12,
+      "SPUp": 0,
+      "StrUp": 0.02,
+      "AtkUp": 0.12,
+      "RynUp": 0.02,
+      "SpdUp": 0.08,
+      "DexUp": 0.22,
+      "DefUp": 0,
+      "ResUp": 0.04
+    },
+    {
+      "id": "Fighter",
+      "weapon": [
+        "sword",
+        "blunt"
+      ],
+      "exp": 57,
+      "masterskill": [
+        "StrongBacking"
+      ],
+      "HPUp": 0.11,
+      "SPUp": 0,
+      "StrUp": 0.05,
+      "AtkUp": 0.1,
+      "RynUp": 0,
+      "SpdUp": 0,
+      "DexUp": 0.1,
+      "DefUp": 0.09,
+      "ResUp": 0.02
+    },
+    {
+      "id": "Asura",
+      "weapon": [
+        "blunt"
+      ],
+      "exp": 79,
+      "masterskill": [
+        "Thrash"
+      ],
+      "HPUp": 0.18,
+      "SPUp": 0,
+      "StrUp": 0.08,
+      "AtkUp": 0.15,
+      "RynUp": 0.02,
+      "SpdUp": 0.01,
+      "DexUp": 0.12,
+      "DefUp": 0.06,
+      "ResUp": 0.03
+    },
+    {
+      "id": "Soldier",
+      "weapon": [
+        "sword",
+        "spear"
+      ],
+      "exp": 37,
+      "masterskill": [
+        "FlowReading"
+      ],
+      "HPUp": 0.09,
+      "SPUp": 0.1,
+      "StrUp": 0.04,
+      "AtkUp": 0.05,
+      "RynUp": 0.02,
+      "SpdUp": 0,
+      "DexUp": 0.04,
+      "DefUp": 0.1,
+      "ResUp": 0
+    },
+    {
+      "id": "EliteSoldier",
+      "weapon": [
+        "sword",
+        "spear"
+      ],
+      "exp": 43,
+      "masterskill": [
+        "Insight"
+      ],
+      "HPUp": 0.13,
+      "SPUp": 0.1,
+      "StrUp": 0.04,
+      "AtkUp": 0.09,
+      "RynUp": 0.03,
+      "SpdUp": 0,
+      "DexUp": 0.03,
+      "DefUp": 0.14,
+      "ResUp": 0.12
+    },
+    {
+      "id": "General",
+      "weapon": [
+        "sword",
+        "spear"
+      ],
+      "exp": 73,
+      "masterskill": [
+        "BattleCommand"
+      ],
+      "HPUp": 0.17,
+      "SPUp": 0.17,
+      "StrUp": 0.06,
+      "AtkUp": 0.11,
+      "RynUp": 0.03,
+      "SpdUp": 0.02,
+      "DexUp": 0.05,
+      "DefUp": 0.12,
+      "ResUp": 0.14
+    },
+    {
+      "id": "Hunter",
+      "weapon": [
+        "spear",
+        "bow"
+      ],
+      "exp": 52,
+      "masterskill": [
+        "Breath"
+      ],
+      "HPUp": 0,
+      "SPUp": 0,
+      "StrUp": 0.02,
+      "AtkUp": 0.04,
+      "RynUp": 0,
+      "SpdUp": 0.14,
+      "DexUp": 0.13,
+      "DefUp": 0,
+      "ResUp": 0
+    },
+    {
+      "id": "Assassin",
+      "weapon": [
+        "sword",
+        "bow"
+      ],
+      "exp": 76,
+      "masterskill": [
+        "PassingBy"
+      ],
+      "HPUp": 0,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.05,
+      "RynUp": 0.08,
+      "SpdUp": 0.19,
+      "DexUp": 0.1,
+      "DefUp": 0.01,
+      "ResUp": 0.03
+    },
+    {
+      "id": "Paladin",
+      "weapon": [
+        "spear",
+        "blunt",
+        "orb"
+      ],
+      "exp": 67,
+      "masterskill": [
+        "DefensiveStance"
+      ],
+      "HPUp": 0.23,
+      "SPUp": 0.07,
+      "StrUp": 0.05,
+      "AtkUp": 0.11,
+      "RynUp": 0.06,
+      "SpdUp": 0,
+      "DexUp": 0,
+      "DefUp": 0.11,
+      "ResUp": 0.21
+    },
+    {
+      "id": "Ryeonier",
+      "weapon": [],
+      "exp": 48,
+      "masterskill": [
+        "ExplosiveRyeon"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.03,
+      "StrUp": 0,
+      "AtkUp": 0,
+      "RynUp": 0.1,
+      "SpdUp": 0,
+      "DexUp": 0.06,
+      "DefUp": 0,
+      "ResUp": 0.14
+    },
+    {
+      "id": "HealRyeonier",
+      "weapon": [],
+      "exp": 62,
+      "masterskill": [
+        "Encouragement"
+      ],
+      "HPUp": 0.05,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.01,
+      "RynUp": 0.08,
+      "SpdUp": 0,
+      "DexUp": 0.1,
+      "DefUp": 0.06,
+      "ResUp": 0.22
+    },
+    {
+      "id": "WhiteRyeonier",
+      "weapon": [],
+      "exp": 72,
+      "masterskill": [
+        "Purity"
+      ],
+      "HPUp": 0.08,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.01,
+      "RynUp": 0.13,
+      "SpdUp": 0.04,
+      "DexUp": 0.12,
+      "DefUp": 0.09,
+      "ResUp": 0.18
+    },
+    {
+      "id": "BlackRyeonier",
+      "weapon": [],
+      "exp": 68,
+      "masterskill": [
+        "Stigma"
+      ],
+      "HPUp": 0.1,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.02,
+      "RynUp": 0.11,
+      "SpdUp": 0.01,
+      "DexUp": 0.2,
+      "DefUp": 0.07,
+      "ResUp": 0.17
+    },
+    {
+      "id": "SoulRyeonier",
+      "weapon": [],
+      "exp": 38,
+      "masterskill": [
+        "FuneralRites"
+      ],
+      "HPUp": 0.03,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.01,
+      "RynUp": 0.09,
+      "SpdUp": 0,
+      "DexUp": 0.13,
+      "DefUp": 0.06,
+      "ResUp": 0.23
+    },
+    {
+      "id": "LivingSoulRyeonier",
+      "weapon": [],
+      "exp": 74,
+      "masterskill": [
+        "SoulAbsorption"
+      ],
+      "HPUp": 0.07,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0,
+      "RynUp": 0.13,
+      "SpdUp": 0.02,
+      "DexUp": 0.31,
+      "DefUp": 0.03,
+      "ResUp": 0.22
+    },
+    {
+      "id": "NecroRyeonier",
+      "weapon": [],
+      "exp": 73,
+      "masterskill": [
+        "SpiritPossession"
+      ],
+      "HPUp": 0.08,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.02,
+      "RynUp": 0.1,
+      "SpdUp": 0.02,
+      "DexUp": 0.29,
+      "DefUp": 0.02,
+      "ResUp": 0.29
+    },
+    {
+      "id": "NaturalRyeonier",
+      "weapon": [],
+      "exp": 37,
+      "masterskill": [
+        "FlowOfRyeon"
+      ],
+      "HPUp": 0,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0,
+      "RynUp": 0.15,
+      "SpdUp": 0.04,
+      "DexUp": 0.12,
+      "DefUp": 0,
+      "ResUp": 0.11
+    },
+    {
+      "id": "FlameRyeonier",
+      "weapon": [],
+      "exp": 82,
+      "masterskill": [
+        "InfernoFlame"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.04,
+      "StrUp": 0,
+      "AtkUp": 0.08,
+      "RynUp": 0.22,
+      "SpdUp": 0.04,
+      "DexUp": 0.15,
+      "DefUp": 0,
+      "ResUp": 0.17
+    },
+    {
+      "id": "FrostRyeonier",
+      "weapon": [],
+      "exp": 79,
+      "masterskill": [
+        "Freezing"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.07,
+      "StrUp": 0.02,
+      "AtkUp": 0,
+      "RynUp": 0.16,
+      "SpdUp": 0.04,
+      "DexUp": 0.19,
+      "DefUp": 0.05,
+      "ResUp": 0.19
+    },
+    {
+      "id": "LightningRyeonier",
+      "weapon": [],
+      "exp": 69,
+      "masterskill": [
+        "PowerCharge"
+      ],
+      "HPUp": 0,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.05,
+      "RynUp": 0.2,
+      "SpdUp": 0.28,
+      "DexUp": 0.12,
+      "DefUp": 0,
+      "ResUp": 0.06
+    },
+    {
+      "id": "StormRyeonier",
+      "weapon": [],
+      "exp": 89,
+      "masterskill": [
+        "GaleStorm"
+      ],
+      "HPUp": 0,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.04,
+      "RynUp": 0.18,
+      "SpdUp": 0.11,
+      "DexUp": 0.14,
+      "DefUp": 0.06,
+      "ResUp": 0.19
+    },
+    {
+      "id": "EarthRyeonier",
+      "weapon": [],
+      "exp": 88,
+      "masterskill": [
+        "RocksProtection"
+      ],
+      "HPUp": 0.11,
+      "SPUp": 0,
+      "StrUp": 0.03,
+      "AtkUp": 0,
+      "RynUp": 0.12,
+      "SpdUp": 0,
+      "DexUp": 0.07,
+      "DefUp": 0.19,
+      "ResUp": 0.22
+    },
+    {
+      "id": "CaptainOfTheMercenaries",
+      "weapon": [
+        "sword",
+        "spear",
+        "blunt",
+        "bow"
+      ],
+      "exp": 50,
+      "masterskill": [
+        "Master"
+      ],
+      "HPUp": 0.2,
+      "SPUp": 0.14,
+      "StrUp": 0.1,
+      "AtkUp": 0.2,
+      "RynUp": 0.06,
+      "SpdUp": 0.12,
+      "DexUp": 0.06,
+      "DefUp": 0.1,
+      "ResUp": 0.02
+    },
+    {
+      "id": "DivineMadien",
+      "weapon": [
+        "spear",
+        "bow",
+        "orb"
+      ],
+      "exp": 100,
+      "masterskill": [
+        "Calling"
+      ],
+      "HPUp": 0.04,
+      "SPUp": 0.17,
+      "StrUp": 0.02,
+      "AtkUp": 0.13,
+      "RynUp": 0.02,
+      "SpdUp": 0.32,
+      "DexUp": 0.16,
+      "DefUp": 0.07,
+      "ResUp": 0.07
+    },
+    {
+      "id": "TheKing",
+      "weapon": [
+        "spear",
+        "blunt"
+      ],
+      "exp": 100,
+      "masterskill": [
+        "ThePower"
+      ],
+      "HPUp": 0.29,
+      "SPUp": 0.1,
+      "StrUp": 0.07,
+      "AtkUp": 0.16,
+      "RynUp": 0,
+      "SpdUp": 0,
+      "DexUp": 0.04,
+      "DefUp": 0.21,
+      "ResUp": 0.13
+    },
+    {
+      "id": "Hero",
+      "weapon": [
+        "sword",
+        "bow"
+      ],
+      "exp": 100,
+      "masterskill": [
+        "Rescue"
+      ],
+      "HPUp": 0.07,
+      "SPUp": 0.08,
+      "StrUp": 0.04,
+      "AtkUp": 0.17,
+      "RynUp": 0.13,
+      "SpdUp": 0.07,
+      "DexUp": 0.2,
+      "DefUp": 0.11,
+      "ResUp": 0.13
+    },
+    {
+      "id": "LostWings",
+      "weapon": [],
+      "exp": 60,
+      "masterskill": [
+        "Divine"
+      ],
+      "HPUp": 0.03,
+      "SPUp": 0.07,
+      "StrUp": 0,
+      "AtkUp": 0.03,
+      "RynUp": 0.21,
+      "SpdUp": 0.03,
+      "DexUp": 0.1,
+      "DefUp": 0.01,
+      "ResUp": 0.02
+    },
+    {
+      "id": "TheDivine",
+      "weapon": [],
+      "exp": 100,
+      "masterskill": [
+        "DivinePunishment"
+      ],
+      "HPUp": 0.06,
+      "SPUp": 0.16,
+      "StrUp": 0,
+      "AtkUp": 0.05,
+      "RynUp": 0.4,
+      "SpdUp": 0.1,
+      "DexUp": 0.15,
+      "DefUp": 0.06,
+      "ResUp": 0.22
+    },
+    {
+      "id": "Sniper",
+      "weapon": [
+        "bow"
+      ],
+      "exp": 54,
+      "masterskill": [
+        "BreathControl"
+      ],
+      "HPUp": 0.03,
+      "SPUp": 0.1,
+      "StrUp": 0,
+      "AtkUp": 0.12,
+      "RynUp": 0.03,
+      "SpdUp": 0.11,
+      "DexUp": 0.33,
+      "DefUp": 0,
+      "ResUp": 0
+    },
+    {
+      "id": "Destroyer",
+      "weapon": [
+        "blunt"
+      ],
+      "exp": 32,
+      "masterskill": [
+        "Crater"
+      ],
+      "HPUp": 0.12,
+      "SPUp": 0,
+      "StrUp": 0.11,
+      "AtkUp": 0.07,
+      "RynUp": 0,
+      "SpdUp": 0.02,
+      "DexUp": 0.09,
+      "DefUp": 0.13,
+      "ResUp": 0.13
+    },
+    {
+      "id": "DeadHunter",
+      "weapon": [
+        "bow",
+        "blunt"
+      ],
+      "exp": 38,
+      "masterskill": [
+        "Requiem"
+      ],
+      "HPUp": 0.05,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.09,
+      "RynUp": 0.05,
+      "SpdUp": 0.2,
+      "DexUp": 0.11,
+      "DefUp": 0.04,
+      "ResUp": 0.11
+    },
+    {
+      "id": "Guardian",
+      "weapon": [
+        "sword",
+        "spear",
+        "blunt"
+      ],
+      "exp": 33,
+      "masterskill": [
+        "Fortitude"
+      ],
+      "HPUp": 0.14,
+      "SPUp": 0,
+      "StrUp": 0.08,
+      "AtkUp": 0.02,
+      "RynUp": 0,
+      "SpdUp": 0,
+      "DexUp": 0.06,
+      "DefUp": 0.24,
+      "ResUp": 0.05
+    },
+    {
+      "id": "Watcher",
+      "weapon": [
+        "sword"
+      ],
+      "exp": 51,
+      "masterskill": [
+        "Insight"
+      ],
+      "HPUp": 0,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0.14,
+      "RynUp": 0,
+      "SpdUp": 0.17,
+      "DexUp": 0.2,
+      "DefUp": 0.11,
+      "ResUp": 0.14
+    },
+    {
+      "id": "Gigantic",
+      "weapon": [
+        "sword",
+        "blunt"
+      ],
+      "exp": 63,
+      "masterskill": [
+        "Giganticism"
+      ],
+      "HPUp": 0.25,
+      "SPUp": 0.06,
+      "StrUp": 0.13,
+      "AtkUp": 0.07,
+      "RynUp": 0,
+      "SpdUp": 0,
+      "DexUp": 0,
+      "DefUp": 0.12,
+      "ResUp": 0.03
+    },
+    {
+      "id": "WaveRyeonier",
+      "weapon": [],
+      "exp": 59,
+      "masterskill": [
+        "FlowReading"
+      ],
+      "HPUp": 0,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0,
+      "RynUp": 0.29,
+      "SpdUp": 0.26,
+      "DexUp": 0.04,
+      "DefUp": 0,
+      "ResUp": 0.14
+    },
+    {
+      "id": "VoidRyeonier",
+      "weapon": [
+        "bow",
+        "orb"
+      ],
+      "exp": 41,
+      "masterskill": [
+        "EventHorizon"
+      ],
+      "HPUp": 0,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0,
+      "RynUp": 0.42,
+      "SpdUp": 0,
+      "DexUp": 0,
+      "DefUp": 0,
+      "ResUp": 0
+    },
+    {
+      "id": "Acrobat",
+      "weapon": [
+        "spear"
+      ],
+      "exp": 29,
+      "masterskill": [
+        "EvadeStance"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.21,
+      "StrUp": 0.03,
+      "AtkUp": 0.11,
+      "RynUp": 0,
+      "SpdUp": 0.19,
+      "DexUp": 0.13,
+      "DefUp": 0,
+      "ResUp": 0
+    },
+    {
+      "id": "Spearyeonier",
+      "weapon": [
+        "spear",
+        "orb"
+      ],
+      "exp": 37,
+      "masterskill": [
+        "RyeonCoreAnnihilation"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.12,
+      "StrUp": 0.07,
+      "AtkUp": 0.06,
+      "RynUp": 0.06,
+      "SpdUp": 0.04,
+      "DexUp": 0.07,
+      "DefUp": 0.03,
+      "ResUp": 0.1
+    },
+    {
+      "id": "CrisomDawn",
+      "weapon": [
+        "blunt",
+        "orb"
+      ],
+      "exp": 45,
+      "masterskill": [
+        "CrimsonGlare"
+      ],
+      "HPUp": 0.06,
+      "SPUp": 0,
+      "StrUp": 0.11,
+      "AtkUp": 0.23,
+      "RynUp": 0.06,
+      "SpdUp": 0,
+      "DexUp": 0,
+      "DefUp": 0.02,
+      "ResUp": 0.04
+    },
+    {
+      "id": "CurseRyeonier",
+      "weapon": [],
+      "exp": 63,
+      "masterskill": [
+        "ForbiddenCurse"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.03,
+      "StrUp": 0.02,
+      "AtkUp": 0.02,
+      "RynUp": 0.21,
+      "SpdUp": 0.04,
+      "DexUp": 0.07,
+      "DefUp": 0.11,
+      "ResUp": 0.12
+    },
+    {
+      "id": "HalfSpiritRyeonier",
+      "weapon": [],
+      "exp": 29,
+      "masterskill": [
+        "HalfSpiritReplication"
+      ],
+      "HPUp": 0.02,
+      "SPUp": 0.01,
+      "StrUp": 0,
+      "AtkUp": 0,
+      "RynUp": 0.13,
+      "SpdUp": 0.06,
+      "DexUp": 0.04,
+      "DefUp": 0.02,
+      "ResUp": 0.03
+    },
+    {
+      "id": "Swordyeonier",
+      "weapon": [
+        "sword",
+        "orb"
+      ],
+      "exp": 31,
+      "masterskill": [
+        "Aura"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.04,
+      "StrUp": 0.01,
+      "AtkUp": 0.04,
+      "RynUp": 0.04,
+      "SpdUp": 0.04,
+      "DexUp": 0.05,
+      "DefUp": 0.06,
+      "ResUp": 0.12
+    },
+    {
+      "id": "Jupiter",
+      "weapon": [
+        "sword"
+      ],
+      "exp": 28,
+      "masterskill": [
+        "Distortion"
+      ],
+      "HPUp": 0.13,
+      "SPUp": 0.02,
+      "StrUp": 0,
+      "AtkUp": 0.02,
+      "RynUp": 0.11,
+      "SpdUp": 0,
+      "DexUp": 0.09,
+      "DefUp": 0.04,
+      "ResUp": 0.22
+    },
+    {
+      "id": "Inwarder",
+      "weapon": [
+        "bow"
+      ],
+      "exp": 47,
+      "masterskill": [
+        "Learning",
+        "Learning"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.06,
+      "StrUp": 0.03,
+      "AtkUp": 0.09,
+      "RynUp": 0.01,
+      "SpdUp": 0.13,
+      "DexUp": 0.15,
+      "DefUp": 0.02,
+      "ResUp": 0.03
+    },
+    {
+      "id": "TheWall",
+      "weapon": [
+        "blunt",
+        "bow"
+      ],
+      "exp": 54,
+      "masterskill": [
+        "Creed"
+      ],
+      "HPUp": 0.23,
+      "SPUp": 0.04,
+      "StrUp": 0.1,
+      "AtkUp": 0.04,
+      "RynUp": 0,
+      "SpdUp": 0,
+      "DexUp": 0.04,
+      "DefUp": 0.22,
+      "ResUp": 0.13
+    },
+    {
+      "id": "Thief",
+      "weapon": [
+        "sword",
+        "spear",
+        "blunt",
+        "bow"
+      ],
+      "exp": 33,
+      "masterskill": [
+        "MoneyMaker"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.08,
+      "StrUp": 0,
+      "AtkUp": 0.06,
+      "RynUp": 0.02,
+      "SpdUp": 0.12,
+      "DexUp": 0.11,
+      "DefUp": 0,
+      "ResUp": 0
+    },
+    {
+      "id": "DreamyRyeonier",
+      "weapon": [],
+      "exp": 42,
+      "masterskill": [
+        "Inborn",
+        "Inborn"
+      ],
+      "HPUp": 0,
+      "SPUp": 0.11,
+      "StrUp": 0,
+      "AtkUp": 0,
+      "RynUp": 0.26,
+      "SpdUp": 0.04,
+      "DexUp": 0.22,
+      "DefUp": 0,
+      "ResUp": 0.11
+    },
+    {
+      "id": "MysticRyeonier",
+      "weapon": [
+        "orb"
+      ],
+      "exp": 46,
+      "masterskill": [
+        "Genius"
+      ],
+      "HPUp": 0,
+      "SPUp": 0,
+      "StrUp": 0,
+      "AtkUp": 0,
+      "RynUp": 0.17,
+      "SpdUp": 0.07,
+      "DexUp": 0.13,
+      "DefUp": 0,
+      "ResUp": 0.05
+    }
+  ]
+}

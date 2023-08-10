@@ -1,0 +1,638 @@
+{
+  "AttackSkills": 
+  [
+    {
+      "id": "NormalAttack_Melee",
+      "weaponType": [
+        "sword",
+        "blunt"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 100,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [""],
+      "val": [""]
+    },
+    {
+      "id": "NormalAttack_Spear",
+      "weaponType": [
+        "spear"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "dmg": 100,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": []
+    },
+    {
+      "id": "NormalAttack_Range",
+      "weaponType": [
+        "bow",
+        "staff"
+      ],
+      "range": [
+        2,
+        2
+      ],
+      "dmg": 100,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": []
+    },
+    {
+      "id": "NormalAttack_Ryeon",
+      "weaponType": [
+        "orb"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "dmg": 100,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": []
+    },
+    {
+      "id": "PowerSmash",
+      "weaponType": [
+        "sword",
+        "spear",
+        "blunt"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 125,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": [
+        10
+      ]
+    },
+    {
+      "id": "SlashHalfSpirit",
+      "weaponType": [
+        "sword"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 115,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [
+        "HalfSpirit"
+      ],
+      "val": [
+        140
+      ]
+    },
+    {
+      "id": "HorizontalSlash",
+      "weaponType": [
+        "sword"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 80,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": [
+        3
+      ]
+    },
+    {
+      "id": "Thrash",
+      "weaponType": [
+        "sword",
+        "spear",
+        "blunt"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 35,
+      "attackCount": 3,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": [
+        "*attackCount",
+        1
+      ]
+    },
+    {
+      "id": "BattleCommand",
+      "weaponType": [
+        "spear"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 80,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": [
+        "*range[1]"
+      ]
+    },
+    {
+      "id": "ExplosiveRyeon",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        3
+      ],
+      "dmg": 120,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        5
+      ]
+    },
+    {
+      "id": "Encouragement",
+      "weaponType": [
+        "Any"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "dmg": 0,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": [
+        2,
+        8
+      ]
+    },
+    {
+      "id": "FuneralRites",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        0,
+        0
+      ],
+      "dmg": 0,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        3,
+        5,
+        3
+      ]
+    },
+    {
+      "id": "SoulAbsorption",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        0,
+        0
+      ],
+      "dmg": 0,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        3,
+        8
+      ]
+    },
+    {
+      "id": "SpiritPossession",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        0,
+        0
+      ],
+      "dmg": 0,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        3
+      ]
+    },
+    {
+      "id": "InfernoFlame",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        0,
+        0
+      ],
+      "dmg": 0,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "GaleStorm",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "dmg": 160,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        4
+      ]
+    },
+    {
+      "id": "DivinePunishment",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 333,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "FlameArrow",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "dmg": 120,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        55
+      ]
+    },
+    {
+      "id": "ArrowRain",
+      "weaponType": [
+        "ryeon",
+        "bow"
+      ],
+      "range": [
+        2,
+        3
+      ],
+      "dmg": 40,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        1
+      ]
+    },
+    {
+      "id": "Photosynthesis",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        0,
+        0
+      ],
+      "dmg": 40,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": []
+    },
+    {
+      "id": "CrystalArrow",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        3
+      ],
+      "dmg": 120,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 30,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        30
+      ]
+    },
+    {
+      "id": "Wind",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "dmg": 85,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        75
+      ]
+    },
+    {
+      "id": "ChainLightning",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "dmg": 40,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        30
+      ]
+    },
+    {
+      "id": "StellarFall",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "dmg": 160,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        10,
+        1
+      ]
+    },
+    {
+      "id": "PiercingThrust",
+      "weaponType": [
+        "spear"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 115,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": [
+        "*range[1]"
+      ]
+    },
+    {
+      "id": "PowerfulStrike",
+      "weaponType": [
+        "blunt"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 150,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": []
+    },
+    {
+      "id": "BreathControl",
+      "weaponType": [
+        "Any"
+      ],
+      "range": [
+        0,
+        0
+      ],
+      "dmg": 0,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": []
+    },
+    {
+      "id": "Crater",
+      "weaponType": [
+        "blunt"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 145,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "p",
+      "unitBonus": [],
+      "val": [
+        "*range[1]",
+        65
+      ]
+    },
+    {
+      "id": "Requiem",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 115,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        3,
+        100
+      ]
+    },
+    {
+      "id": "EventHorizon",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        0,
+        0
+      ],
+      "dmg": 135,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        2
+      ]
+    },
+    {
+      "id": "RyeonCoreAnnihilation",
+      "weaponType": [
+        "spear"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "dmg": 120,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        1,
+        80
+      ]
+    },
+    {
+      "id": "ForbiddenCurse",
+      "weaponType": [
+        "ryeon"
+      ],
+      "range": [
+        1,
+        10
+      ],
+      "dmg": 0,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        3,
+        20,
+        30
+      ]
+    },
+    {
+      "id": "HalfSpiritReplication",
+      "weaponType": [
+        "Any"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "dmg": 40,
+      "attackCount": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": []
+    }
+  ]
+}

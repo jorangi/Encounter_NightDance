@@ -1,0 +1,718 @@
+{
+  "Weapon": [
+    {
+      "id": "Test_Sword",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 1,
+      "dmgType": "p",
+      "acc": 100,
+      "weight": 5,
+      "val": []
+    },
+    {
+      "id": "WoodenSword",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 2,
+      "dmgType": "p",
+      "acc": 80,
+      "weight": 3,
+      "val": []
+    },
+    {
+      "id": "IronSword",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 4,
+      "dmgType": "p",
+      "acc": 70,
+      "weight": 5,
+      "val": []
+    },
+    {
+      "id": "FireSword",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 7,
+      "dmgType": "p",
+      "acc": 75,
+      "weight": 5,
+      "val": [
+        55
+      ]
+    },
+    {
+      "id": "RoseThorn",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 7,
+      "dmgType": "p",
+      "acc": 75,
+      "weight": 4,
+      "val": [
+        20,
+        40
+      ]
+    },
+    {
+      "id": "TheNeedleOfFate",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 17,
+      "dmgType": "p",
+      "acc": 85,
+      "weight": 6,
+      "val": [
+        25,
+        3
+      ]
+    },
+    {
+      "id": "RevolvingBlade",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 7,
+      "dmgType": "p",
+      "acc": 65,
+      "weight": 7,
+      "val": [
+        2,
+        10
+      ]
+    },
+    {
+      "id": "ColoredBlack",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 12,
+      "dmgType": "p",
+      "acc": 70,
+      "weight": 5,
+      "val": [
+        30,
+        1
+      ]
+    },
+    {
+      "id": "SoulCrusher",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 22,
+      "dmgType": "p",
+      "acc": 60,
+      "weight": 10,
+      "val": [
+        3
+      ]
+    },
+    {
+      "id": "Umbrella",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 8,
+      "dmgType": "p",
+      "acc": 90,
+      "weight": 6,
+      "val": [
+        25,
+        10
+      ]
+    },
+    {
+      "id": "RedUmbrella",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 11,
+      "dmgType": "p",
+      "acc": 80,
+      "weight": 8,
+      "val": [
+        25,
+        10,
+        40
+      ]
+    },
+    {
+      "id": "FoxSilverKnife",
+      "weaponType": "sword",
+      "rangeBonus": 1,
+      "dmg": 3,
+      "dmgType": "p",
+      "acc": 100,
+      "weight": 2,
+      "val": [
+        100
+      ]
+    },
+    {
+      "id": "Sodett",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 32,
+      "dmgType": "p",
+      "acc": 80,
+      "weight": 9,
+      "val": [
+        140,
+        1,
+        "**Nia",
+        80,
+        150,
+        "**The Sixth Destint, Andett",
+        "**Eclipse:Sol"
+      ]
+    },
+    {
+      "id": "Dorrmu",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 20,
+      "dmgType": "p",
+      "acc": 75,
+      "weight": 10,
+      "val": [
+        25,
+        30
+      ]
+    },
+    {
+      "id": "HoroonBlade",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 20,
+      "dmgType": "p",
+      "acc": 75,
+      "weight": 11,
+      "val": [
+        3
+      ]
+    },
+    {
+      "id": "Andett",
+      "weaponType": "sword",
+      "rangeBonus": 0,
+      "dmg": 18,
+      "dmgType": "p",
+      "acc": 95,
+      "weight": 7,
+      "val": [
+        180,
+        10,
+        "**Nia",
+        20,
+        "**The First StarEaten, Sodett",
+        "**Eclipse:Luna"
+      ]
+    },
+    {
+      "id": "WoodenSpear",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 4,
+      "dmgType": "p",
+      "acc": 85,
+      "weight": 4,
+      "val": []
+    },
+    {
+      "id": "IronSpear",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 8,
+      "dmgType": "p",
+      "acc": 75,
+      "weight": 8,
+      "val": []
+    },
+    {
+      "id": "LightningGodsSpear",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 16,
+      "dmgType": "p",
+      "acc": 65,
+      "weight": 10,
+      "val": [
+        130
+      ]
+    },
+    {
+      "id": "DemonArm",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 12,
+      "dmgType": "p",
+      "acc": 55,
+      "weight": 11,
+      "val": [
+        15,
+        1
+      ]
+    },
+    {
+      "id": "GigantSpear",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 30,
+      "dmgType": "p",
+      "acc": 65,
+      "weight": 14,
+      "val": []
+    },
+    {
+      "id": "CrystalSpear",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 12,
+      "dmgType": "p",
+      "acc": 80,
+      "weight": 5,
+      "val": []
+    },
+    {
+      "id": "AshSpike",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 8,
+      "dmgType": "p",
+      "acc": 65,
+      "weight": 7,
+      "val": [
+        85
+      ]
+    },
+    {
+      "id": "VoidAbsorber",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 14,
+      "dmgType": "p",
+      "acc": 70,
+      "weight": 13,
+      "val": [
+        50
+      ]
+    },
+    {
+      "id": "TransdimensionalEmitter",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 6,
+      "dmgType": "p",
+      "acc": 85,
+      "weight": 11,
+      "val": [
+        150
+      ]
+    },
+    {
+      "id": "UnstableDimensionalTeleporter",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 10,
+      "dmgType": "p",
+      "acc": 60,
+      "weight": 12,
+      "val": []
+    },
+    {
+      "id": "FelvenBermel",
+      "weaponType": "spear",
+      "rangeBonus": 1,
+      "dmg": 12,
+      "dmgType": "p",
+      "acc": 75,
+      "weight": 11,
+      "val": [
+        6,
+        5
+      ]
+    },
+    {
+      "id": "Burava",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 35,
+      "dmgType": "p",
+      "acc": 60,
+      "weight": 14,
+      "val": [
+        40,
+        2,
+        5
+      ]
+    },
+    {
+      "id": "Sioon",
+      "weaponType": "spear",
+      "rangeBonus": 0,
+      "dmg": 27,
+      "dmgType": "p",
+      "acc": 70,
+      "weight": 13,
+      "val": [
+        20,
+        2,
+        50,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "WoodenClub",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 6,
+      "dmgType": "p",
+      "acc": 65,
+      "weight": 8,
+      "val": []
+    },
+    {
+      "id": "IronAxe",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 10,
+      "dmgType": "p",
+      "acc": 50,
+      "weight": 15,
+      "val": []
+    },
+    {
+      "id": "FishbowlStick",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 13,
+      "dmgType": "p",
+      "acc": 65,
+      "weight": 19,
+      "val": [
+        75
+      ]
+    },
+    {
+      "id": "StoneSpiritsAxe",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 18,
+      "dmgType": "p",
+      "acc": 45,
+      "weight": 20,
+      "val": []
+    },
+    {
+      "id": "BigIcicle",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 14,
+      "dmgType": "p",
+      "acc": 60,
+      "weight": 15,
+      "val": [
+        80
+      ]
+    },
+    {
+      "id": "GiantDeersHorn",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 16,
+      "dmgType": "p",
+      "acc": 55,
+      "weight": 13,
+      "val": []
+    },
+    {
+      "id": "WoodenStaff",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 3,
+      "dmgType": "p",
+      "acc": 85,
+      "weight": 7,
+      "val": []
+    },
+    {
+      "id": "ALazyMorning",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 10,
+      "dmgType": "p",
+      "acc": 70,
+      "weight": 8,
+      "val": [
+        25,
+        1
+      ]
+    },
+    {
+      "id": "BurningStick",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 3,
+      "dmgType": "p",
+      "acc": 85,
+      "weight": 6,
+      "val": []
+    },
+    {
+      "id": "ThePillarOfVerdure",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 10,
+      "dmgType": "p",
+      "acc": 70,
+      "weight": 9,
+      "val": []
+    },
+    {
+      "id": "EducationStick",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 6,
+      "dmgType": "p",
+      "acc": 65,
+      "weight": 7,
+      "val": [
+        50,
+        1
+      ]
+    },
+    {
+      "id": "MilleniumRock",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 12,
+      "dmgType": "p",
+      "acc": 55,
+      "weight": 10,
+      "val": [
+        6
+      ]
+    },
+    {
+      "id": "TorrbonBreaker",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 55,
+      "dmgType": "p",
+      "acc": 40,
+      "weight": 23,
+      "val": [
+        150
+      ]
+    },
+    {
+      "id": "EterKrsour",
+      "weaponType": "blunt",
+      "rangeBonus": 0,
+      "dmg": 30,
+      "dmgType": "p",
+      "acc": 50,
+      "weight": 18,
+      "val": [
+        55,
+        2,
+        25
+      ]
+    },
+    {
+      "id": "EaelJonel",
+      "weaponType": "blunt",
+      "rangeBonus": 1,
+      "dmg": 1,
+      "dmgType": "p",
+      "acc": 100,
+      "weight": 14,
+      "val": [
+        40,
+        5,
+        1
+      ]
+    },
+    {
+      "id": "TrainingBow",
+      "weaponType": "bow",
+      "rangeBonus": 0,
+      "dmg": 1,
+      "dmgType": "p",
+      "acc": 90,
+      "weight": 2,
+      "val": []
+    },
+    {
+      "id": "IronBow",
+      "weaponType": "bow",
+      "rangeBonus": 0,
+      "dmg": 3,
+      "dmgType": "p",
+      "acc": 85,
+      "weight": 4,
+      "val": []
+    },
+    {
+      "id": "FrostCrystal",
+      "weaponType": "bow",
+      "rangeBonus": 0,
+      "dmg": 7,
+      "dmgType": "p",
+      "acc": 80,
+      "weight": 3,
+      "val": [
+        85
+      ]
+    },
+    {
+      "id": "TheZephyros",
+      "weaponType": "bow",
+      "rangeBonus": 1,
+      "dmg": 7,
+      "dmgType": "p",
+      "acc": 80,
+      "weight": 4,
+      "val": [
+        75,
+        1
+      ]
+    },
+    {
+      "id": "Typhoon",
+      "weaponType": "bow",
+      "rangeBonus": 3,
+      "dmg": 9,
+      "dmgType": "p",
+      "acc": 75,
+      "weight": 6,
+      "val": [
+        3
+      ]
+    },
+    {
+      "id": "SplitBow",
+      "weaponType": "bow",
+      "rangeBonus": 0,
+      "dmg": 6,
+      "dmgType": "p",
+      "acc": 70,
+      "weight": 5,
+      "val": []
+    },
+    {
+      "id": "Luneion",
+      "weaponType": "bow",
+      "rangeBonus": 0,
+      "dmg": 16,
+      "dmgType": "p",
+      "acc": 80,
+      "weight": 6,
+      "val": [
+        30
+      ]
+    },
+    {
+      "id": "GorrmangDi",
+      "weaponType": "bow",
+      "rangeBonus": 0,
+      "dmg": 31,
+      "dmgType": "p",
+      "acc": 65,
+      "weight": 10,
+      "val": [
+        20,
+        6,
+        100,
+        100
+      ]
+    },
+    {
+      "id": "SapphireOrb",
+      "weaponType": "orb",
+      "rangeBonus": 0,
+      "dmg": 5,
+      "dmgType": "p",
+      "acc": 85,
+      "weight": 3,
+      "val": []
+    },
+    {
+      "id": "RubyOrb",
+      "weaponType": "orb",
+      "rangeBonus": 0,
+      "dmg": 5,
+      "dmgType": "p",
+      "acc": 80,
+      "weight": 4,
+      "val": []
+    },
+    {
+      "id": "WhiteOrb",
+      "weaponType": "orb",
+      "rangeBonus": 0,
+      "dmg": 6,
+      "dmgType": "p",
+      "acc": 85,
+      "weight": 4,
+      "val": []
+    },
+    {
+      "id": "SparkGlass",
+      "weaponType": "orb",
+      "rangeBonus": 0,
+      "dmg": 4,
+      "dmgType": "p",
+      "acc": 75,
+      "weight": 3,
+      "val": []
+    },
+    {
+      "id": "FlowerOfStar",
+      "weaponType": "orb",
+      "rangeBonus": 0,
+      "dmg": 12,
+      "dmgType": "p",
+      "acc": 90,
+      "weight": 5,
+      "val": []
+    },
+    {
+      "id": "GloryAndFaith",
+      "weaponType": "orb",
+      "rangeBonus": 0,
+      "dmg": 8,
+      "dmgType": "p",
+      "acc": 65,
+      "weight": 3,
+      "val": [
+        50
+      ]
+    },
+    {
+      "id": "RedEye",
+      "weaponType": "orb",
+      "rangeBonus": 0,
+      "dmg": 4,
+      "dmgType": "p",
+      "acc": 10,
+      "weight": 5,
+      "val": [
+        10
+      ]
+    },
+    {
+      "id": "CremRovan",
+      "weaponType": "orb",
+      "rangeBonus": 0,
+      "dmg": 22,
+      "dmgType": "p",
+      "acc": 85,
+      "weight": 9,
+      "val": [
+        4,
+        80,
+        25,
+        50
+      ]
+    }
+  ]
+}
