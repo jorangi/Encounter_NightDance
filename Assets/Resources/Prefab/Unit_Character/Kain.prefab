@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5936868139711731282}
   - component: {fileID: 4048111854431731742}
   m_Layer: 0
-  m_Name: TestCharacter_0
+  m_Name: Kana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 351946675
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1349712789, guid: 541362db2cf731143a06b14e0c57565e, type: 3}
+  m_Sprite: {fileID: 1544140765, guid: 4efeba44aa2d0ab40831ebd9030a0370, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
