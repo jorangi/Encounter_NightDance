@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+//캐릭터 베이스 스크립트
 public class Character : TileObject
 {
     public LineRenderer targettingLine;
@@ -17,6 +18,7 @@ public class Character : TileObject
     public Tile[] MoveableTiles = new Tile[0];
     public int weight;
     private bool isfocus;
+    //캐릭터 포커싱 프로퍼티
     public bool IsFocus
     {
         get => isfocus;
@@ -36,6 +38,7 @@ public class Character : TileObject
         SP = Mathf.FloorToInt(oriData.SP);
         targettingLine = GetComponentInChildren<LineRenderer>();
     }
+    //캐릭터 데이터 세팅 메소드
     public override void Init(string id)
     {
         base.Init(id);
@@ -54,6 +57,7 @@ public class Character : TileObject
             group.groupName = id;
         
     }
+    //캐릭터 이동
     public virtual void Move(Vector3Int des)
     {
         tiles.FocusChar = this;
@@ -72,6 +76,7 @@ public class Character : TileObject
             StartCoroutine(MoveUnit(ts));
         }
     }
+    //캐릭터 이동에 의한 움직임 Coroutine
     public virtual IEnumerator MoveUnit(Tile[] tilePos)
     {
         Debug.Log("움직이기 시작");
@@ -106,6 +111,7 @@ public class Character : TileObject
         SetPOS((Vector2Int)tilePos[^1].POS);
         OperatedAttackRange();
     }
+    //이동 후 행동 결정 표시
     public void OperatedAttackRange()
     {
         if(group.groupName == "Player")
@@ -155,6 +161,7 @@ public class Character : TileObject
             tiles.uiCon.ActionsOn();
         }
     }
+    //사용 보류 코드, 이동 후 즉시 행동
     public void ActOnTile(Tile t)
     {
         Debug.Log("액팅");
@@ -187,6 +194,7 @@ public class Character : TileObject
             Move(t.POS);
         }
     }
+    //대상 지정 가시화
     public void SetTarget(Tile tile)
     {
         foreach(Tile _t in tiles.SelectedChecker)
@@ -244,6 +252,7 @@ public class Character : TileObject
             }
         }
     }
+    //모든 캐릭터의 턴 시작 세팅
     public void WholeTurnStart()
     {
         MoveableTiles = tiles.MoveableRange(this, POS, movement, false, out AttackableTiles);
@@ -255,6 +264,7 @@ public class Character : TileObject
         }
         targettingArrowing = StartCoroutine(TargettingArrow());
     }
+    //AI 캐릭터의 대상 탐색
     public void FindTarget()
     {
         List<TileObject> cand = new();
@@ -315,6 +325,7 @@ public class Character : TileObject
         }
         exTarget = TargetUnit;
     }
+    //행동 취소
     public virtual void TurnCancle()
     {
         tiles.tileDatas[tempPOS.y, tempPOS.x].tempTileObject = null;
@@ -338,6 +349,7 @@ public class Character : TileObject
             // tiles.MoveableRange(POS, movement, !string.IsNullOrEmpty(ori_data.HalfSpirit) ? (bool)DataManager.Datas[ori_data.HalfSpirit]["fly"] : false, out tiles.AttackableResult);
         }
     }
+    //캐릭터의 턴 시작
     public override void TurnStart()
     {
         base.TurnStart();
@@ -352,15 +364,18 @@ public class Character : TileObject
             // Tile[] t = tiles.MoveableRange(POS, movement, !string.IsNullOrEmpty(ori_data.HalfSpirit) ? (bool)DataManager.Datas[ori_data.HalfSpirit]["fly"] : false, out tiles.AttackableResult);
         }
     }
+    //대기 행동
     public void ActStay()
     {
         Stay();
         TurnEnd();
     }
+    //턴 종료
     public override void TurnEnd()
     {
         base.TurnEnd();
     }
+    //무기 세팅
     public void SetWeapon(string id)
     {
         weapon = id;
@@ -378,15 +393,18 @@ public class Character : TileObject
         else if (DataManager.Datas[weapon]["weaponType"].ToString() == "bow")
             GetAttackSkill("NormalAttack_Range");
     }
+    //전투 기술 습득
     public void GetAttackSkill(string id)
     {
         if (!oriData.attackSkills.Contains(id))
             oriData.attackSkills.Add(id);
     }
+    //스킬 습득
     public void GetSkills(string id)
     {
         oriData.Skills.Add(id);
     }
+    //타일 위의 대상이 적대적인지 판단
     public bool JudgeEnemy(TileObject tileObject)
     {
         if(tileObject == null)
@@ -395,6 +413,7 @@ public class Character : TileObject
             return true;
         return false;
     }
+    //사용할 전투 기술 선택
     public virtual void SelectSkill(string id)
     {
         if(group.groupName == "Player")
@@ -457,6 +476,7 @@ public class Character : TileObject
             }
         }
     }
+    //캐릭터 포커싱
     public void FocusOn()
     {
         if(tiles.TurnChar == this) return;
@@ -523,6 +543,7 @@ public class Character : TileObject
             }
         }
     }
+    //AI 캐릭터의 예상 공격 대상을 표시하는 Coroutine
     public IEnumerator TargettingArrow()
     {
         if(exTarget == null || this == tiles.TurnChar)
@@ -554,10 +575,12 @@ public class Character : TileObject
             yield return null;
         }
     }
+    //미사용 코드, 후에 활용
     public Tile FindVantageTile()
     {
         return null;
     }
+    //지정한 위치로부터 적절한 위치를 선점, 후에 우선순위를 배정하여 조건을 작성
     public Tile FindVTileToAttack(Tile tile, int maxRange, int minRange)
     {
         //int prio = int.MinValue;
