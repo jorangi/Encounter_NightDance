@@ -1,8 +1,14 @@
 {
-  "Weapon": [
+  "Weapon": 
+  [
     {
       "id": "Test_Sword",
+      "tag": [
+        "sword",
+        "test"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 1,
       "dmgType": "p",
@@ -12,7 +18,12 @@
     },
     {
       "id": "WoodenSword",
+      "tag": [
+        "sword",
+        "wood"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 2,
       "dmgType": "p",
@@ -22,7 +33,12 @@
     },
     {
       "id": "IronSword",
+      "tag": [
+        "sword",
+        "iron"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 4,
       "dmgType": "p",
@@ -32,7 +48,12 @@
     },
     {
       "id": "FireSword",
+      "tag": [
+        "sword",
+        "fire"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 7,
       "dmgType": "p",
@@ -44,7 +65,13 @@
     },
     {
       "id": "RoseThorn",
+      "tag": [
+        "sword",
+        "poison",
+        "bleed"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 7,
       "dmgType": "p",
@@ -57,7 +84,12 @@
     },
     {
       "id": "TheNeedleOfFate",
+      "tag": [
+        "sword",
+        "teleport"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 17,
       "dmgType": "p",
@@ -70,7 +102,12 @@
     },
     {
       "id": "RevolvingBlade",
+      "tag": [
+        "sword",
+        "spd"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 7,
       "dmgType": "p",
@@ -83,7 +120,12 @@
     },
     {
       "id": "ColoredBlack",
+      "tag": [
+        "sword",
+        "weakness"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 12,
       "dmgType": "p",
@@ -96,7 +138,12 @@
     },
     {
       "id": "SoulCrusher",
+      "tag": [
+        "sword",
+        "soul"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 22,
       "dmgType": "p",
@@ -108,7 +155,13 @@
     },
     {
       "id": "Umbrella",
+      "tag": [
+        "sword",
+        "water",
+        "lightning"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 8,
       "dmgType": "p",
@@ -121,7 +174,17 @@
     },
     {
       "id": "RedUmbrella",
+      "tag": [
+        "sword",
+        "water",
+        "lightning",
+        "weather",
+        "rain",
+        "reducedmg",
+        "protective"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 11,
       "dmgType": "p",
@@ -135,7 +198,12 @@
     },
     {
       "id": "FoxSilverKnife",
+      "tag": [
+        "sword",
+        "spd"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 1,
       "dmg": 3,
       "dmgType": "p",
@@ -147,7 +215,15 @@
     },
     {
       "id": "Sodett",
+      "tag": [
+        "sword",
+        "fire",
+        "13spirits",
+        "shield",
+        "frostresist"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 32,
       "dmgType": "p",
@@ -165,7 +241,17 @@
     },
     {
       "id": "Dorrmu",
+      "tag": [
+        "sword",
+        "13spirits",
+        "dpn",
+        "reducedmg",
+        "ccresist",
+        "cccure",
+        "protective"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 20,
       "dmgType": "p",
@@ -178,7 +264,14 @@
     },
     {
       "id": "HoroonBlade",
+      "tag": [
+        "sword",
+        "13spirits",
+        "res",
+        "silence"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 20,
       "dmgType": "p",
@@ -190,7 +283,16 @@
     },
     {
       "id": "Andett",
+      "tag": [
+        "sword",
+        "13spirits",
+        "frost",
+        "frozen",
+        "shield",
+        "burnresist"
+      ],
       "weaponType": "sword",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 18,
       "dmgType": "p",
@@ -207,7 +309,12 @@
     },
     {
       "id": "WoodenSpear",
+      "tag": [
+        "spear",
+        "wood"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 4,
       "dmgType": "p",
@@ -217,7 +324,12 @@
     },
     {
       "id": "IronSpear",
+      "tag": [
+        "spear",
+        "iron"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 8,
       "dmgType": "p",
@@ -227,7 +339,12 @@
     },
     {
       "id": "LightningGodsSpear",
+      "tag": [
+        "spear",
+        "lightning"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 16,
       "dmgType": "p",
@@ -239,7 +356,12 @@
     },
     {
       "id": "DemonArm",
+      "tag": [
+        "spear",
+        "fear"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 12,
       "dmgType": "p",
@@ -252,7 +374,11 @@
     },
     {
       "id": "GigantSpear",
+      "tag": [
+        "spear"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 30,
       "dmgType": "p",
@@ -262,7 +388,12 @@
     },
     {
       "id": "CrystalSpear",
+      "tag": [
+        "spear",
+        "ryndmg"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 12,
       "dmgType": "p",
@@ -272,7 +403,12 @@
     },
     {
       "id": "AshSpike",
+      "tag": [
+        "spear",
+        "fire"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 8,
       "dmgType": "p",
@@ -284,7 +420,14 @@
     },
     {
       "id": "VoidAbsorber",
+      "tag": [
+        "spear",
+        "heal",
+        "elabsorb",
+        "protective"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 14,
       "dmgType": "p",
@@ -296,7 +439,13 @@
     },
     {
       "id": "TransdimensionalEmitter",
+      "tag": [
+        "spear",
+        "cctransmit",
+        "eltransmit"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 6,
       "dmgType": "p",
@@ -308,7 +457,12 @@
     },
     {
       "id": "UnstableDimensionalTeleporter",
+      "tag": [
+        "spear",
+        "teleport"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 10,
       "dmgType": "p",
@@ -318,7 +472,13 @@
     },
     {
       "id": "FelvenBermel",
+      "tag": [
+        "spear",
+        "13spirits",
+        "atk"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 1,
       "dmg": 12,
       "dmgType": "p",
@@ -331,7 +491,15 @@
     },
     {
       "id": "Burava",
+      "tag": [
+        "spear",
+        "13spirits",
+        "fear",
+        "dpn",
+        "rpn"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 35,
       "dmgType": "p",
@@ -345,7 +513,16 @@
     },
     {
       "id": "Sioon",
+      "tag": [
+        "spear",
+        "13spirits",
+        "silence",
+        "creating",
+        "stun",
+        "protective"
+      ],
       "weaponType": "spear",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 27,
       "dmgType": "p",
@@ -361,7 +538,13 @@
     },
     {
       "id": "WoodenClub",
+      "tag": [
+        "blunt",
+        "wood",
+        "club"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 6,
       "dmgType": "p",
@@ -371,7 +554,13 @@
     },
     {
       "id": "IronAxe",
+      "tag": [
+        "blunt",
+        "iron",
+        "axe"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 10,
       "dmgType": "p",
@@ -381,7 +570,13 @@
     },
     {
       "id": "FishbowlStick",
+      "tag": [
+        "blunt",
+        "water",
+        "club"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 13,
       "dmgType": "p",
@@ -393,7 +588,13 @@
     },
     {
       "id": "StoneSpiritsAxe",
+      "tag": [
+        "blunt",
+        "earth",
+        "axe"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 18,
       "dmgType": "p",
@@ -403,7 +604,13 @@
     },
     {
       "id": "BigIcicle",
+      "tag": [
+        "blunt",
+        "frost",
+        "club"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 14,
       "dmgType": "p",
@@ -415,7 +622,12 @@
     },
     {
       "id": "GiantDeersHorn",
+      "tag": [
+        "blunt",
+        "club"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 16,
       "dmgType": "p",
@@ -425,7 +637,13 @@
     },
     {
       "id": "WoodenStaff",
+      "tag": [
+        "blunt",
+        "rynskill",
+        "staff"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 3,
       "dmgType": "p",
@@ -435,7 +653,13 @@
     },
     {
       "id": "ALazyMorning",
+      "tag": [
+        "blunt",
+        "reducemove",
+        "staff"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 10,
       "dmgType": "p",
@@ -448,7 +672,13 @@
     },
     {
       "id": "BurningStick",
+      "tag": [
+        "blunt",
+        "rynskill",
+        "staff"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 3,
       "dmgType": "p",
@@ -458,7 +688,13 @@
     },
     {
       "id": "ThePillarOfVerdure",
+      "tag": [
+        "blunt",
+        "fire",
+        "staff"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 10,
       "dmgType": "p",
@@ -468,7 +704,13 @@
     },
     {
       "id": "EducationStick",
+      "tag": [
+        "blunt",
+        "stun",
+        "staff"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 6,
       "dmgType": "p",
@@ -481,7 +723,14 @@
     },
     {
       "id": "MilleniumRock",
+      "tag": [
+        "blunt",
+        "def",
+        "res",
+        "club"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 12,
       "dmgType": "p",
@@ -493,7 +742,13 @@
     },
     {
       "id": "TorrbonBreaker",
+      "tag": [
+        "blunt",
+        "13spirits",
+        "club"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 55,
       "dmgType": "p",
@@ -505,7 +760,15 @@
     },
     {
       "id": "EterKrsour",
+      "tag": [
+        "blunt",
+        "13spirits",
+        "earth",
+        "ryndmg",
+        "axe"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 30,
       "dmgType": "p",
@@ -519,7 +782,17 @@
     },
     {
       "id": "EaelJonel",
+      "tag": [
+        "blunt",
+        "13spirits",
+        "rangebonus",
+        "dpn",
+        "atk",
+        "bonusattack",
+        "axe"
+      ],
       "weaponType": "blunt",
+      "shard": 0,
       "rangeBonus": 1,
       "dmg": 1,
       "dmgType": "p",
@@ -533,7 +806,12 @@
     },
     {
       "id": "TrainingBow",
+      "tag": [
+        "bow",
+        "wood"
+      ],
       "weaponType": "bow",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 1,
       "dmgType": "p",
@@ -543,7 +821,12 @@
     },
     {
       "id": "IronBow",
+      "tag": [
+        "bow",
+        "iron"
+      ],
       "weaponType": "bow",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 3,
       "dmgType": "p",
@@ -553,7 +836,12 @@
     },
     {
       "id": "FrostCrystal",
+      "tag": [
+        "bow",
+        "frost"
+      ],
       "weaponType": "bow",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 7,
       "dmgType": "p",
@@ -565,7 +853,13 @@
     },
     {
       "id": "TheZephyros",
+      "tag": [
+        "bow",
+        "wind",
+        "rangebonus"
+      ],
       "weaponType": "bow",
+      "shard": 0,
       "rangeBonus": 1,
       "dmg": 7,
       "dmgType": "p",
@@ -578,7 +872,12 @@
     },
     {
       "id": "Typhoon",
+      "tag": [
+        "bow",
+        "rangebonus"
+      ],
       "weaponType": "bow",
+      "shard": 0,
       "rangeBonus": 3,
       "dmg": 9,
       "dmgType": "p",
@@ -590,7 +889,12 @@
     },
     {
       "id": "SplitBow",
+      "tag": [
+        "bow",
+        "skill"
+      ],
       "weaponType": "bow",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 6,
       "dmgType": "p",
@@ -600,7 +904,13 @@
     },
     {
       "id": "Luneion",
+      "tag": [
+        "bow",
+        "13spirits",
+        "heal"
+      ],
       "weaponType": "bow",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 16,
       "dmgType": "p",
@@ -612,7 +922,13 @@
     },
     {
       "id": "GorrmangDi",
+      "tag": [
+        "bow",
+        "13spirits",
+        "pierce"
+      ],
       "weaponType": "bow",
+      "shard": 0,
       "rangeBonus": 0,
       "dmg": 31,
       "dmgType": "p",
@@ -627,81 +943,137 @@
     },
     {
       "id": "SapphireOrb",
+      "tag": [
+        "orb",
+        "rynskill"
+      ],
       "weaponType": "orb",
+      "shard": 5,
       "rangeBonus": 0,
       "dmg": 5,
       "dmgType": "p",
       "acc": 85,
       "weight": 3,
-      "val": []
+      "val": [
+        "*shard"
+      ]
     },
     {
       "id": "RubyOrb",
+      "tag": [
+        "orb",
+        "rynskill"
+      ],
       "weaponType": "orb",
+      "shard": 4,
       "rangeBonus": 0,
       "dmg": 5,
       "dmgType": "p",
       "acc": 80,
       "weight": 4,
-      "val": []
+      "val": [
+        "*shard"
+      ]
     },
     {
       "id": "WhiteOrb",
+      "tag": [
+        "orb",
+        "rynskill"
+      ],
       "weaponType": "orb",
+      "shard": 4,
       "rangeBonus": 0,
       "dmg": 6,
       "dmgType": "p",
       "acc": 85,
       "weight": 4,
-      "val": []
+      "val": [
+        "*shard"
+      ]
     },
     {
       "id": "SparkGlass",
+      "tag": [
+        "orb",
+        "rynskill"
+      ],
       "weaponType": "orb",
+      "shard": 3,
       "rangeBonus": 0,
       "dmg": 4,
       "dmgType": "p",
       "acc": 75,
       "weight": 3,
-      "val": []
+      "val": [
+        "*shard"
+      ]
     },
     {
       "id": "FlowerOfStar",
+      "tag": [
+        "orb",
+        "rynskill"
+      ],
       "weaponType": "orb",
+      "shard": 5,
       "rangeBonus": 0,
       "dmg": 12,
       "dmgType": "p",
       "acc": 90,
       "weight": 5,
-      "val": []
+      "val": [
+        "*shard"
+      ]
     },
     {
       "id": "GloryAndFaith",
+      "tag": [
+        "orb",
+        "rynskill"
+      ],
       "weaponType": "orb",
+      "shard": 6,
       "rangeBonus": 0,
       "dmg": 8,
       "dmgType": "p",
       "acc": 65,
       "weight": 3,
       "val": [
-        50
+        50,
+        "*shard"
       ]
     },
     {
       "id": "RedEye",
+      "tag": [
+        "orb",
+        "rynskill"
+      ],
       "weaponType": "orb",
+      "shard": 8,
       "rangeBonus": 0,
       "dmg": 4,
       "dmgType": "p",
       "acc": 10,
       "weight": 5,
       "val": [
-        10
+        10,
+        "*shard"
       ]
     },
     {
       "id": "CremRovan",
+      "tag": [
+        "orb",
+        "13spirits",
+        "reducedmg",
+        "shield",
+        "through",
+        "protective"
+      ],
       "weaponType": "orb",
+      "shard": 10,
       "rangeBonus": 0,
       "dmg": 22,
       "dmgType": "p",
@@ -711,7 +1083,8 @@
         4,
         80,
         25,
-        50
+        50,
+        "*shard"
       ]
     }
   ]

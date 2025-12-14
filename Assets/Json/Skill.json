@@ -486,7 +486,9 @@
           3,
           2
         ],
-        [1]
+        [
+          1
+        ]
       ]
     },
     {
@@ -538,7 +540,9 @@
         [
           0
         ],
-        [1],
+        [
+          1
+        ],
         [
           50
         ],
@@ -867,6 +871,262 @@
         ],
         [
           2
+        ]
+      ]
+    },
+    {
+      "id": "PathOfSwordsman",
+      "val": [
+        [
+          10
+        ]
+      ]
+    },
+    {
+      "id": "PathOfSwordMaster",
+      "val": [
+        [
+          20
+        ]
+      ]
+    },
+    {
+      "id": "PathOfJupiter",
+      "val": [
+        [
+          8
+        ]
+      ]
+    },
+    {
+      "id": "PathOfSoldier",
+      "val": [
+        [
+          30
+        ],
+        [
+          20
+        ]
+      ]
+    },
+    {
+      "id": "PathOfEliteSoldier",
+      "val": [
+        [
+          70
+        ],
+        [
+          20
+        ]
+      ]
+    },
+    {
+      "id": "PathOfSpearyeonier",
+      "val": [
+        [
+          30
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "id": "PathOfFighter",
+      "val": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          8
+        ]
+      ]
+    },
+    {
+      "id": "PathOfAsura",
+      "val": [
+        [
+          3
+        ],
+        [
+          3
+        ],
+        [
+          8
+        ]
+      ]
+    },
+    {
+      "id": "PathOfCrisomDawn",
+      "val": [
+        [
+          80
+        ]
+      ]
+    },
+    {
+      "id": "PathOfGuardian",
+      "val": [
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "PathOfPaladin",
+      "val": [
+        [
+          5
+        ],
+        [
+          5
+        ]
+      ]
+    },
+    {
+      "id": "PathOfThief",
+      "val": [
+        [
+          10
+        ]
+      ]
+    },
+    {
+      "id": "PathOfWatcher",
+      "val": [
+        [
+          10
+        ]
+      ]
+    },
+    {
+      "id": "PathOfHunter",
+      "val": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "id": "PathOfSniper",
+      "val": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "PathOfRyeonier",
+      "val": [
+        [
+          1
+        ],
+        [
+          20
+        ]
+      ]
+    },
+    {
+      "id": "PathOfBlackRyeonier",
+      "val": [
+        [
+          1
+        ],
+        [
+          20
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "PathOfHealRyeonier",
+      "val": [
+        [
+          20
+        ]
+      ]
+    },
+    {
+      "id": "PathOfWhiteRyeonier",
+      "val": [
+        [
+          20
+        ],
+        [
+          5
+        ]
+      ]
+    },
+    {
+      "id": "PathOfCaptainOfTheMercenaries",
+      "val": [
+        [
+          30
+        ]
+      ]
+    },
+    {
+      "id": "PathOfDivineMadien",
+      "val": []
+    },
+    {
+      "id": "PathOfTheKing",
+      "val": [
+        [
+          1
+        ],
+        [
+          15
+        ]
+      ]
+    },
+    {
+      "id": "PathOfHero",
+      "val": [
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "id": "PathOfLostWings",
+      "val": [
+        [
+          1
+        ],
+        [
+          0
+        ],
+        [
+          20
+        ]
+      ]
+    },
+    {
+      "id": "PathOfTheDivine",
+      "val": [
+        [
+          1
+        ],
+        [
+          0
+        ],
+        [
+          70
         ]
       ]
     }

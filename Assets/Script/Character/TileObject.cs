@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class CharacterData
 {
@@ -19,6 +18,10 @@ public class CharacterData
             if(Char != null && value != curHP)
             {
                 Char.SetHPBar(value);
+            }
+            if(value == 0)
+            {
+                Char.tiles.DeadUnit(Char);
             }
             curHP = value;
         }
@@ -135,11 +138,27 @@ public class CharacterData
         }
     }
     public int MaxExp;
+    public List<string> inventory = new();
+    public List<int> inventory_ea = new();
     public List<string> attackSkills = new();
     public List<string> Skills = new();
     public string characterClass;
     public List<string> UnitBonus = new();
     public int ClassEXP;
+}
+public class ObjectData
+{
+    public string id;
+    private float hp;
+    public float HP
+    {
+        get => hp;
+        set
+        {
+            hp = value;
+        }
+    }
+    public Dictionary<string, string> Special = new();
 }
 public class Group
 {
@@ -149,6 +168,7 @@ public class Group
 public class TileObject : MonoBehaviour
 {
     #region tileObjectData
+    public ObjectData objectData = new();
     public CharacterData oriData = new();
     public CharacterData realData = new();
     public SpriteRenderer spriteRenderer;
@@ -157,53 +177,94 @@ public class TileObject : MonoBehaviour
     public SpriteRenderer PrevHealthBar;
     public Tiles tiles;
     public Group group = new();
-    public Vector2Int POS;
-    public Vector2Int tempPOS;
+    public bool flatness = false;
+    public bool blockable = true;
+    private Vector2Int pos;
+    public Vector2Int POS
+    {
+        get => pos;
+        set
+        {
+            tiles.tileDatas[pos.y, pos.x].tileObject = null;
+            tiles.tileDatas[pos.y, pos.x].blocked = false;
+            if(this is not Character && objectData.Special.ContainsKey("width"))
+            {
+                int width = DataManager.ToInt(objectData.Special["width"]);
+                for(int i = 1; i < width; i++)
+                {
+                    tiles.tileDatas[pos.y, pos.x + i].tileObject = null;
+                    tiles.tileDatas[pos.y, pos.x + i].blocked = false;
+                }
+            }
+            tiles.tileDatas[value.y, value.x].tileObject = blockable ? this : null;
+            tiles.tileDatas[value.y, value.x].blocked = blockable;
+            if(this is not Character && objectData.Special.ContainsKey("width"))
+            {
+                int width = DataManager.ToInt(objectData.Special["width"]);
+                for(int i = 1; i < width; i++)
+                {
+                    tiles.tileDatas[value.y, value.x + i].tileObject = blockable ? this : null;
+                    tiles.tileDatas[value.y, value.x + i].blocked = blockable;
+                }
+            }
+            pos = value;
+            tiles.AllUnitRecalcRange();
+        }
+    }
+    private Vector2Int tempPOS;
+    public Vector2Int TempPOS
+    {
+        get => tempPOS;
+        set
+        {
+            tiles.SetTempTileObj(this, null, tempPOS);
+            if(this is not Character && objectData.Special.ContainsKey("width"))
+            {
+                int width = DataManager.ToInt(objectData.Special["width"]);
+                for(int i = 1; i < width; i++)
+                {
+                    tiles.tileDatas[tempPOS.y, tempPOS.x + i].tileObject = null;
+                    tiles.tileDatas[tempPOS.y, tempPOS.x + i].blocked = false;
+                }
+            }
+            tiles.SetTempTileObj(this, this, value);
+            if(this is not Character && objectData.Special.ContainsKey("width"))
+            {
+                int width = DataManager.ToInt(objectData.Special["width"]);
+                for(int i = 1; i < width; i++)
+                {
+                    tiles.tileDatas[value.y, value.x + i].tileObject = null;
+                    tiles.tileDatas[value.y, value.x + i].blocked = false;
+                }
+            }
+            tempPOS = value;
+            if(group.groupName == "Player")
+                tiles.AllUnitRecalcRange(this as Character);
+            else
+                tiles.AllUnitRecalcRange();
+        }
+    }
     public virtual void Awake()
     {
         tiles = GameManager.Inst.tiles;
+        tiles.rotObjects.Add(this);
         HealthBar = transform.Find("HealthBar").Find("HealthBar").GetComponent<SpriteRenderer>();
         PrevHealthBar = transform.Find("HealthBar").Find("PrevHealthBar").GetComponent<SpriteRenderer>();
+        spriteRenderer = transform.Find("Unit").Find("Sprite").GetComponent<SpriteRenderer>();
+        spriteRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        spriteRenderer.material = GameManager.Inst.baseMaterial;
     }
-    public virtual void Update()
+    public virtual void Init(string id, Vector2Int pos)
     {
-        switch(Mathf.RoundToInt(tiles.transform.eulerAngles.z)/90)
-        {
-            case 0:
-                transform.Find("Unit").localPosition = new Vector3(0, -0.3f, 0.2f);
-                transform.Find("Unit").localEulerAngles = new Vector3(Mathf.Sign(tiles.transform.eulerAngles.z - 179) * tiles.transform.eulerAngles.x, 0, 0);
-                break;
-            case 1:
-                transform.Find("Unit").localPosition = new Vector3(-0.3f, 0, 0.2f);
-                transform.Find("Unit").localEulerAngles = new Vector3(0, -Mathf.Sign(tiles.transform.eulerAngles.z - 179) * tiles.transform.eulerAngles.x, -90);
-                break;
-            case 2:
-                transform.Find("Unit").localPosition = new Vector3(0, 0.3f, 0.2f);
-                transform.Find("Unit").localEulerAngles = new Vector3(Mathf.Sign(tiles.transform.eulerAngles.z - 179) * tiles.transform.eulerAngles.x, 0, -180);
-                break;
-            case 3:
-                transform.Find("Unit").localPosition = new Vector3(0.3f, 0, 0.2f);
-                transform.Find("Unit").localEulerAngles = new Vector3(0, -Mathf.Sign(tiles.transform.eulerAngles.z - 179) * tiles.transform.eulerAngles.x, -270);
-                break;
-        }
-    }
-    public virtual void Init(string id)
-    {
+        SetTempPOS(pos);
         this.id = id;
-        oriData.id = id;
-        SetRealData();
+        objectData.id = id;
     }
-    public void SetPOS(Vector2Int pos)
+    public void SetTempPOS(Vector2Int pos)
     {
-        tempPOS = new Vector2Int(pos.x, pos.y);
-        tiles.tileDatas[tempPOS.y, tempPOS.x].tempTileObject = this;
         Vector2 des = tiles.TilePos(pos);
         transform.localPosition = new Vector3(des.x, des.y, - tiles.tileDatas[pos.y, pos.x].POS.z * 0.51f);
-        tiles.tileDatas[pos.y, pos.x].tileObject = this;
-        foreach(Character character in tiles.Units)
-        {
-            if(character.group.groupName != "Player") character.FindTarget();
-        }
+        TempPOS = pos;
     }
     public virtual void GetBuff(string id, int turn)
     {
@@ -219,9 +280,9 @@ public class TileObject : MonoBehaviour
     }
     public virtual void SetHPBar(float hp)
     {
-        float ratio = (float)Mathf.FloorToInt(hp) / Mathf.FloorToInt(realData.HP);
-        HealthBar.transform.localScale = new Vector2(ratio, 1);
-        PrevHealthBar.transform.localScale = new Vector2(ratio, 1);
+        float ratio = Mathf.Clamp((float)Mathf.FloorToInt(hp) / Mathf.FloorToInt(realData.HP), 0.0f, 1.0f);
+        HealthBar.transform.localScale = new Vector2(ratio, 1.0f);
+        PrevHealthBar.transform.localScale = new Vector2(ratio, 1.0f);
         if(ratio > 0.25f)
         {
             HealthBar.color = Color.white;
@@ -235,8 +296,8 @@ public class TileObject : MonoBehaviour
     }
     public virtual void SetPrevHPBar(float hp)
     {
-        float ratio = (float)Mathf.FloorToInt(hp) / Mathf.FloorToInt(realData.HP);
-        PrevHealthBar.transform.localScale = new Vector2(ratio, 1);
+        float ratio = Mathf.Clamp((float)Mathf.FloorToInt(hp) / Mathf.FloorToInt(realData.HP), 0.0f, 1.0f);
+        PrevHealthBar.transform.localScale = new Vector2(ratio, 1.0f);
         if(ratio > 0.25f)
         {
             PrevHealthBar.color = Color.white;
@@ -301,6 +362,8 @@ public class TileObject : MonoBehaviour
     }
     public virtual void ActEnd()
     {
+        POS = TempPOS;
+        GameManager.Inst.tiles.FocusChar = null;
         foreach(MethodEff m in actEnd)
             m();
     }
@@ -311,12 +374,10 @@ public class TileObject : MonoBehaviour
     }
     public virtual void TurnEnd()
     {
-        POS = tempPOS;
+        POS = TempPOS;
         GameManager.Inst.tiles.FocusChar = null;
         foreach(MethodEff m in turnEnd)
             m();
-
-        
     }
     public void BattleStart()
     {

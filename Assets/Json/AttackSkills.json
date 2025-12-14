@@ -7,29 +7,43 @@
         "sword",
         "blunt"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "normal"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 100,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
-      "unitBonus": [""],
-      "val": [""]
+      "unitBonus": [],
+      "val": []
     },
     {
       "id": "NormalAttack_Spear",
       "weaponType": [
         "spear"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "normal"
+      ],
       "range": [
         1,
         2
       ],
+      "target": "enemy",
       "dmg": 100,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -42,12 +56,19 @@
         "bow",
         "staff"
       ],
+      "tag": [
+        "range",
+        "attack",
+        "normal"
+      ],
       "range": [
         2,
         2
       ],
+      "target": "enemy",
       "dmg": 100,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -59,12 +80,20 @@
       "weaponType": [
         "orb"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "normal"
+      ],
       "range": [
         1,
         2
       ],
+      "target": "enemy",
       "dmg": 100,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -78,12 +107,19 @@
         "spear",
         "blunt"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "attackskill"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 125,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -97,12 +133,20 @@
       "weaponType": [
         "sword"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "attackskill",
+        "halfspirit"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 115,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -118,12 +162,20 @@
       "weaponType": [
         "sword"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "attackskill",
+        "area"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 80,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -139,12 +191,20 @@
         "spear",
         "blunt"
       ],
+      "tag": [
+        "attackskill",
+        "attack",
+        "multiple",
+        "allies"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 35,
       "attackCount": 3,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -159,12 +219,21 @@
       "weaponType": [
         "spear"
       ],
+      "tag": [
+        "melee",
+        "attackskill",
+        "attack",
+        "multiple",
+        "area"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 80,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -178,12 +247,21 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "buffryn"
+      ],
       "range": [
         1,
         3
       ],
+      "target": "enemy",
       "dmg": 120,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -197,12 +275,21 @@
       "weaponType": [
         "Any"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "attackskill",
+        "buffatk"
+      ],
       "range": [
         1,
         2
       ],
+      "target": "enemy",
       "dmg": 0,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -217,12 +304,21 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "self",
+        "rynskill",
+        "buffryn",
+        "buffspd",
+        "soul"
+      ],
       "range": [
         0,
         0
       ],
+      "target": "enemy",
       "dmg": 0,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -238,12 +334,22 @@
       "weaponType": [
         "ryeon"
       ],
-      "range": [
-        0,
-        0
+      "tag": [
+        "melee",
+        "range",
+        "rynskill",
+        "debuffatk",
+        "debuffspd",
+        "soul"
       ],
+      "range": [
+        1,
+        2
+      ],
+      "target": "enemy",
       "dmg": 0,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -258,12 +364,19 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "self",
+        "rynskill",
+        "soul"
+      ],
       "range": [
         0,
         0
       ],
+      "target": "enemy",
       "dmg": 0,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -277,19 +390,27 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "self",
+        "rynskill",
+        "area",
+        "fire"
+      ],
       "range": [
         0,
         0
       ],
+      "target": "enemy",
       "dmg": 0,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
       "unitBonus": [],
       "val": [
         3,
-        3
+        80
       ]
     },
     {
@@ -297,18 +418,29 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "knockback",
+        "wind"
+      ],
       "range": [
         1,
         2
       ],
+      "target": "enemy",
       "dmg": 160,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
       "unitBonus": [],
       "val": [
-        4
+        4,
+        75
       ]
     },
     {
@@ -316,12 +448,21 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "rynskill",
+        "area",
+        "fear"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 333,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -336,12 +477,21 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "fire"
+      ],
       "range": [
         1,
         2
       ],
+      "target": "enemy",
       "dmg": 120,
       "attackCount": 1,
+      "shard": 2,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -356,12 +506,20 @@
         "ryeon",
         "bow"
       ],
+      "tag": [
+        "range",
+        "attack",
+        "attackskill",
+        "area"
+      ],
       "range": [
         2,
         3
       ],
+      "target": "enemy",
       "dmg": 40,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -375,12 +533,19 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "self",
+        "rynskill",
+        "heal"
+      ],
       "range": [
         0,
         0
       ],
-      "dmg": 40,
+      "target": "ally",
+      "dmg": -40,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -392,12 +557,21 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "buffacc"
+      ],
       "range": [
         1,
         3
       ],
+      "target": "enemy",
       "dmg": 120,
       "attackCount": 1,
+      "shard": 2,
       "cost": 1,
       "acc": 30,
       "dmgType": "r",
@@ -411,12 +585,21 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "wind"
+      ],
       "range": [
         1,
         2
       ],
+      "target": "enemy",
       "dmg": 85,
       "attackCount": 1,
+      "shard": 1,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -430,12 +613,21 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "area"
+      ],
       "range": [
         1,
         2
       ],
+      "target": "enemy",
       "dmg": 40,
       "attackCount": 1,
+      "shard": 2,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -449,12 +641,21 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "confusion"
+      ],
       "range": [
         1,
         2
       ],
+      "target": "enemy",
       "dmg": 160,
       "attackCount": 1,
+      "shard": 2,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -469,12 +670,20 @@
       "weaponType": [
         "spear"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "attackskill",
+        "area"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 115,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -488,12 +697,19 @@
       "weaponType": [
         "blunt"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "attackskill"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 150,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -505,12 +721,19 @@
       "weaponType": [
         "Any"
       ],
+      "tag": [
+        "self",
+        "attackskill",
+        "buffacc"
+      ],
       "range": [
         0,
         0
       ],
+      "target": "enemy",
       "dmg": 0,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -522,12 +745,21 @@
       "weaponType": [
         "blunt"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "attackskill",
+        "area",
+        "stun"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 145,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "p",
@@ -542,12 +774,20 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "rynskill",
+        "fear"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 115,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -562,12 +802,19 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "field",
+        "attack",
+        "rynskill"
+      ],
       "range": [
         0,
         0
       ],
+      "target": "enemy",
       "dmg": 135,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -581,12 +828,20 @@
       "weaponType": [
         "spear"
       ],
+      "tag": [
+        "melee",
+        "attack",
+        "attackskill",
+        "debuffryn"
+      ],
       "range": [
         1,
         1
       ],
+      "target": "enemy",
       "dmg": 120,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -601,12 +856,22 @@
       "weaponType": [
         "ryeon"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "rynskill",
+        "hpcost",
+        "specialdmg",
+        "heal"
+      ],
       "range": [
         1,
         10
       ],
+      "target": "enemy",
       "dmg": 0,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
@@ -622,17 +887,548 @@
       "weaponType": [
         "Any"
       ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "halfspirit"
+      ],
       "range": [
         1,
         2
       ],
+      "target": "enemy",
       "dmg": 40,
       "attackCount": 1,
+      "shard": 0,
       "cost": 1,
       "acc": 0,
       "dmgType": "r",
       "unitBonus": [],
       "val": []
+    },
+    {
+      "id": "Ignite",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "rynskill",
+        "fire"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "target": "enemy",
+      "dmg": 0,
+      "attackCount": 0,
+      "shard": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        80
+      ]
+    },
+    {
+      "id": "Healing",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "rynskill",
+        "heal"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "target": "ally",
+      "dmg": -50,
+      "attackCount": 1,
+      "shard": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": []
+    },
+    {
+      "id": "SelfHealing",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "self",
+        "rynskill",
+        "heal"
+      ],
+      "range": [
+        0,
+        0
+      ],
+      "target": "ally",
+      "dmg": -65,
+      "attackCount": 1,
+      "shard": 2,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": []
+    },
+    {
+      "id": "TouchHealing",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "self",
+        "rynskill",
+        "heal",
+        "area"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "target": "ally",
+      "dmg": -40,
+      "attackCount": 1,
+      "shard": 2,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": []
+    },
+    {
+      "id": "AreaHealing",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "self",
+        "rynskill",
+        "heal",
+        "area"
+      ],
+      "range": [
+        1,
+        4
+      ],
+      "target": "ally",
+      "dmg": -20,
+      "attackCount": 1,
+      "shard": 3,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        "*range[1]"
+      ]
+    },
+    {
+      "id": "DewArrow",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "water"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "target": "enemy",
+      "dmg": 80,
+      "attackCount": 1,
+      "shard": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        50
+      ]
+    },
+    {
+      "id": "HailBlade",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "attack",
+        "rynskill",
+        "water"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "target": "enemy",
+      "dmg": 130,
+      "attackCount": 1,
+      "shard": 2,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        70
+      ]
+    },
+    {
+      "id": "WaterCannon",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "water"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "target": "enemy",
+      "dmg": 110,
+      "attackCount": 1,
+      "shard": 2,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        40
+      ]
+    },
+    {
+      "id": "StormPiercing",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "wind"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "target": "enemy",
+      "dmg": 100,
+      "attackCount": 1,
+      "shard": 2,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        65
+      ]
+    },
+    {
+      "id": "BloodStorm",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "heal",
+        "bleed",
+        "area"
+      ],
+      "range": [
+        1,
+        3
+      ],
+      "target": "enemy",
+      "dmg": 80,
+      "attackCount": 1,
+      "shard": 4,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        20,
+        1
+      ]
+    },
+    {
+      "id": "Thunder",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "lightning"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "target": "enemy",
+      "dmg": 70,
+      "attackCount": 1,
+      "shard": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        70
+      ]
+    },
+    {
+      "id": "BlackCloud",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "lightning",
+        "area",
+        "electristorm"
+      ],
+      "range": [
+        1,
+        3
+      ],
+      "target": "enemy",
+      "dmg": 145,
+      "attackCount": 1,
+      "shard": 3,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        35
+      ]
+    },
+    {
+      "id": "Stone",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "earth"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "target": "enemy",
+      "dmg": 65,
+      "attackCount": 1,
+      "shard": 1,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        40
+      ]
+    },
+    {
+      "id": "GolemHand",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "attack",
+        "rynskill",
+        "earth"
+      ],
+      "range": [
+        1,
+        1
+      ],
+      "target": "enemy",
+      "dmg": 140,
+      "attackCount": 1,
+      "shard": 2,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        80
+      ]
+    },
+    {
+      "id": "SolidSpear",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "area",
+        "earth"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "target": "enemy",
+      "dmg": 110,
+      "attackCount": 1,
+      "shard": 3,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        1,
+        30
+      ]
+    },
+    {
+      "id": "GiganticCrystalArrow",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "debuffres"
+      ],
+      "range": [
+        1,
+        2
+      ],
+      "target": "enemy",
+      "dmg": 180,
+      "attackCount": 1,
+      "shard": 3,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        1,
+        10
+      ]
+    },
+    {
+      "id": "Transmission",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "rynskill",
+        "teleport"
+      ],
+      "range": [
+        1,
+        8
+      ],
+      "target": "enemy",
+      "dmg": 0,
+      "attackCount": 1,
+      "shard": 3,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        "*range[1]"
+      ]
+    },
+    {
+      "id": "Summons",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "rynskill",
+        "teleport"
+      ],
+      "range": [
+        1,
+        8
+      ],
+      "target": "enemy",
+      "dmg": 0,
+      "attackCount": 0,
+      "shard": 2,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        "*range[1]"
+      ]
+    },
+    {
+      "id": "InterstellaCollision",
+      "weaponType": [
+        "ryeon"
+      ],
+      "tag": [
+        "melee",
+        "range",
+        "attack",
+        "rynskill",
+        "stun"
+      ],
+      "range": [
+        1,
+        4
+      ],
+      "target": "enemy",
+      "dmg": 240,
+      "attackCount": 1,
+      "shard": 4,
+      "cost": 1,
+      "acc": 0,
+      "dmgType": "r",
+      "unitBonus": [],
+      "val": [
+        2
+      ]
     }
   ]
 }

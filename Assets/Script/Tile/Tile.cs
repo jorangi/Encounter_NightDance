@@ -12,13 +12,16 @@ public class Tile
     public int G = int.MaxValue;
     public int H = int.MaxValue;
     public GameObject obj;
+    public SpriteRenderer checker;
     public SpriteRenderer tileSprite;
     public SpriteRenderer rangeSprite;
     public SpriteRenderer selectedUnitSprite;
     public SpriteRenderer stateSprite;
+    public SpriteRenderer mark;
     public List<Character> CheckRange = new();
     public TileObject tileObject;
-    public TileObject tempTileObject;
+    public TileObject TempTileObject;
+    public TileObject justTileObject;
 
     public void ResetPath()
     {

@@ -1,0 +1,126 @@
+{
+    "SystemJson": 
+    [
+      {
+        "id": "AttackSpeed",
+        "val": [5, 10, 20]
+      },
+      {
+        "id": "FireElement",
+        "val": [0]
+      },
+      {
+        "id": "FrostElement",
+        "val": []
+      },
+      {
+        "id": "LightningElement",
+        "val": [10]
+      },
+      {
+        "id": "EarthElement",
+        "val": []
+      },
+      {
+        "id": "WindElement",
+        "val": []
+      },
+      {
+        "id": "WaterElement",
+        "val": []
+      },
+      {
+        "id": "Poison",
+        "val": [8]
+      },
+      {
+        "id": "Weakness",
+        "val": [25]
+      },
+      {
+        "id": "Vulnerable",
+        "val": [25]
+      },
+      {
+        "id": "Burn",
+        "val": [2]
+      },
+      {
+        "id": "Bleed",
+        "val": [1]
+      },
+      {
+        "id": "Wet",
+        "val": [5]
+      },
+      {
+        "id": "Frozen",
+        "val": [20]
+      },
+      {
+        "id": "Electrified",
+        "val": [20]
+      },
+      {
+        "id": "Confusion",
+        "val": [25, 25]
+      },
+      {
+        "id": "Stun",
+        "val": []
+      },
+      {
+        "id": "Blind",
+        "val": []
+      },
+      {
+        "id": "Silence",
+        "val": []
+      },
+      {
+        "id": "Binding",
+        "val": []
+      },
+      {
+        "id": "Fear",
+        "val": []
+      },
+      {
+        "id": "Sunny",
+        "val": [40, 10, 15]
+      },
+      {
+        "id": "Storm",
+        "val": [30, 4, 3, 30, 2]
+      },
+      {
+        "id": "ElectriStorm",
+        "val": [40, 20, 4, 100, 30, 10]
+      },
+      {
+        "id": "HeatWave",
+        "val": [20, 20, 30]
+      },
+      {
+        "id": "ColdWave",
+        "val": [20, 1]
+      },
+      {
+        "id": "Rain",
+        "val": []
+      },
+      {
+        "id": "Snow",
+        "val": [20, 10]
+      },
+      {
+        "id": "Fog",
+        "val": [20, 40, 3, 40]
+      },
+      {
+        "id": "Hail",
+        "val": [40, 1, 40, 8]
+      }
+    ]
+  }
+  

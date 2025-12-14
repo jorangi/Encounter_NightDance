@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - f
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -12,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Tiles
-  - MinimapMark
-  - TestLayer
+  - Minimap
+  - Tile
+  - Background
   - 
   - 
   - 
@@ -43,26 +42,20 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: Tile
-    uniqueID: 2955236873
-    locked: 0
-  - name: Object
-    uniqueID: 3345942517
-    locked: 0
-  - name: HideBoard
-    uniqueID: 3294512711
-    locked: 0
-  - name: HPBar
-    uniqueID: 1309964609
-    locked: 0
-  - name: Unit
-    uniqueID: 351946675
+    uniqueID: 4048450263
     locked: 0
   - name: Focus
-    uniqueID: 789127117
+    uniqueID: 260278653
     locked: 0
-  - name: Canvas
-    uniqueID: 976671607
+  - name: UnitUI
+    uniqueID: 326894533
+    locked: 0
+  - name: TileObject
+    uniqueID: 3870960031
     locked: 0
   - name: TargettingLine
-    uniqueID: 3545840005
+    uniqueID: 2348571547
+    locked: 0
+  - name: UI
+    uniqueID: 3059607381
     locked: 0

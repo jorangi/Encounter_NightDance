@@ -22,10 +22,11 @@ public class DataManager : MonoBehaviour
     public TextAsset t_Items;
     public TextAsset t_Class;
     public TextAsset t_CharBase;
+    public TextAsset t_SystemJson;
     public GameObject AttackSkillPrefab;
 
     private void Awake()
-    {
+    {        
         foreach(string str in TextData.text.Split('\n'))
         {
             string[] t = str.Split('\t');
@@ -44,6 +45,35 @@ public class DataManager : MonoBehaviour
             }
             textData.Add(t[0], langs);
         }
+        
+        //SystemJson
+        JObject systemParse = JObject.Parse(t_SystemJson.text);
+        foreach (JToken systems in (JArray)systemParse["SystemJson"])
+        {
+            Dictionary<string, object> d = new();
+            foreach(JProperty jp in systems)
+            {
+                bool a = false;
+                if(jp.Value.Count() > 0)
+                {
+                    List<string> _d = new List<string>();
+                    foreach(JToken j in jp.Value)
+                    {
+                        _d.Add(j.ToString());
+                    }
+                    d.Add(jp.Name, _d.ToArray());
+                    a = true;
+                    continue;
+                }
+                if(a)
+                    continue;
+                d.Add(jp.Name, jp.Value);
+            }
+            d.Add("dataType", "systems");
+            Datas.Add(systems["id"].ToString().ToUpper(), d);
+        }
+        
+        //AttackSkill
         JObject attackSkillParse = JObject.Parse(t_AttackSkills.text);
         foreach (JToken attackSkill in (JArray)attackSkillParse["AttackSkills"])
         {
@@ -67,9 +97,10 @@ public class DataManager : MonoBehaviour
                 d.Add(jp.Name, jp.Value);
             }
             d.Add("dataType", "attackSkill");
-            Datas.Add(attackSkill["id"].ToString(), d);
+            Datas.Add(attackSkill["id"].ToString().ToUpper(), d);
         }
 
+        //Weapons
         JObject weaponParse = JObject.Parse(t_Weapons.text);
         foreach (JToken weapon in (JArray)weaponParse["Weapon"])
         {
@@ -79,9 +110,10 @@ public class DataManager : MonoBehaviour
                 d.Add(jp.Name, jp.Value);
             }
             d.Add("dataType", "weaponParse");
-            Datas.Add(weapon["id"].ToString(), d);
+            Datas.Add(weapon["id"].ToString().ToUpper(), d);
         }
 
+        //Skills
         JObject skillsParse = JObject.Parse(t_Skills.text);
         foreach (JToken skill in (JArray)skillsParse["Skill"])
         {
@@ -91,9 +123,10 @@ public class DataManager : MonoBehaviour
                 d.Add(jp.Name, jp.Value);
             }
             d.Add("dataType", "skill");
-            Datas.Add(skill["id"].ToString(), d);
+            Datas.Add(skill["id"].ToString().ToUpper(), d);
         }
 
+        //Half Spirit
         JObject halfSpiritParse = JObject.Parse(t_HalfSpirits.text);
         foreach (JToken halfSpirit in (JArray)halfSpiritParse["HalfSpirit"])
         {
@@ -103,9 +136,10 @@ public class DataManager : MonoBehaviour
                 d.Add(jp.Name, jp.Value);
             }
             d.Add("dataType", "halfSpirit");
-            Datas.Add(halfSpirit["id"].ToString(), d);
+            Datas.Add(halfSpirit["id"].ToString().ToUpper(), d);
         }
 
+        //Items
         JObject itemsParse = JObject.Parse(t_Items.text);
         foreach (JToken items in (JArray)itemsParse["Items"])
         {
@@ -115,9 +149,10 @@ public class DataManager : MonoBehaviour
                 d.Add(jp.Name, jp.Value);
             }
             d.Add("dataType", "items");
-            Datas.Add(items["id"].ToString(), d);
+            Datas.Add(items["id"].ToString().ToUpper(), d);
         }
 
+        //Classes
         JObject classParse = JObject.Parse(t_Class.text);
         foreach (JToken _class in (JArray)classParse["Class"])
         {
@@ -127,9 +162,10 @@ public class DataManager : MonoBehaviour
                 d.Add(jp.Name, jp.Value);
             }
             d.Add("dataType", "class");
-            Datas.Add(_class["id"].ToString(), d);
+            Datas.Add(_class["id"].ToString().ToUpper(), d);
         }
 
+        //Character Base Data
         JObject charBaseParse = JObject.Parse(t_CharBase.text);
         foreach (JToken _charBase in (JArray)charBaseParse["CharacterDatas"])
         {
@@ -139,7 +175,7 @@ public class DataManager : MonoBehaviour
                 d.Add(jp.Name, jp.Value);
             }
             d.Add("dataType", "charBase");
-            Datas.Add(_charBase["id"].ToString(), d);
+            Datas.Add(_charBase["id"].ToString().ToUpper(), d);
         }
 
         UIDataSetup();
@@ -152,32 +188,30 @@ public class DataManager : MonoBehaviour
             if(aSkill.Value["dataType"].ToString() == "attackSkill")
             {
                 GameObject skItem = Instantiate(AttackSkillPrefab, skList.transform);
-                skItem.name = aSkill.Value["id"].ToString();
-                skItem.GetComponent<SkillListItem>().id = aSkill.Value["id"].ToString();
-                skItem.GetComponentInChildren<TextMeshProUGUI>().text = DescConvert(aSkill.Value["id"].ToString())[0];
+                skItem.name = aSkill.Value["id"].ToString().ToUpper();
+                skItem.GetComponent<SkillListItem>().id = aSkill.Value["id"].ToString().ToUpper();
+                skItem.GetComponentInChildren<TextMeshProUGUI>().text = DescConvert(aSkill.Value["id"].ToString().ToUpper())[0];
             }
         }
     }
     public CharacterData UnitFirstSetup(string id)
     {
+        id = id.ToUpper();
         CharacterData c = new();
-
-        string cl = Datas[id]["Class"].ToString();
+        string cl = Datas[id]["Class"].ToString().ToUpper();
         c.id = id;
         c.Lv = ToInt(Datas[id]["Lv"]);
         c.Lv = 51;
         c.HP = ToFloat(Datas[id]["HP"]) + c.Lv * (ToFloat(Datas[id]["HPUp"]) + ToFloat(Datas[cl]["HPUp"]));
         c.SP = ToFloat(Datas[id]["SP"]) + c.Lv * (ToFloat(Datas[id]["SPUp"]) + ToFloat(Datas[cl]["SPUp"]));
-        c.Str = ToFloat(Datas[id]["Str"]) + c.Lv * (ToFloat(Datas[id]["StrUp"]) + ToFloat(Datas[cl]["StrUp"]));
-        c.Atk = ToFloat(Datas[id]["Atk"]) + c.Lv * (ToFloat(Datas[id]["AtkUp"]) + ToFloat(Datas[cl]["AtkUp"]));
-        c.Ryn = ToFloat(Datas[id]["Ryn"]) + c.Lv * (ToFloat(Datas[id]["RynUp"]) + ToFloat(Datas[cl]["RynUp"]));
-        c.Spd = ToFloat(Datas[id]["Spd"]) + c.Lv * (ToFloat(Datas[id]["SpdUp"]) + ToFloat(Datas[cl]["SpdUp"]));
-        c.Dex = ToFloat(Datas[id]["Dex"]) + c.Lv * (ToFloat(Datas[id]["DexUp"]) + ToFloat(Datas[cl]["DexUp"]));
-        c.Def = ToFloat(Datas[id]["Def"]) + c.Lv * (ToFloat(Datas[id]["DefUp"]) + ToFloat(Datas[cl]["DefUp"]));
-        c.Res = ToFloat(Datas[id]["Res"]) + c.Lv * (ToFloat(Datas[id]["ResUp"]) + ToFloat(Datas[cl]["ResUp"]));
-        c.Dpn = 100;
+        c.Str = ToFloat(Datas[id]["STR"]) + c.Lv * (ToFloat(Datas[id]["STRUp"]) + ToFloat(Datas[cl]["STRUp"]));
+        c.Atk = ToFloat(Datas[id]["ATK"]) + c.Lv * (ToFloat(Datas[id]["ATKUp"]) + ToFloat(Datas[cl]["ATKUp"]));
+        c.Ryn = ToFloat(Datas[id]["RYN"]) + c.Lv * (ToFloat(Datas[id]["RYNUp"]) + ToFloat(Datas[cl]["RYNUp"]));
+        c.Spd = ToFloat(Datas[id]["SPD"]) + c.Lv * (ToFloat(Datas[id]["SPDUp"]) + ToFloat(Datas[cl]["SPDUp"]));
+        c.Dex = ToFloat(Datas[id]["DEX"]) + c.Lv * (ToFloat(Datas[id]["DEXUp"]) + ToFloat(Datas[cl]["DEXUp"]));
+        c.Def = ToFloat(Datas[id]["DEF"]) + c.Lv * (ToFloat(Datas[id]["DEFUp"]) + ToFloat(Datas[cl]["DEFUp"]));
+        c.Res = ToFloat(Datas[id]["RES"]) + c.Lv * (ToFloat(Datas[id]["RESUp"]) + ToFloat(Datas[cl]["RESUp"]));
         c.characterClass = cl;
-        c.ClassEXP = ToInt(Datas[cl]["exp"]);
         c.MaxExp = c.Lv * 5;
         return c;
     }
@@ -194,16 +228,17 @@ public class DataManager : MonoBehaviour
     }
     public static string[] DescConvert(string Id)
     {
+        Id = Id.ToUpper();
         string name = "";
         string desc = "";
         name = textData[Id][GameManager.langCode];
 
-        if(!textData.ContainsKey($"desc_{Id}"))
+        if(!textData.ContainsKey($"DESC_{Id}"))
          return new string[] {name, desc};
 
-        desc = textData[$"desc_{Id}"][GameManager.langCode];
-        Regex regex = new Regex(@"<|>");
-        string[] descs = desc.Split(new char[]{'<', '>'});
+        desc = textData[$"DESC_{Id}"][GameManager.langCode];
+        Regex regex = new(@"{|}");
+        string[] descs = desc.Split(new char[]{'{', '}'});
         desc = string.Empty;
         for(int i = 0; i < descs.Length; i++)
         {
@@ -280,6 +315,10 @@ public class DataManager : MonoBehaviour
     }
     public static bool ToBool(object d)
     {
-        return d.ToString() == "true" ? true : false;
+        return d.ToString() == "true";
+    }
+    public static string LangText(string id)
+    {
+        return textData[id.ToUpper()][GameManager.langCode];
     }
 }

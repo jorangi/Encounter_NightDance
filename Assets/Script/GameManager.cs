@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Material baseMaterial;
     public bool InputBlock = true;
     private static GameManager inst = null;
     public static GameManager Inst
@@ -31,17 +32,18 @@ public class GameManager : MonoBehaviour
             return;
         }
         Application.targetFrameRate = 120;
-        DataManager = FindObjectOfType<DataManager>();
-        uiCon = FindObjectOfType<UIController>();
-        tiles = FindObjectOfType<Tiles>();
-        cursor = FindObjectOfType<CursorManager>();
-        inputManager = FindObjectOfType<InputManager>();
-        ControlType = controlType.WithMouse;
+        DataManager = FindFirstObjectByType<DataManager>();
+        uiCon = FindFirstObjectByType<UIController>();
+        tiles = FindFirstObjectByType<Tiles>();
+        cursor = FindFirstObjectByType<CursorManager>();
+        inputManager = FindFirstObjectByType<InputManager>();
+        ControlType = ControlType.WithMouse;
         Init();
     }
     private void Init()
     {
         langCode = 0;
+        UnitMoveSpeed = 2.75f;
     }
 
     public InputManager inputManager;
@@ -49,7 +51,7 @@ public class GameManager : MonoBehaviour
     public UIController uiCon;
     public DataManager DataManager;
     public CursorManager cursor;
-    public static int langCode = 0; //0:eng, 1:kor
-    public float UnitMoveSpeed = 1.0f;
-    public controlType ControlType = controlType.WithMouse;
+    public static int langCode = 0; //0:kor, 1:eng
+    public float UnitMoveSpeed = 2.5f;
+    public ControlType ControlType = ControlType.WithMouse;
 }

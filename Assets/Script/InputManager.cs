@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public enum controlType
+public enum ControlType
 {
     WithMouse,
     WithoutMouse,
@@ -20,10 +21,8 @@ public class InputManager : MonoBehaviour
     private float MoveHoldDur = 0f;
     private float MoveHoldCycle = 0.5f;
     private bool MoveOn = false;
-    private float ZoomSpeed = 0.2f;
-    private float SkewSpeed = 1f;
-    //private bool LPress = false;
-    private bool IsOverUI = false;
+    private readonly float ZoomSpeed = 0.2f;
+    private readonly float SkewSpeed = 1f;
     private bool RPress = false;
     private bool MPress = false;
     private Vector2 MousePos = Vector2.zero;
@@ -33,31 +32,40 @@ public class InputManager : MonoBehaviour
     Vector2 StartMouseMovementForRot = Vector2.zero;
     Vector2 MouseMovementForRot = Vector2.zero;
     private float holdTimer = 0.0f;
-    public float MinholdTimer = 0.5f;
-    private float MaxholdTimer = 1.0f;
+    public float MinholdTimer = 0.75f;
+    private readonly float MaxholdTimer = 1.0f;
     private TileObject dataObject;
     private bool HoldSelect = false;
     public TMPro.TextMeshProUGUI fps;
     public SpriteRenderer FocusSprite;
     public SpriteRenderer MouseFocusSprite;
     public Tile FocusingTile;
+    private bool IsMouseOverOnUI = false;
+    public GraphicRaycaster gr;
 
     private void Awake()
     {
+        tiles = FindFirstObjectByType<Tiles>();
         mainAction = new MainAction();
-        tiles = FindObjectOfType<Tiles>();
-        camTr = Camera.main.transform;
         FocusSprite = tiles.Focus.GetComponent<SpriteRenderer>();
         MouseFocusSprite = tiles.MouseFocus.GetComponent<SpriteRenderer>();
+        camTr = Camera.main.transform;
+        gr = GameManager.Inst.uiCon.GetComponent<GraphicRaycaster>();
     }
     private void Update()
     {
-        // /Debug.Log(1.0f / Time.deltaTime);
-        //fps.text = String.Format("{0:N1}FPS ({1:N1})ms", 1.0f / Time.deltaTime, Time.deltaTime * 1000.0f);
-        IsOverUI = EventSystem.current.IsPointerOverGameObject();
+        fps.text = $"{1.0f / Time.deltaTime}";
     }
     private void FixedUpdate()
     {
+        PointerEventData ped = new(null)
+        {
+            position = Input.mousePosition
+        };
+        List<RaycastResult> results = new();
+        gr.Raycast(ped, results);
+        IsMouseOverOnUI = results.Count > 0;
+
         if(GameManager.Inst.InputBlock)
             return;
         Move();
@@ -65,7 +73,7 @@ public class InputManager : MonoBehaviour
         Skew();
         RotationFromMouse();
         UnitDataHold();
-        if(GameManager.Inst.ControlType == controlType.WithMouse)
+        if(GameManager.Inst.ControlType == ControlType.WithMouse)
         {
             FocusSprite.enabled = false;
             tiles.MouseFocus.gameObject.SetActive(true);
@@ -85,7 +93,7 @@ public class InputManager : MonoBehaviour
         Ray ray = new(tiles.Focus.position, tiles.Focus.forward);
         Physics.Raycast(ray, out RaycastHit hit, 1000);
 
-        if(GameManager.Inst.ControlType == controlType.WithMouse)
+        if(GameManager.Inst.ControlType == ControlType.WithMouse)
         {
             FocusingTile = ImportTileData();
             if(FocusingTile != null)
@@ -95,7 +103,7 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        if(MPress && GameManager.Inst.ControlType == controlType.WithMouse)
+        if(MPress && GameManager.Inst.ControlType == ControlType.WithMouse)
         {
             curMousePos = mainAction.MouseControl.Position.ReadValue<Vector2>();
             if(MousePos != curMousePos)
@@ -117,7 +125,7 @@ public class InputManager : MonoBehaviour
              {
                 Transform tr = hit.collider.transform;
                 tiles.Focus.localPosition = new Vector3(tr.localPosition.x, tr.localPosition.y, tiles.Focus.localPosition.z);
-                if(GameManager.Inst.ControlType == controlType.WithoutMouse)
+                if(GameManager.Inst.ControlType == ControlType.WithoutMouse)
                 {
                     Vector2Int v = new Vector2Int(System.Convert.ToInt32(tr.name.Split('|')[0]), System.Convert.ToInt32(tr.name.Split('|')[1]));
                     tiles.FocusPos = v;
@@ -170,7 +178,7 @@ public class InputManager : MonoBehaviour
                 break;
         }
         tiles.Focus.transform.localPosition = tiles.tileObject[tiles.FocusPos.y, tiles.FocusPos.x].transform.localPosition; 
-        TileObject[] objs = FindObjectsOfType<TileObject>();
+        TileObject[] objs = FindObjectsByType<TileObject>(FindObjectsSortMode.None);
         
         foreach(TileObject obj in objs)
         {
@@ -208,7 +216,7 @@ public class InputManager : MonoBehaviour
     }
     private void RotationFromMouse()
     {
-        if(RPress && GameManager.Inst.ControlType == controlType.WithMouse)
+        if(RPress && GameManager.Inst.ControlType == ControlType.WithMouse)
         {
             MouseMovementForRot = mainAction.MouseControl.Position.ReadValue<Vector2>();
             if(StartMouseMovementForRot.x - MouseMovementForRot.x > Screen.width * 0.5f)
@@ -222,7 +230,7 @@ public class InputManager : MonoBehaviour
                 tiles.transform.eulerAngles -= new Vector3(0, 0, 90f);    
             }
         }
-        TileObject[] objs = FindObjectsOfType<TileObject>();
+        TileObject[] objs = FindObjectsByType<TileObject>(FindObjectsSortMode.None);
         
         foreach(TileObject obj in objs)
         {
@@ -262,7 +270,7 @@ public class InputManager : MonoBehaviour
     private void Skew()
     {
         Vector2 MouseMovement = Vector2.zero;
-        if(RPress && GameManager.Inst.ControlType == controlType.WithMouse)
+        if(RPress && GameManager.Inst.ControlType == ControlType.WithMouse)
         {
             MouseMovement = (MousePos - mainAction.MouseControl.Position.ReadValue<Vector2>()) * 0.005f;
         }
@@ -283,31 +291,46 @@ public class InputManager : MonoBehaviour
     }
     private void UnitDataHold()
     {
+        if(RPress)
+        {
+            tiles.uiCon.SettedUnitFieldPrieview = null;
+            holdTimer = 0.0f;
+            tiles.uiCon.HoldRing.fillAmount = 0.0f;
+            tiles.uiCon.HoldRing.color = new Color(255, 255, 255, 0.0f);
+            return;
+        }
         if(FocusingTile == null) 
         {
+            tiles.uiCon.SettedUnitFieldPrieview = null;
             HoldSelect = false;
             holdTimer = 0.0f;
             tiles.uiCon.HoldRing.fillAmount = 0.0f;
             tiles.uiCon.HoldRing.color = new Color(255, 255, 255, 0.0f);
             return;
         }
-        if(FocusingTile.tileObject != null)
+        if(FocusingTile.TempTileObject != null && FocusingTile.TempTileObject is Character character)
         {
             holdTimer += Time.fixedDeltaTime;
-            if(dataObject == FocusingTile.tileObject)
+            if(dataObject == FocusingTile.TempTileObject)
             {
+                tiles.uiCon.HoldRing.rectTransform.anchoredPosition = mainAction.MouseControl.Position.ReadValue<Vector2>();
                 if(holdTimer >= MaxholdTimer)
+                {   
+                    tiles.uiCon.HoldRing.color = new Color(255, 255, 255, 1.0f);
                     HoldSelect = true;
-                if(holdTimer > MinholdTimer)
+                    tiles.uiCon.SettedUnitFieldPrieview = character;
+                }
+                else if(holdTimer > MinholdTimer)
                 {
+                    tiles.uiCon.SettedUnitFieldPrieview = null;
                     float val = (holdTimer - MinholdTimer) / (MaxholdTimer - MinholdTimer);
                     tiles.uiCon.HoldRing.fillAmount = val;
-                    tiles.uiCon.HoldRing.color = new Color(255, 255, 255, val);
-                    tiles.uiCon.HoldRing.rectTransform.anchoredPosition = mainAction.MouseControl.Position.ReadValue<Vector2>();
+                    tiles.uiCon.HoldRing.color = new Color(255, 255, 255, Mathf.Clamp(val, 0, 0.5f));
                 }
             }
             else
             {
+                tiles.uiCon.SettedUnitFieldPrieview = null;
                 HoldSelect = false;
                 holdTimer = 0.0f;
                 tiles.uiCon.HoldRing.fillAmount = 0.0f;
@@ -316,12 +339,13 @@ public class InputManager : MonoBehaviour
         }
         else
         {
+            tiles.uiCon.SettedUnitFieldPrieview = null;
             HoldSelect = false;
             holdTimer = 0.0f;
             tiles.uiCon.HoldRing.fillAmount = 0.0f;
             tiles.uiCon.HoldRing.color = new Color(255, 255, 255, 0.0f);
         }
-        dataObject = FocusingTile.tileObject;
+        dataObject = FocusingTile.TempTileObject;
     }
     public void SetTarget()
     {
@@ -332,9 +356,9 @@ public class InputManager : MonoBehaviour
     }
     private void FoucsTile(InputAction.CallbackContext context)
     {
-        if(IsOverUI) return;
+        if(IsMouseOverOnUI) return;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, 1<<6))
+        if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, 1<<7))
         {
             tiles.Focus.localPosition = new Vector3(hit.transform.localPosition.x, hit.transform.localPosition.y, -0.1f);
         }
@@ -382,8 +406,6 @@ public class InputManager : MonoBehaviour
         {
             if(HoldSelect)
             {
-                if(dataObject is Character)
-                    ((Character)dataObject).IsFocus = false;
                 tiles.uiCon.UnitDataUISet(dataObject.realData);
                 tiles.uiCon.UnitDataVisible(true);
                 holdTimer = 0.0f;
@@ -403,14 +425,14 @@ public class InputManager : MonoBehaviour
         mainAction.MouseControl.RightDouble.performed += FoucsTile;
         mainAction.MouseControl.Left.performed += (e) => 
         {
-            if(GameManager.Inst.ControlType != controlType.WithMouse)
+            Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(GameManager.Inst.ControlType != ControlType.WithMouse)
                 return;
-            if(!IsOverUI && tiles.TurnChar.group.groupName == "Player" && tiles.TurnAct == Act.Ready)
+            if(!IsMouseOverOnUI && Physics.Raycast(_ray) && tiles.TurnChar.group.groupName == "Player" && tiles.TurnAct == Act.Ready)
             {
-                Debug.Log("마우스");
                 tiles.TurnChar.ActOnTile(tiles.tileDatas[tiles.FocusPos.y, tiles.FocusPos.x]);
             }
-            else if(!IsOverUI && tiles.TurnChar.group.groupName == "Player" && tiles.TurnAct == Act.SelectSkill)
+            else if(!IsMouseOverOnUI && tiles.TurnChar.group.groupName == "Player" && tiles.TurnAct == Act.SelectSkill)
             {
                 tiles.TurnAct = Act.SetTarget;
                 tiles.SelectedChecker.Clear();
@@ -435,24 +457,24 @@ public class InputManager : MonoBehaviour
         };
         mainAction.MouseControl.Scroll.performed += (e) => 
         {
-            if(GameManager.Inst.ControlType == controlType.WithMouse)
+            if(GameManager.Inst.ControlType == ControlType.WithMouse)
                 camDistance = Mathf.Clamp(camDistance - Time.fixedDeltaTime * e.ReadValue<Vector2>().y, 3, 15);
         };
         mainAction.MouseControl.RightHold.performed += (e) =>
         {
-            if(!HoldSelect && FocusingTile != null && FocusingTile.tileObject != null)
+            if(!HoldSelect && FocusingTile != null && FocusingTile.tileObject != null && FocusingTile.tileObject != null && FocusingTile.tileObject is Character)
             {
-                tiles.ShowEnemiesRange();
-                holdTimer = 0.0f;
-                tiles.uiCon.HoldRing.fillAmount = 0.0f;
-                tiles.uiCon.HoldRing.color = new Color(255, 255, 255, 0.0f);
-                HoldSelect = false;
+                    tiles.ShowEnemiesRange();
+                    holdTimer = 0.0f;
+                    tiles.uiCon.HoldRing.fillAmount = 0.0f;
+                    tiles.uiCon.HoldRing.color = new Color(255, 255, 255, 0.0f);
+                    HoldSelect = false;
                 return;
             }
         };
         mainAction.MouseControl.MiddleHold.performed += (e) =>
         {
-            if(dataObject == null) return;
+            if(dataObject == null || FocusingTile.tileObject is not Character) return;
             tiles.ShowEnemyRange((Character)dataObject);
             holdTimer = 0.0f;
             tiles.uiCon.HoldRing.fillAmount = 0.0f;
@@ -467,13 +489,13 @@ public class InputManager : MonoBehaviour
     }
     private Tile ImportTileData()
     {
+        if(IsMouseOverOnUI) return null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, 1<<6) && !IsOverUI)
+        if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, 1<<7))
         {
             string[] a = hit.collider.name.Split('|');
-            return GameManager.Inst.tiles.tileDatas[System.Convert.ToInt32(a[1]), System.Convert.ToInt32(a[0])];
+            return GameManager.Inst.tiles.tileDatas[Convert.ToInt32(a[1]), Convert.ToInt32(a[0])];
         }
-        IsOverUI = false;
         return null;
     }
 }

@@ -406,6 +406,234 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "CreateMapControl",
+            "id": "94936953-0923-4601-b187-4dbbfe43045c",
+            "actions": [
+                {
+                    "name": "Brush",
+                    "type": "Button",
+                    "id": "f1639f24-403e-431f-b318-37ded2154bb3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "BorderBox",
+                    "type": "Button",
+                    "id": "ffe327e9-cab2-4515-b42c-bcb51b64df0a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FilledBox",
+                    "type": "Button",
+                    "id": "d65eafd3-fe31-42e3-b39b-b589692756b2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Fill",
+                    "type": "Button",
+                    "id": "5133e4a9-d89f-42ce-9927-b4c2e7356b11",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Erase",
+                    "type": "Button",
+                    "id": "2131cb7d-2c09-491b-bf7d-fb65a8ba149c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Save",
+                    "type": "Button",
+                    "id": "be979577-c254-417c-8880-59208f1219c7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RollBack",
+                    "type": "Button",
+                    "id": "37e244ba-8f1d-4bdb-a597-b3e589ba7998",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RollBackHold",
+                    "type": "Button",
+                    "id": "84a8f21c-ba74-40dc-8437-bc0256810096",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReRollBack",
+                    "type": "Button",
+                    "id": "dab0cda5-7540-4b39-bedd-27783f0267d3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReRollBackHold",
+                    "type": "Button",
+                    "id": "9af2df4b-9cf6-42d9-8714-acb4433805fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LoadMap",
+                    "type": "Button",
+                    "id": "d9b2da97-d64f-4054-b99b-2201d18551f7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "42cafd0e-74ed-4d15-8ef5-a1f6d238224d",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brush",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b2be750-2c90-4bfa-844a-b748f4b2292d",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BorderBox",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6a901a6-e2a0-4a7f-b8f7-b154543324a0",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FilledBox",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d3a81b0-f9a8-439a-a853-521db6f8da7f",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72dc48ab-b75a-4632-b6a6-e59a7163e4a5",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Erase",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d622b18f-1998-4341-8796-9b8269ec2377",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Save",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd61a201-9848-4796-bdd6-c2e8244051e7",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RollBack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f1f82739-1a70-4abb-a8d5-a8c2d48b60c9",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RollBackHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d9d424f4-c67f-499e-ad44-bb438e34d00e",
+                    "path": "<Keyboard>/w",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReRollBackHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c64bf703-a735-47d0-971e-a39ac1a890dc",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReRollBack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ae8f19a-027c-46f8-ba7b-5145423602f9",
+                    "path": "<Keyboard>/l",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LoadMap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

@@ -14,7 +14,7 @@ public class TurnQueueItem : MonoBehaviour, IPointerClickHandler
     }
     public void FindUnitLoc()
     {
-        Vector2 p = GameManager.Inst.tiles.TilePos(unitP.tileObject.tempPOS);
+        Vector2 p = GameManager.Inst.tiles.TilePos(unitP.tileObject.TempPOS);
         GameManager.Inst.tiles.Focus.localPosition = new Vector3(p.x, p.y, GameManager.Inst.tiles.Focus.localPosition.z);
     }
     public void OnPointerClick(PointerEventData eventData)
