@@ -1,3 +1,4 @@
+using System;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -10,14 +11,14 @@ public enum CameraRot:sbyte
 }
 public class CameraController : MonoBehaviour
 {
-    
-    CinemachineCamera cam;
-    CinemachineThirdPersonFollow follow;
-    const float ZoomSpeed = 15f;
-    const float ROTOFFSET = 3f;
-    const float ARMMAX = 10f;
-    const float ARMMIN = -6f;
+    [SerializeField] CinemachineThirdPersonFollow follow;
+    private const float ZoomSpeed = 15f;
+    private const float MoveSpeed = 0.01f;
+    private const float ROTOFFSET = 3f;
+    private const float ARMMAX = 10f;
+    private const float ARMMIN = -6f;
     [SerializeField]Transform target;
+    private float _targetArmLength;
     [SerializeField]Grid grid;
     [SerializeField]Tilemap tilemap;
     CameraRot rot = CameraRot.Center;
@@ -27,18 +28,21 @@ public class CameraController : MonoBehaviour
     Vector2 movePos;
     void Awake()
     {
-        cam = GetComponent<CinemachineCamera>();
-        follow = GetComponent<CinemachineThirdPersonFollow>();
-        Debug.Log($"tilemap Size: {tilemap.size}");
-        Debug.Log($"tilemap Cell Bounds Size: {tilemap.cellBounds.size}");
-        Debug.Log($"tilemap Cell Bounds: {tilemap.cellBounds.min} to {tilemap.cellBounds.max}");
+        follow = follow != null ? follow : GetComponent<CinemachineThirdPersonFollow>();
+        // Debug.Log($"tilemap Size: {tilemap.size}");
+        // Debug.Log($"tilemap Cell Bounds Size: {tilemap.cellBounds.size}");
+        // Debug.Log($"tilemap Cell Bounds: {tilemap.cellBounds.min} to {tilemap.cellBounds.max}");
     }
     void Update()
     {
+        
+            Vector3 rayStart = target.position;// + 0.5f * target.localScale.y * Vector3.down;
+            float rayLength = 10.0f;
+            Vector3 rayDirection = Vector3.down;
+            Debug.DrawRay(rayStart, rayDirection * rayLength, Color.red);
         //마우스 우클릭 트리거 -> 회전, 줌인/아웃
         if(Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Right Clicked");
             rotatePos = Input.mousePosition.x;
             zoomPos = Input.mousePosition.y;
         }
@@ -46,6 +50,13 @@ public class CameraController : MonoBehaviour
         if(Input.GetMouseButtonDown(2))
         {
             movePos = Input.mousePosition;
+        }
+        if(Input.GetMouseButtonUp(2))
+        {
+            Vector3 p = target.position;
+            Vector3Int newPos = new(Mathf.RoundToInt(p.x), 0, Mathf.RoundToInt(p.z));
+            target.transform.position = new(newPos.x, 0.5f, newPos.z);
+            movePos = Vector2.zero;
         }
         float rotateDelta = Input.GetMouseButton(1) ? Input.mousePosition.x - rotatePos : 0.0f; // 우클릭 X 이동량
         float zoomDelta = Input.GetMouseButton(1) ? Input.mousePosition.y - zoomPos : 0.0f; // 우클릭 Y 이동량
@@ -55,36 +66,43 @@ public class CameraController : MonoBehaviour
         {
             CameraRotate(rotateDelta < 0);
         }
-        //마우스 조작 줌인/줌아웃
+        //마우스 우클릭 조작 줌인/줌아웃
         if(Mathf.Abs(zoomDelta) > Screen.height * 0.1f)
         {
             CameraZoom(zoomDelta > 0);
         }
+        //마우스 휠 스크롤 조작 줌인/줌아웃
         if(!Mathf.Approximately(Input.mouseScrollDelta.y, 0.0f))
         {
-            CameraZoom(Input.mouseScrollDelta.y > 0);
+            CameraZoom(Input.mouseScrollDelta.y);
+        }
+        //줌 선형 보간(휠 스크롤)
+        if(Mathf.Abs(follow.VerticalArmLength - _targetArmLength) > 0.01f)
+        {
+            follow.VerticalArmLength = Mathf.Lerp(follow.VerticalArmLength, _targetArmLength, Time.deltaTime * ZoomSpeed);
+        }
+        else //선형 보간 해제
+        {
+            follow.VerticalArmLength = _targetArmLength;
         }
         //마우스 조작 이동
         if(!Mathf.Approximately(moveDelta.magnitude, 0.0f))
         {
-            Vector3 pickPos = new(Mathf.Clamp(target.position.x - moveDelta.x * 0.01f, tilemap.cellBounds.min.x, tilemap.cellBounds.max.x - 1),
-                                  target.position.y,
-                                  Mathf.Clamp(target.position.z - moveDelta.y * 0.01f, tilemap.cellBounds.min.y, tilemap.cellBounds.max.y - 1));
-            bool hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
-            if(hasTile)
-                target.position = pickPos;
-            else
-            {
-                Debug.Log("No Tile Ahead");
-            }
+            target.transform.position += MoveSpeed * Time.deltaTime * new Vector3(-moveDelta.x, 0, -moveDelta.y);
+            target.transform.position = new(
+                Mathf.Clamp(target.position.x, tilemap.cellBounds.min.x+1, tilemap.cellBounds.max.x),
+                target.position.y,
+                Mathf.Clamp(target.position.z, tilemap.cellBounds.min.y+1, tilemap.cellBounds.max.y)
+            );
         }
         //키보드 이동 조작
         if(Input.GetKeyDown(KeyCode.W)) //상향
         {
             Vector3 pickPos = new(target.position.x, target.position.y, Mathf.Clamp(target.position.z + 1, tilemap.cellBounds.min.y, tilemap.cellBounds.max.y - 1));
             bool hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
+            hasTile = true; //임시로 타일 항상 있다고 처리
             if(hasTile)
-                target.position = new(target.position.x, target.position.y, Mathf.Clamp(target.position.z + 1, tilemap.cellBounds.min.y, tilemap.cellBounds.max.y - 1));
+                target.position = new(target.position.x, target.position.y, Mathf.Min(target.position.z + 1, tilemap.cellBounds.max.y));
             else
             {
                 while(!hasTile && pickPos.z < tilemap.cellBounds.max.y - 1)
@@ -100,8 +118,9 @@ public class CameraController : MonoBehaviour
         {
             Vector3 pickPos = new(Mathf.Clamp(target.position.x - 1, tilemap.cellBounds.min.x, tilemap.cellBounds.max.x - 1), target.position.y, target.position.z);
             bool hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
+            hasTile = true;
             if(hasTile)
-                target.position = new(Mathf.Clamp(target.position.x - 1, tilemap.cellBounds.min.x, tilemap.cellBounds.max.x - 1), target.position.y, target.position.z);
+                target.position = new(Mathf.Max(target.position.x - 1, tilemap.cellBounds.min.x + 1), target.position.y, target.position.z);
             else
             {
                 while(!hasTile && pickPos.x > tilemap.cellBounds.min.x)
@@ -117,8 +136,9 @@ public class CameraController : MonoBehaviour
         {
             Vector3 pickPos = new(target.position.x, target.position.y, Mathf.Clamp(target.position.z - 1, tilemap.cellBounds.min.y, tilemap.cellBounds.max.y - 1));
             bool hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
+            hasTile = true;
             if(hasTile)
-                target.position = new(target.position.x, target.position.y, Mathf.Clamp(target.position.z - 1, tilemap.cellBounds.min.y, tilemap.cellBounds.max.y - 1));
+                target.position = new(target.position.x, target.position.y, Mathf.Max(target.position.z - 1, tilemap.cellBounds.min.y+1));
             else
             {
                 while(!hasTile && pickPos.z > tilemap.cellBounds.min.y)
@@ -134,8 +154,9 @@ public class CameraController : MonoBehaviour
         {
             Vector3 pickPos = new(Mathf.Clamp(target.position.x + 1, tilemap.cellBounds.min.x, tilemap.cellBounds.max.x - 1), target.position.y, target.position.z);
             bool hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
+            hasTile = true;
             if(hasTile)
-                target.position = new(Mathf.Clamp(target.position.x + 1, tilemap.cellBounds.min.x, tilemap.cellBounds.max.x - 1), target.position.y, target.position.z);
+                target.position = new(Mathf.Min(target.position.x + 1, tilemap.cellBounds.max.x), target.position.y, target.position.z);
             else
             {
                 while(!hasTile && pickPos.x < tilemap.cellBounds.max.x - 1)
@@ -176,15 +197,34 @@ public class CameraController : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 카메라 회전 구현
+    /// </summary>
+    /// <param name="isLeft"></param>
     private void CameraRotate(bool isLeft)
     {
         rotatePos = Input.mousePosition.x;
         rot = isLeft ? (CameraRot)Mathf.Max(-1, (int)rot - 1) : (CameraRot)Mathf.Min(1, (int)rot + 1);
         rotDirty = true;
     }
+    /// <summary>
+    /// 카메라 줌인/줌아웃 구현
+    /// </summary>
+    /// <param name="isIn"></param>
     private void CameraZoom(bool isIn)
     {
-        float zoomStep = isIn ? -ZoomSpeed : ZoomSpeed;
-        follow.VerticalArmLength = Mathf.Clamp(follow.VerticalArmLength + zoomStep * Time.deltaTime, ARMMIN, ARMMAX);
+        float zoomAmount = isIn ? -ZoomSpeed : ZoomSpeed;
+        follow.VerticalArmLength = Mathf.Clamp(follow.VerticalArmLength + zoomAmount * Time.deltaTime, ARMMIN, ARMMAX);
+        _targetArmLength = follow.VerticalArmLength;
+    }
+    /// <summary>
+    /// 카메라 줌인/줌아웃 구현 (스크롤 입력)
+    /// </summary>
+    /// <param name="scrollInput"></param>
+    private void CameraZoom(float scrollInput)
+    {
+        float zoomAmount = -scrollInput;
+        _targetArmLength += zoomAmount;
+        _targetArmLength = Mathf.Clamp(_targetArmLength, ARMMIN, ARMMAX);
     }
 }
