@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
         {
             Vector3 p = target.position;
             Vector3Int newPos = new(Mathf.RoundToInt(p.x), 0, Mathf.RoundToInt(p.z));
-            target.transform.position = new(newPos.x, 0.5f, newPos.z);
+            target.transform.position = new(newPos.x, 0.01f, newPos.z);
             movePos = Vector2.zero;
         }
         float rotateDelta = Input.GetMouseButton(1) ? Input.mousePosition.x - rotatePos : 0.0f; // 우클릭 X 이동량
