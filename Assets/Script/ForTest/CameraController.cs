@@ -16,9 +16,9 @@ public class CameraController : MonoBehaviour
     private const float MoveSpeed = 0.01f;
     private const float ROTOFFSET = 3f;
     private const float ARMMAX = 10f;
-    private const float ARMMIN = -6f;
+    private const float ARMMIN = -8f;
     [SerializeField]Transform target;
-    private float _targetArmLength;
+    private float _targetDistance;
     [SerializeField]Grid grid;
     [SerializeField]Tilemap tilemap;
     CameraRot rot = CameraRot.Center;
@@ -35,7 +35,6 @@ public class CameraController : MonoBehaviour
     }
     void Update()
     {
-        
             Vector3 rayStart = target.position;// + 0.5f * target.localScale.y * Vector3.down;
             float rayLength = 10.0f;
             Vector3 rayDirection = Vector3.down;
@@ -77,13 +76,13 @@ public class CameraController : MonoBehaviour
             CameraZoom(Input.mouseScrollDelta.y);
         }
         //줌 선형 보간(휠 스크롤)
-        if(Mathf.Abs(follow.VerticalArmLength - _targetArmLength) > 0.01f)
+        if(Mathf.Abs(follow.CameraDistance - _targetDistance) > 0.01f)
         {
-            follow.VerticalArmLength = Mathf.Lerp(follow.VerticalArmLength, _targetArmLength, Time.deltaTime * ZoomSpeed);
+            follow.CameraDistance = Mathf.Lerp(follow.CameraDistance, _targetDistance, Time.deltaTime * ZoomSpeed);
         }
         else //선형 보간 해제
         {
-            follow.VerticalArmLength = _targetArmLength;
+            follow.CameraDistance = _targetDistance;
         }
         //마우스 조작 이동
         if(!Mathf.Approximately(moveDelta.magnitude, 0.0f))
@@ -214,8 +213,8 @@ public class CameraController : MonoBehaviour
     private void CameraZoom(bool isIn)
     {
         float zoomAmount = isIn ? -ZoomSpeed : ZoomSpeed;
-        follow.VerticalArmLength = Mathf.Clamp(follow.VerticalArmLength + zoomAmount * Time.deltaTime, ARMMIN, ARMMAX);
-        _targetArmLength = follow.VerticalArmLength;
+       _targetDistance = Mathf.Clamp(follow.CameraDistance + 8 * zoomAmount * Time.deltaTime, ARMMIN, ARMMAX);
+        // Debug.Log($"Camera Distance: {follow.CameraDistance}");
     }
     /// <summary>
     /// 카메라 줌인/줌아웃 구현 (스크롤 입력)
@@ -224,7 +223,7 @@ public class CameraController : MonoBehaviour
     private void CameraZoom(float scrollInput)
     {
         float zoomAmount = -scrollInput;
-        _targetArmLength += zoomAmount;
-        _targetArmLength = Mathf.Clamp(_targetArmLength, ARMMIN, ARMMAX);
+        _targetDistance += zoomAmount;
+        _targetDistance = Mathf.Clamp(_targetDistance, ARMMIN, ARMMAX);
     }
 }
