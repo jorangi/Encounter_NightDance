@@ -10,6 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53142e79fba355349ae69557de222974, type: 3}
-  m_Name: TestUnit
+  m_Name: test_unit2
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  maxHp: 100
+  id: test_unit2
+  maxLife: 33
+  maxMind: 44
+  intensity: 65
+  control: 33
+  speed: 70
+  mobility: 4
+  growthLife: 36
+  growthMind: 72
+  growthIntensity: 19
+  growthControl: 72
+  growthSpeed: 49
+  containment: 0
+  extraction: 0
+  tuning: 0
+  observation: 0

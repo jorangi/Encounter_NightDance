@@ -24,16 +24,16 @@ public class UnitData : ScriptableObject
     [SerializeField] private int mobility = 5;
     public int Mobility => mobility;
     [Header("성장 데이터")]
-    [SerializeField] private float growthLife = 0.0f;
-    public float GrowthLife => growthLife;
-    [SerializeField] private float growthMind = 0.0f;
-    public float GrowthMind => growthMind;
-    [SerializeField] private float growthIntensity = 0.0f;
-    public float GrowthIntensity => growthIntensity;
-    [SerializeField] private float growthControl = 0.0f;
-    public float GrowthControl => growthControl;
-    [SerializeField] private float growthSpeed = 0.0f;
-    public float GrowthSpeed => growthSpeed;
+    [SerializeField] private int growthLife = 0;
+    public int GrowthLife => growthLife;
+    [SerializeField] private int growthMind = 0;
+    public int GrowthMind => growthMind;
+    [SerializeField] private int growthIntensity = 0;
+    public int GrowthIntensity => growthIntensity;
+    [SerializeField] private int growthControl = 0;
+    public int GrowthControl => growthControl;
+    [SerializeField] private int growthSpeed = 0;
+    public int GrowthSpeed => growthSpeed;
 
     [Header("성향 데이터")]
     [SerializeField] private int containment = 0;
@@ -65,10 +65,16 @@ public class UnitData : ScriptableObject
         this.mobility = stats["mobility"];
 
         //성장 스탯
-        this.growthLife = growth_stats["life"];
-        this.growthMind = growth_stats["mind"];
-        this.growthIntensity = growth_stats["intensity"];
-        this.growthControl = growth_stats["control"];
-        this.growthSpeed = growth_stats["speed"];
+        bool exist_G_Life = growth_stats.TryGetValue("life", out int growthLife);
+        this.growthLife = exist_G_Life ? growthLife : 0;
+        bool exist_G_Mind = growth_stats.TryGetValue("mind", out int growthMind);
+        this.growthMind = exist_G_Mind ? growthMind : 0;
+        bool exist_G_Intensity = growth_stats.TryGetValue("intensity", out int growthIntensity);
+        this.growthIntensity = exist_G_Intensity ? growthIntensity : 0;
+        bool exist_G_Control = growth_stats.TryGetValue("control", out int growthControl);
+        this.growthControl = exist_G_Control ? growthControl : 0;
+        bool exist_G_Speed = growth_stats.TryGetValue("speed", out int growthSpeed);
+        this.growthSpeed = exist_G_Speed ? growthSpeed : 0;
+        //기동은 성장X
     }
 }
