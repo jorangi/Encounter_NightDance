@@ -4591,8 +4591,10 @@ GameObject:
   - component: {fileID: 1019336977}
   - component: {fileID: 1019336976}
   - component: {fileID: 1019336979}
+  - component: {fileID: 1019336980}
+  - component: {fileID: 1019336981}
   m_Layer: 0
-  m_Name: UnitSprite
+  m_Name: TestUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4695,6 +4697,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6db815bb20b64489adbd7a377f9415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitController
+--- !u!114 &1019336980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019336975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e099b620a3c4544ad06a6ac6a88a23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.Status.ObjectHealth
+--- !u!114 &1019336981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019336975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e9b12a8fdc53342978bfd3b54b5851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.Status.UnitStat
+  baseData: {fileID: 11400000, guid: 027845b13e0394f4d9f7d4b2d6e0b199, type: 2}
 --- !u!1 &1274455900
 GameObject:
   m_ObjectHideFlags: 0

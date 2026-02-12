@@ -11,10 +11,10 @@ public class UnitData : ScriptableObject
     [SerializeField] private string id;
     public string Id => id;
     [Header("기본 데이터")]
-    [SerializeField] private int maxLife = 100;
-    public int MaxLife => maxLife;
-    [SerializeField] private int maxMind = 100;
-    public int MaxMind => maxMind;
+    [SerializeField] private int maxVitality = 100;
+    public int MaxVitality => maxVitality;
+    [SerializeField] private int maxMental = 100;
+    public int MaxMental => maxMental;
     [SerializeField] private int intensity = 0;
     public int Intensity => intensity;
     [SerializeField] private int control = 0;
@@ -23,11 +23,12 @@ public class UnitData : ScriptableObject
     public int Speed => speed;
     [SerializeField] private int mobility = 5;
     public int Mobility => mobility;
+    
     [Header("성장 데이터")]
-    [SerializeField] private int growthLife = 0;
-    public int GrowthLife => growthLife;
-    [SerializeField] private int growthMind = 0;
-    public int GrowthMind => growthMind;
+    [SerializeField] private int growthVitality = 0;
+    public int GrowthVitality => growthVitality;
+    [SerializeField] private int growthMental = 0;
+    public int GrowthMental => growthMental;
     [SerializeField] private int growthIntensity = 0;
     public int GrowthIntensity => growthIntensity;
     [SerializeField] private int growthControl = 0;
@@ -57,18 +58,18 @@ public class UnitData : ScriptableObject
         this.id = id;
 
         //기본 스탯
-        this.maxLife = stats["life"];
-        this.maxMind = stats["mind"];
+        this.maxVitality = stats["vitality"];
+        this.maxMental = stats["mental"];
         this.intensity = stats["intensity"];
         this.control = stats["control"];
         this.speed = stats["speed"];
         this.mobility = stats["mobility"];
 
         //성장 스탯
-        bool exist_G_Life = growth_stats.TryGetValue("life", out int growthLife);
-        this.growthLife = exist_G_Life ? growthLife : 0;
-        bool exist_G_Mind = growth_stats.TryGetValue("mind", out int growthMind);
-        this.growthMind = exist_G_Mind ? growthMind : 0;
+        bool exist_G_Vitality = growth_stats.TryGetValue("vitality", out int growthVitality);
+        this.growthVitality = exist_G_Vitality ? growthVitality : 0;
+        bool exist_G_Mental = growth_stats.TryGetValue("mental", out int growthMental);
+        this.growthMental = exist_G_Mental ? growthMental : 0;
         bool exist_G_Intensity = growth_stats.TryGetValue("intensity", out int growthIntensity);
         this.growthIntensity = exist_G_Intensity ? growthIntensity : 0;
         bool exist_G_Control = growth_stats.TryGetValue("control", out int growthControl);

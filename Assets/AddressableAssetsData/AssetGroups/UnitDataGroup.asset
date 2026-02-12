@@ -15,13 +15,8 @@ MonoBehaviour:
   m_GroupName: UnitDataGroup
   m_GUID: 6aba5d16de0571e4fadd6ab0ea406d32
   m_SerializeEntries:
-  - m_GUID: 3624934000f92dc4ba5ddfcd2a7467f9
-    m_Address: test_unit2
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7876b139a1d5d8940be9f9c99552c46e
-    m_Address: test_unit
+  - m_GUID: 027845b13e0394f4d9f7d4b2d6e0b199
+    m_Address: testunit
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

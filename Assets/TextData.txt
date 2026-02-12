@@ -226,7 +226,7 @@ DESC_SWORDMASTER	검을 매우 능숙히 다루는 자.	A person who handles a s
 FIGHTER	투사	Fighter
 DESC_FIGHTER	순수히 전투 자체를 즐기는 자.	One who purely enjoys battles.
 ASURA	아수라	Asura
-DESC_ASURA	전투를 삶의 목적으로 삼는 자.	Life's purpose is battle itself.
+DESC_ASURA	전투를 삶의 목적으로 삼는 자.	Vitality's purpose is battle itself.
 SOLDIER	병사	Soldier
 DESC_SOLDIER	저마다의 이유로 모인 군사.	Military personnel gathered for various reasons.
 ELITESOLDIER	정예병	Elite Soldier
