@@ -8,13 +8,9 @@ namespace Encounter.NightDance.Character
     public class UnitController : MonoBehaviour
     {
         private UnitStat stat;
-        private void Awake()
+        private void Start()
         {
-            stat = stat != null ? stat : gameObject.AddComponent<UnitStat>();
-        }
-        private void LateUpdate()
-        {
-            transform.rotation = Camera.main.transform.rotation; // 카메라의 회전에 맞춰 유닛 회전
+            stat = stat != null ? stat : gameObject.GetComponent<UnitStat>();
         }
     }
 }

@@ -21,37 +21,4 @@ namespace Encounter.NightDance.Status
             Source = source;
         }
     }
-    // public class StatModifier
-    // {
-    //     public int BaseValue;
-    //     private int value;
-    //     private bool isDirty;
-
-    //     private readonly List<StatModifier> statModifiers = new();
-
-    //     public int Value
-    //     {
-    //         get
-    //         {
-    //             if (isDirty)
-    //             {
-    //                 value = Calc();
-    //                 isDirty = false;
-    //             }
-    //             return value;
-    //         }
-    //     }
-    //     public void AddModifier(StatModifier mod)
-    //     {
-    //         statModifiers.Add(mod);
-    //         isDirty = true;
-    //     }
-    //     public bool RemoveAllModifiersFromSource(object source)
-    //     {
-    //         foreach (StatModifier mod in statModifiers)
-    //         {
-    //             if(mod.)
-    //         }
-    //     }
-    // }
 }
