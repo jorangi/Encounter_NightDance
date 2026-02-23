@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class Prototype_GameManager : MonoBehaviour
+namespace Encounter.NightDance.Core
 {
-    [SerializeField]private Transform Focus;
-    [SerializeField]private Transform FocusUnit;
-
-    private void Start()
+    public class Prototype_GameManager : MonoBehaviour
     {
-        Focus.transform.position = FocusUnit.transform.position;
+        [SerializeField]private Transform Focus;
+        [SerializeField]private Transform FocusUnit;
+
+        private void Start()
+        {
+            Focus.transform.position = FocusUnit.transform.position;
+        }
     }
 }

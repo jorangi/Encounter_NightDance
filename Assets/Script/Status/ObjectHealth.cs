@@ -6,7 +6,7 @@ namespace Encounter.NightDance.Status
     public class ObjectHealth : IDamageable
     {
         public Stat MaxHP {get; private set;}
-        public int HP{get; private set;}
+        public int CurHP{get; private set;}
         public event Action OnDamaged;
         public event Action OnHeal;
         public event Action OnAlived;
@@ -17,14 +17,19 @@ namespace Encounter.NightDance.Status
         /// <param name="damage"></param>
         public void TakeDamage(int damage)
         {
-            HP -= damage;
-            HP = Mathf.Clamp(HP, 0, MaxHP.Value);
+            CurHP -= damage;
+            CurHP = Mathf.Clamp(CurHP, 0, MaxHP.Value);
             if(damage > 0) OnDamaged?.Invoke();
             else if(damage < 0) OnHeal?.Invoke();
             if(IsDead) OnDied?.Invoke();
             else OnAlived?.Invoke();
         }
-        public bool IsAlive => HP > 0;
-        public bool IsDead => HP <= 0;
+        public bool IsAlive => CurHP > 0;
+        public bool IsDead => CurHP <= 0;
+        public ObjectHealth(int baseValue)
+        {
+            MaxHP = new(baseValue);
+            CurHP = MaxHP.Value;
+        }
     }
 }

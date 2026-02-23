@@ -64,9 +64,13 @@ namespace Encounter.NightDance.Status
 
             foreach(StatModifier mod in statModifiers)
             {
-                if(mod.Type == StatModifierType.PercentMul) finalValue *= (1+mod.Value);
+                if(mod.Type == StatModifierType.PercentMul) finalValue *= 1+mod.Value;
             }
             return Mathf.FloorToInt(finalValue);
+        }
+        public Stat(int baseValue)
+        {
+            this.BaseValue = baseValue;
         }
     }
 }
