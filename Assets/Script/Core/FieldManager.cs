@@ -8,8 +8,8 @@ namespace Encounter.NightDance.Core
     public class FieldManager : MonoBehaviour
     {
         [SerializeField] private Tilemap tilemap;
-        private Vector2Int fieldSize;
-        private Dictionary<Vector2Int, GameObject> objectOnField = new();
+        public static Vector2Int fieldSize{private set; get;}
+        private Dictionary<Vector2Int, IFieldObject> objectOnField = new();
         private void Start()
         {
             tilemap = tilemap != null ? tilemap : gameObject.GetComponent<Tilemap>();
@@ -22,9 +22,9 @@ namespace Encounter.NightDance.Core
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        private GameObject CheckTile(Vector2Int pos)
+        private IFieldObject CheckTile(Vector2Int pos)
         {
-            if(objectOnField.TryGetValue(pos, out GameObject objectOnTile))
+            if(objectOnField.TryGetValue(pos, out IFieldObject objectOnTile))
             {
                 return objectOnTile;
             }

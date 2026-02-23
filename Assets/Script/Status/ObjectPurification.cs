@@ -18,7 +18,7 @@ namespace Encounter.NightDance.Status
         /// <param name="CasterMental"></param>
         private void Pure(ObjectMental CasterMental)
         {
-            purification += PurificationRule.PureCalculate(unitStat.Value, CasterMental.CurMp);
+            purification += PurificationRule.PureCalculate(unitStat.Value, CasterMental.CurValue);
             OnPure?.Invoke();
         }
     }

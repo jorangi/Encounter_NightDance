@@ -4,26 +4,33 @@ using UnityEngine;
 
 namespace Encounter.NightDance.Status
 {
-    public class ObjectMental : IDamageable_M
+    [Serializable]
+    public class ObjectMental: ResourceStat
     {
-        public Stat MaxMp {get; private set;}
-        public int CurMp {get; private set;}
         public event Action OnDamaged;
+        public event Action OnHealed;
         public event Action OnAlived;
         public event Action OnContamination;
-        public bool IsAlive => CurMp > 0;
-        public bool ProceedContamination => CurMp <= 0;
+        public bool IsAlive => CurValue > 0;
+        public bool ProceedContamination => CurValue <= 0;
         
-        public ObjectMental(int baseValue)
+        public ObjectMental(int baseValue): base(baseValue){}
+        /// <summary>
+        /// 정신 피해 함수
+        /// </summary>
+        /// <param name="damage"></param>
+        public override void TakeDamage(int damage)
         {
-            MaxMp = new(baseValue);
-            CurMp = MaxMp.Value;
+            base.TakeDamage(damage);
         }
-        public void TakeDamage(int damage)
+        /// <summary>
+        /// 정신 피해 값 변화 함수
+        /// </summary>
+        /// <param name="damage"></param>
+        public override void OnValueCheck(int damage)
         {
-            CurMp -= damage;
-            CurMp = Mathf.Max(CurMp, 0);
-            OnDamaged?.Invoke();
+            if(damage > 0)OnDamaged?.Invoke();
+            else if(damage < 0) OnHealed?.Invoke();
             if(ProceedContamination) OnContamination?.Invoke();
             else OnAlived?.Invoke();
         }

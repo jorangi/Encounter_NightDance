@@ -1,17 +1,19 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 namespace Encounter.NightDance.Status
 {
+    [Serializable]
     public class Stat
     {
-        public int BaseValue{get; private set;}
-        private int value;
+        [field: SerializeField]public int BaseValue{get; private set;}
+        [field: SerializeField]private int value;
         /// <summary>
         /// 더티 플래그 true시 다시 계산
         /// </summary>
-        public int Value
+        [SerializeField] public int Value
         {
             get
             {
@@ -71,6 +73,7 @@ namespace Encounter.NightDance.Status
         public Stat(int baseValue)
         {
             this.BaseValue = baseValue;
+            isDirty = true;
         }
     }
 }

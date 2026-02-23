@@ -3,33 +3,34 @@ using UnityEngine;
 
 namespace Encounter.NightDance.Status
 {
-    public class ObjectHealth : IDamageable
+    [Serializable]
+    public class ObjectHealth: ResourceStat
     {
-        public Stat MaxHP {get; private set;}
-        public int CurHP{get; private set;}
         public event Action OnDamaged;
-        public event Action OnHeal;
+        public event Action OnHealed;
         public event Action OnAlived;
         public event Action OnDied;
+        public bool IsAlive => CurValue > 0;
+        public bool IsDead => CurValue <= 0;
+        public ObjectHealth(int baseValue): base(baseValue){}
         /// <summary>
-        /// 피해를 입거나 회복하는 함수
+        /// 체력 피해 함수
         /// </summary>
         /// <param name="damage"></param>
-        public void TakeDamage(int damage)
+        public override void TakeDamage(int damage)
         {
-            CurHP -= damage;
-            CurHP = Mathf.Clamp(CurHP, 0, MaxHP.Value);
+            base.TakeDamage(damage);
+        }
+        /// <summary>
+        /// 체력 피해 값 변화 함수
+        /// </summary>
+        /// <param name="damage"></param>
+        public override void OnValueCheck(int damage)
+        {
             if(damage > 0) OnDamaged?.Invoke();
-            else if(damage < 0) OnHeal?.Invoke();
+            else if(damage < 0) OnHealed?.Invoke();
             if(IsDead) OnDied?.Invoke();
             else OnAlived?.Invoke();
-        }
-        public bool IsAlive => CurHP > 0;
-        public bool IsDead => CurHP <= 0;
-        public ObjectHealth(int baseValue)
-        {
-            MaxHP = new(baseValue);
-            CurHP = MaxHP.Value;
         }
     }
 }
