@@ -334,7 +334,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""Left"",
                     ""type"": ""Button"",
                     ""id"": ""b3cc98ab-a940-4f1b-b483-88987fc9775c"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -397,7 +397,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""MiddleHold"",
                     ""type"": ""Button"",
                     ""id"": ""5b671bc0-8eb1-4af0-8669-52f3d920ea6f"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false

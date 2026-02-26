@@ -35,10 +35,6 @@ public class CameraController : MonoBehaviour
     }
     void Update()
     {
-            Vector3 rayStart = target.position;// + 0.5f * target.localScale.y * Vector3.down;
-            float rayLength = 10.0f;
-            Vector3 rayDirection = Vector3.down;
-            Debug.DrawRay(rayStart, rayDirection * rayLength, Color.red);
         //마우스 우클릭 트리거 -> 회전, 줌인/아웃
         if(Input.GetMouseButtonDown(1))
         {
