@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Encounter.NightDance.Status
 {
+    /// <summary>
+    /// 유닛 생존 수치 스냅샷
+    /// </summary>
     [Serializable]
     public class ObjectHealth: ResourceStat
     {

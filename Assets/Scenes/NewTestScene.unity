@@ -327,6 +327,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   Focus: {fileID: 909857875}
   FocusUnit: {fileID: 2054259103}
+  turnedUnit: {fileID: 2054259101}
+  fieldManager: {fileID: 1274455903}
 --- !u!4 &335691868
 Transform:
   m_ObjectHideFlags: 0

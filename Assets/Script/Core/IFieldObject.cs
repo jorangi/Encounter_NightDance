@@ -10,6 +10,7 @@ namespace Encounter.NightDance.Core
         /// <summary>
         /// 오브젝트의 위치 좌표
         /// </summary>
+        public Vector2 WorldPos{get; set;}
         public Vector2Int Pos{get; set;}
     }
 }

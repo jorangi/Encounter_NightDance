@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Encounter.NightDance.Status
@@ -17,6 +18,10 @@ namespace Encounter.NightDance.Status
         {
             CurValue = Mathf.Clamp(CurValue - value, 0, MaxValue.Value);
             OnValueCheck(value);
+        }
+        public void ApplySnapshot(int curValue)
+        {
+            CurValue = Mathf.Clamp(curValue, 0, MaxValue.Value);
         }
         public abstract void OnValueCheck(int value);
     }

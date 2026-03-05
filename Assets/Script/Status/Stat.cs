@@ -8,6 +8,8 @@ namespace Encounter.NightDance.Status
     [Serializable]
     public class Stat
     {
+        public event Action OnSync; // 단순 데이터 동기화용(스냅샷 적용 등)
+        public event Action OnChanged; // 값의 변화마다 호출(로직에 의한 변화)
         [field: SerializeField]public int BaseValue{get; private set;}
         [field: SerializeField]private int value;
         /// <summary>
@@ -27,7 +29,7 @@ namespace Encounter.NightDance.Status
             set => this.value = value;
         }
         private bool isDirty;
-        private readonly List<StatModifier> statModifiers = new();
+        public readonly List<StatModifier> statModifiers = new();
         /// <summary>
         /// 모디파이어 추가
         /// </summary>
@@ -46,6 +48,7 @@ namespace Encounter.NightDance.Status
         {
             int removeCount = statModifiers.RemoveAll(m => m.Source == source);
             isDirty = removeCount > 0;
+            OnChanged?.Invoke();
             return removeCount > 0;
         }
         /// <summary>
@@ -68,12 +71,22 @@ namespace Encounter.NightDance.Status
             {
                 if(mod.Type == StatModifierType.PercentMul) finalValue *= 1+mod.Value;
             }
+            OnChanged?.Invoke();
             return Mathf.FloorToInt(finalValue);
         }
         public Stat(int baseValue)
         {
             this.BaseValue = baseValue;
             isDirty = true;
+            OnSync?.Invoke();
+        }
+        public void RestoreFromSnapshot(int baseVal, IEnumerable<StatModifier> mods)
+        {
+            this.BaseValue = baseVal;
+            statModifiers.Clear();
+            statModifiers.AddRange(mods);
+            isDirty = true;
+            OnSync?.Invoke();
         }
     }
 }
