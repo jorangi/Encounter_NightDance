@@ -1,4 +1,5 @@
 using System;
+using Encounter.NightDance.Core;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -17,7 +18,7 @@ public class CameraController : MonoBehaviour
     private const float ROTOFFSET = 3f;
     private const float ARMMAX = 10f;
     private const float ARMMIN = -8f;
-    [SerializeField]Transform target;
+    [SerializeField]Transform focus;
     private float _targetDistance;
     [SerializeField]Grid grid;
     [SerializeField]Tilemap tilemap;
@@ -26,8 +27,11 @@ public class CameraController : MonoBehaviour
     float rotatePos;
     float zoomPos;
     Vector2 movePos;
+    [SerializeField]private FieldManager fieldManager;
+    private Vector2Int focusPos = Vector2Int.zero;
     void Awake()
     {
+        fieldManager = fieldManager != null ? fieldManager : GetComponent<FieldManager>();
         follow = follow != null ? follow : GetComponent<CinemachineThirdPersonFollow>();
         // Debug.Log($"tilemap Size: {tilemap.size}");
         // Debug.Log($"tilemap Cell Bounds Size: {tilemap.cellBounds.size}");
@@ -48,9 +52,15 @@ public class CameraController : MonoBehaviour
         }
         if(Input.GetMouseButtonUp(2))
         {
-            Vector3 p = target.position;
-            Vector3Int newPos = new(Mathf.RoundToInt(p.x), 0, Mathf.RoundToInt(p.z));
-            target.transform.position = new(newPos.x, 0.01f, newPos.z);
+            //마우스 휠클릭 이동 종료 시 focus의 위치를 타일맵 셀에 고정
+            //유닛 이동과의 일관성을 위해 GetTilePos를 사용
+            Vector3 p = focus.position; //focus의 월드 좌표
+            Vector2Int __p = new(Mathf.RoundToInt(p.x+0.5f), Mathf.RoundToInt(p.z-0.5f)); //focus의 월드 셀 좌표, focus의 좌표를 우선 보정
+            // __p를 셀 좌표로 변환할 것
+            Vector2Int offsetV = fieldManager.FocusOffset(__p); //보정된 focus의 셀 좌표에서 타일맵의 셀 좌표로 변환한 오프셋
+            Vector2 v = fieldManager.GetTilePos(offsetV); //오프셋이 적용된 focus의 월드 좌표
+            focus.position = new Vector3(v.x, focus.position.y, v.y);
+            focusPos = __p;
             movePos = Vector2.zero;
         }
         float rotateDelta = Input.GetMouseButton(1) ? Input.mousePosition.x - rotatePos : 0.0f; // 우클릭 X 이동량
@@ -83,85 +93,41 @@ public class CameraController : MonoBehaviour
         //마우스 조작 이동
         if(!Mathf.Approximately(moveDelta.magnitude, 0.0f))
         {
-            target.transform.position += MoveSpeed * Time.deltaTime * new Vector3(-moveDelta.x, 0, -moveDelta.y);
-            target.transform.position = new(
-                Mathf.Clamp(target.position.x, tilemap.cellBounds.min.x+1, tilemap.cellBounds.max.x),
-                target.position.y,
-                Mathf.Clamp(target.position.z, tilemap.cellBounds.min.y+1, tilemap.cellBounds.max.y)
+            focus.transform.position += MoveSpeed * Time.deltaTime * new Vector3(-moveDelta.x, 0, -moveDelta.y);
+            focus.transform.position = new(
+                Mathf.Clamp(focus.position.x, tilemap.cellBounds.min.x+0.5f, tilemap.cellBounds.max.x-0.5f),
+                focus.position.y,
+                Mathf.Clamp(focus.position.z, tilemap.cellBounds.min.y+0.5f, tilemap.cellBounds.max.y-0.5f)
             );
         }
         //키보드 이동 조작
         if(Input.GetKeyDown(KeyCode.W)) //상향
         {
-            Vector3 pickPos = new(target.position.x, target.position.y, Mathf.Clamp(target.position.z + 1, tilemap.cellBounds.min.y, tilemap.cellBounds.max.y - 1));
-            bool hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
-            hasTile = true; //임시로 타일 항상 있다고 처리
-            if(hasTile)
-                target.position = new(target.position.x, target.position.y, Mathf.Min(target.position.z + 1, tilemap.cellBounds.max.y));
-            else
-            {
-                while(!hasTile && pickPos.z < tilemap.cellBounds.max.y - 1)
-                {
-                    pickPos.z += 1;
-                    hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
-                }
-                if(hasTile)target.position = pickPos;
-                else Debug.Log("No Tile Ahead");
-            }
+            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x, focusPos.y - 1);
+            focusPos = clampedPos;
+            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
+            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
         }
         if(Input.GetKeyDown(KeyCode.A)) //좌향
         {
-            Vector3 pickPos = new(Mathf.Clamp(target.position.x - 1, tilemap.cellBounds.min.x, tilemap.cellBounds.max.x - 1), target.position.y, target.position.z);
-            bool hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
-            hasTile = true;
-            if(hasTile)
-                target.position = new(Mathf.Max(target.position.x - 1, tilemap.cellBounds.min.x + 1), target.position.y, target.position.z);
-            else
-            {
-                while(!hasTile && pickPos.x > tilemap.cellBounds.min.x)
-                {
-                    pickPos.x -= 1;
-                    hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
-                }
-                if(hasTile)target.position = pickPos;
-                else Debug.Log("No Tile Ahead");
-            }
+            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x - 1, focusPos.y);
+            focusPos = clampedPos;
+            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
+            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
         }
         if(Input.GetKeyDown(KeyCode.S)) //하향
         {
-            Vector3 pickPos = new(target.position.x, target.position.y, Mathf.Clamp(target.position.z - 1, tilemap.cellBounds.min.y, tilemap.cellBounds.max.y - 1));
-            bool hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
-            hasTile = true;
-            if(hasTile)
-                target.position = new(target.position.x, target.position.y, Mathf.Max(target.position.z - 1, tilemap.cellBounds.min.y+1));
-            else
-            {
-                while(!hasTile && pickPos.z > tilemap.cellBounds.min.y)
-                {
-                    pickPos.z -= 1;
-                    hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
-                }
-                if(hasTile)target.position = pickPos;
-                else Debug.Log($"{target.position}에 타일이 존재하지 않아 취소됨.");
-            }
+            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x, focusPos.y + 1);
+            focusPos = clampedPos;
+            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
+            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
         }
         if(Input.GetKeyDown(KeyCode.D)) //우향
         {
-            Vector3 pickPos = new(Mathf.Clamp(target.position.x + 1, tilemap.cellBounds.min.x, tilemap.cellBounds.max.x - 1), target.position.y, target.position.z);
-            bool hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
-            hasTile = true;
-            if(hasTile)
-                target.position = new(Mathf.Min(target.position.x + 1, tilemap.cellBounds.max.x), target.position.y, target.position.z);
-            else
-            {
-                while(!hasTile && pickPos.x < tilemap.cellBounds.max.x - 1)
-                {
-                    pickPos.x += 1;
-                    hasTile = tilemap.HasTile(grid.WorldToCell(pickPos));
-                }
-                if(hasTile)target.position = pickPos;
-                else Debug.Log("No Tile Ahead");
-            }
+            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x + 1, focusPos.y);
+            focusPos = clampedPos;
+            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
+            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
         }
         //키보드 회전
         if(Input.GetKeyDown(KeyCode.Q)) //좌회전

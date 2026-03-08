@@ -13,7 +13,11 @@ namespace Encounter.NightDance.Character
     {
         private UnitStat stat;
 
-        public void MoveTo(Vector2Int newPos)
+        /// <summary>
+        /// 유닛 이동 메서드, transform의 위치를 업데이트
+        /// </summary>
+        /// <param name="newPos"></param>
+        public void MoveTo(Vector2 newPos)
         {
             transform.position = new(newPos.x, 0, newPos.y);
             // TODO: 이동 실행, 애니메이션 등

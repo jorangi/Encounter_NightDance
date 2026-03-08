@@ -13,7 +13,7 @@ namespace Encounter.NightDance.Core.Commands
     public class MoveCommand : CommandBase
     {
         private readonly UnitController _unit;
-        private readonly Vector2Int _targetPos;
+        private readonly Vector2 _targetPos;
         private readonly Vector2Int _startPos;
         /// <summary>
         /// 이동 명령 커맨드 생성자 - TODO: 필드 매니저를 받지 않고 좌표만 받아서 처리하게끔 수정
