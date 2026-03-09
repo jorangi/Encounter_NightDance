@@ -9586,7 +9586,7 @@ Transform:
   m_GameObject: {fileID: 1905038546}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9906,7 +9906,7 @@ SpriteRenderer:
   m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.63342315, g: 0.63342315, b: 0.63342315, a: 1}
+  m_Color: {r: 0.81671154, g: 0.81671154, b: 0.81671154, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -9946,6 +9946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6db815bb20b64489adbd7a377f9415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitController
+  t_hpbar: {fileID: 1905038548}
 --- !u!4 &2054259103
 Transform:
   m_ObjectHideFlags: 0

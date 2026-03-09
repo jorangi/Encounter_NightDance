@@ -289,3 +289,30 @@ ToyGemini나 마인크래프트 모딩을 요즘 더 중점적으로 하다보�
         - 잘못된 값을 대입하고 있던 문제를 수정
     - FieldManager의 SetUnitPos는 더 이상 사용되지 않음 Obsolote처리
         - MoveCommand로 일관성 확보
+
+* **그래픽 관련**
+    - 기존의 스프라이트(유닛, 타일, 셀테두리 제외)의 머티리얼을 Lit기반으로 변경
+        - 반사광, 그림자 적용
+            - 반사광의 경우 과하게 적용된 감이 있어 Lit 쉐이더 그래프 기반 머티리얼 작성 후 금속 재질을 specular로 변경 + smoothness와 조정
+            - 그림자 적용을 위해 인스펙터에서 Debug모드로 들어가 Cast Shadow, Recieve Shadow 설정
+    - SpriteRenderer 기반 체력바를 만들기 위해 GaugeBar 쉐이더 그래프와 머티리얼 생성
+        - UV -> Split -> Step -> One minus를 이용해 Image의 Fill을 구현
+
+* **체력바 추가**
+    - 유닛의 발밑에 체력바 추가
+    - 유닛 스프라이트와 마찬가지로 회전을 적용할지는 고민중
+    - SpriteRenderer에는 Fill기능이 없기에 쉐이더 그래프와 머티리얼로 구현
+    - GetPropertyBlock을 이용해 개별 머티리얼 값을 적용할 예정
+
+<hr>
+
+### 2026-03-10
+
+* **체력바 관련**
+    - 체력바의 색상이 적용되지 않던 문제 해결
+        - Vertex Color를 사용하지 않고 Unlit(3D)으로 사용했기에 발생한 문제
+        - Sprite Unlit 그래프로 변경하고 Vertex Color 적용
+            - One minus 순서 문제로 인한 이슈도 해결
+    - 유닛 컨트롤러에 1초마다 체력이 변경되면 선형보간으로 부드러운 체력바를 테스트
+        - UniTask를 활용해 사용
+            - Coroutine은 지양할 예정
