@@ -19,7 +19,7 @@ namespace Encounter.NightDance.Character
         /// <param name="newPos"></param>
         public void MoveTo(Vector2 newPos)
         {
-            transform.position = new(newPos.x, 0, newPos.y);
+            transform.position = new(newPos.x, transform.position.y, newPos.y);
             // TODO: 이동 실행, 애니메이션 등
         }
         private void Start()

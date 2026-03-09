@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviour
         Vector2Int clampedPos = FieldManager.ClampToField(0, 0);
         focusPos = clampedPos;
         Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
-        focus.position = new(cellPos.x, focus.position.y, cellPos.y);
+        focus.position = new(cellPos.x, 0.1f, cellPos.y);
     }
     void Update()
     {

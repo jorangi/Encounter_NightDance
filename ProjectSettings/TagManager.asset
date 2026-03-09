@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -44,14 +44,14 @@ TagManager:
   - name: Tile
     uniqueID: 4048450263
     locked: 0
-  - name: Focus
-    uniqueID: 260278653
-    locked: 0
   - name: UnitUI
     uniqueID: 326894533
     locked: 0
   - name: TileObject
     uniqueID: 3870960031
+    locked: 0
+  - name: Focus
+    uniqueID: 260278653
     locked: 0
   - name: TargettingLine
     uniqueID: 2348571547
@@ -59,3 +59,5 @@ TagManager:
   - name: UI
     uniqueID: 3059607381
     locked: 0
+  m_RenderingLayers:
+  - Default
