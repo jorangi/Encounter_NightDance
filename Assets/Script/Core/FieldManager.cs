@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Encounter.NightDance.Character;
@@ -9,23 +10,21 @@ namespace Encounter.NightDance.Core
     public class FieldManager : MonoBehaviour
     {
         [SerializeField] private Tilemap tilemap;
-        public static Vector2Int fieldSize{private set; get;}
-        private Dictionary<Vector2, IFieldObject> objectOnField = new();
+        public static Vector2Int FieldSize{private set; get;}
+        private readonly Dictionary<Vector2Int, IFieldObject> objectOnField = new();
         private void Start()
         {
             tilemap = tilemap != null ? tilemap : gameObject.GetComponent<Tilemap>();
             int width = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
             int height = tilemap.cellBounds.yMax - tilemap.cellBounds.yMin;
-            fieldSize = new(width, height);
-
-            Debug.Log($"xMin: {tilemap.cellBounds.xMin}, xMax: {tilemap.cellBounds.xMax}, yMin: {tilemap.cellBounds.yMin}, yMax: {tilemap.cellBounds.yMax}");
+            FieldSize = new(width, height);
         }
         /// <summary>
         /// 타일 위치에 오브젝트가 있는지 확인하는 함수
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        private IFieldObject CheckUnitOnTile(Vector2 pos)
+        private IFieldObject CheckUnitOnTile(Vector2Int pos)
         {
             if(objectOnField.TryGetValue(pos, out IFieldObject objectOnTile))
             {
@@ -57,19 +56,27 @@ namespace Encounter.NightDance.Core
             Vector3 tilePos = tilemap.CellToWorld(new Vector3Int(offsetX, offsetY, 0));
             return new Vector2Int((int)tilePos.x, (int)tilePos.z);
         }
+        [Obsolete("이 함수는 MoveCommand로 대체되었습니다.")]
+        /// <summary>
+        /// 유닛의 위치를 설정하는 함수, 타일에 이미 오브젝트가 존재하는 경우 위치 변경 불가
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="pos"></param>
         public void SetUnitPos(UnitController unit, Vector2Int pos)
         {
-            Vector2Int tilePos = GetTilePosWithoutOffset(pos);
-            if(CheckUnitOnTile(tilePos) == null)
+            if(CheckUnitOnTile(pos) != null)
             {
-                unit.Pos = tilePos;
-                objectOnField[tilePos] = unit;
+                Debug.Log("이미 오브젝트가 존재하는 타일입니다.");
+                return;
             }
+            Vector2Int tilePos = GetTilePosWithoutOffset(pos);
+            unit.SetPos(pos, tilePos);
+            objectOnField[tilePos] = unit;
         }
         public static Vector2Int ClampToField(int x, int y)
         {
-            int clampedX = Mathf.Clamp(x, 0, fieldSize.x - 1);
-            int clampedY = Mathf.Clamp(y, 0, fieldSize.y - 1);
+            int clampedX = Mathf.Clamp(x, 0, FieldSize.x - 1);
+            int clampedY = Mathf.Clamp(y, 0, FieldSize.y - 1);
             return new Vector2Int(clampedX, clampedY);
         }
         public Vector2Int FocusOffset(Vector2Int v)

@@ -13,8 +13,8 @@ namespace Encounter.NightDance.Core
             get=>_pos;
             set {
                 _pos = new Vector2Int(
-                Mathf.Clamp(value.x, 0, FieldManager.fieldSize.x - 1), 
-                Mathf.Clamp(value.y, 0, FieldManager.fieldSize.y -1));
+                Mathf.Clamp(value.x, 0, FieldManager.FieldSize.x - 1), 
+                Mathf.Clamp(value.y, 0, FieldManager.FieldSize.y -1));
             }
         }
         private Vector2 worldPos;
@@ -25,6 +25,11 @@ namespace Encounter.NightDance.Core
                 worldPos = value;
                 transform.position = new Vector3(worldPos.x, 0, worldPos.y);
             }
+        }
+        public void SetPos(Vector2Int pos, Vector2 worldPos)
+        {
+            Pos = pos;
+            WorldPos = worldPos;
         }
     }
 }

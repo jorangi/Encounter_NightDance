@@ -4,12 +4,18 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+/// <summary>
+/// 카메라 회전 방향, 기존 int enum에서 sbyte enum으로 변경하여 4byte -> 1byte로 메모리 최적화
+/// </summary>
 public enum CameraRot:sbyte
 {
     Left = -1,
     Center = 0,
     Right = 1
 }
+/// <summary>
+/// 카메라 컨트롤러
+/// </summary>
 public class CameraController : MonoBehaviour
 {
     [SerializeField] CinemachineThirdPersonFollow follow;
@@ -37,6 +43,13 @@ public class CameraController : MonoBehaviour
         // Debug.Log($"tilemap Cell Bounds Size: {tilemap.cellBounds.size}");
         // Debug.Log($"tilemap Cell Bounds: {tilemap.cellBounds.min} to {tilemap.cellBounds.max}");
     }
+    void Start()
+    {
+        Vector2Int clampedPos = FieldManager.ClampToField(0, 0);
+        focusPos = clampedPos;
+        Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
+        focus.position = new(cellPos.x, focus.position.y, cellPos.y);
+    }
     void Update()
     {
         //마우스 우클릭 트리거 -> 회전, 줌인/아웃
@@ -60,7 +73,7 @@ public class CameraController : MonoBehaviour
             Vector2Int offsetV = fieldManager.FocusOffset(__p); //보정된 focus의 셀 좌표에서 타일맵의 셀 좌표로 변환한 오프셋
             Vector2 v = fieldManager.GetTilePos(offsetV); //오프셋이 적용된 focus의 월드 좌표
             focus.position = new Vector3(v.x, focus.position.y, v.y);
-            focusPos = __p;
+            focusPos = offsetV; //focusPos 업데이트
             movePos = Vector2.zero;
         }
         float rotateDelta = Input.GetMouseButton(1) ? Input.mousePosition.x - rotatePos : 0.0f; // 우클릭 X 이동량

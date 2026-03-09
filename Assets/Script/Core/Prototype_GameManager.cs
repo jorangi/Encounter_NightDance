@@ -16,7 +16,7 @@ namespace Encounter.NightDance.Core
         {
             Focus.transform.position = FocusUnit.transform.position;
             commandInvoker = new CommandInvoker();
-            commandInvoker.ExecuteCommand(new MoveCommand(turnedUnit, fieldManager, new Vector2Int(0, 16)));
+            commandInvoker.ExecuteCommand(new MoveCommand(turnedUnit, fieldManager, new Vector2Int(0, 0)));
         }
         private void Update()
         {
