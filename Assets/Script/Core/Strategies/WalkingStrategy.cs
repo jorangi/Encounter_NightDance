@@ -1,12 +1,24 @@
 using Encounter.NightDance.Map;
+using Encounter.NightDance.ScriptableObjects;
+using UnityEngine;
 
 namespace Encounter.NightDance.Core.Strategies
 {
     public class WalkingStrategy : IMovementStrategy
     {
+        private MovementStrategySO costData;
+        /// <summary>
+        /// 보병 유닛의 이동 전략, 지형 코스트 SO를 받아 초기화
+        /// </summary>
+        /// <param name="costSO"></param>
+        public WalkingStrategy(MovementStrategySO costSO)
+        {
+            this.costData = costSO;
+            costData.Initialize();
+        }
         public float Calc(ITile tile)
         {
-            return 1f; // TODO: 타일의 종류에 따라 이동 비용 계산, 예: 평지 1, 숲 1.5, 산 2 등
+            return costData.GetCost(tile.Terrain);
         }
     }
 }

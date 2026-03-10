@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using Encounter.NightDance.ScriptableObjects;
+using Encounter.NightDance.Core.Strategies;
 
 namespace Encounter.NightDance.Character
 {
@@ -13,10 +15,18 @@ namespace Encounter.NightDance.Character
     [RequireComponent(typeof(UnitStat))]
     public class UnitController : Prototype_TileObject, IMovable
     {
+        [SerializeField] private MovementStrategySO terrainCostSO;
         private UnitStat stat;
         [SerializeField] private SpriteRenderer t_hpbar;
         private MaterialPropertyBlock mpb;
+        private IMovementStrategy movementStrategy;
         private static readonly int FillAmountId = Shader.PropertyToID("_fillAmount");
+
+        private void Awake()
+        {
+            stat = stat != null ? stat : gameObject.GetComponent<UnitStat>();
+            movementStrategy = new WalkingStrategy(terrainCostSO);
+        }
         /// <summary>
         /// 유닛 이동 메서드, transform의 위치를 업데이트
         /// </summary>
@@ -29,7 +39,6 @@ namespace Encounter.NightDance.Character
         }
         private void Start()
         {
-            stat = stat != null ? stat : gameObject.GetComponent<UnitStat>();
             TestFillMaterialAmount(this.GetCancellationTokenOnDestroy()).Forget();
         }
         private async UniTaskVoid TestFillMaterialAmount(CancellationToken ct)

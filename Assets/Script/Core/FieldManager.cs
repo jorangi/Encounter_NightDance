@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Encounter.NightDance.Character;
+using Encounter.NightDance.Map;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,6 +13,7 @@ namespace Encounter.NightDance.Core
         [SerializeField] private Tilemap tilemap;
         public static Vector2Int FieldSize{private set; get;}
         private readonly Dictionary<Vector2Int, IFieldObject> objectOnField = new();
+        private Dictionary<Vector2Int, ITile> tiles = new();
         private void Start()
         {
             tilemap = tilemap != null ? tilemap : gameObject.GetComponent<Tilemap>();
@@ -84,6 +86,10 @@ namespace Encounter.NightDance.Core
             int offsetX = Mathf.Abs(Mathf.Abs(tilemap.cellBounds.xMin + 1) + v.x);
             int offsetY = Mathf.Abs(v.y - Mathf.Abs(tilemap.cellBounds.yMax - 1));
             return new(offsetX, offsetY);
+        }
+        public static bool IsWithinField(Vector2Int pos)
+        {
+            return pos.x >= 0 && pos.x < FieldSize.x && pos.y >= 0 && pos.y < FieldSize.y;
         }
     }
 }
