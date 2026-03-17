@@ -326,3 +326,60 @@ ToyGemini나 마인크래프트 모딩을 요즘 더 중점적으로 하다보�
     - 유닛의 이동은 지형에 따라 비용이 달라지고, 파이어엠블렘의 비병을 생각하면 유닛의 타입에 따라 지형코스트도 달라지기 때문에 유닛 이동 타입에 대해서도 전략 패턴을 사용하고자 한다.
     - PathFinder 메서드도 지형 코스트에 따라 적용해야 하기 때문에 그냥 새로 만들고자 한다.
     - 유닛 - 지형의 코스트 계산값은 Scriptable Object를 쓰려고 한다.
+
+### 2026-03-17
+Gemini + Qwen 개인용 프로젝트던 ToyGemini 프로젝트가 얼추 마무리됐고(따로 업로는 안하는 프로젝트! miller_rabbin.cpp나 exe 둘 다 내가 작성한게 아니라 AI가 만들고 AI가 컴파일한 실행파일)
+<br><img src="image-1.png" width="400" height="200"/>
+<br>굳이 따지면 MCP, 오픈클로같은 에이전트긴 한데 그런걸 알고 시작한 프로젝트는 아니었고 공부 목적도 아니었고 말 그대로 이거 해보자! 이런것도 넣으면 재밌겠다! 해서 점점 커진 경우였다.
+
+그리고 여자친구 마인크래프트 서버 만들어주던 작업(베드락 서버 + 백엔드 + DB + 프론트엔드 + Gemini)도 거의 마무리가 돼서 이제 포트폴리오에 더 집중할 수 있게 되었다.
+<br><img src="image-2.png" width="300" height="200"/>
+
+* **체력바 관련 설계**
+체력바의 기능 구현 자체는 되었다. 다만 유닛컨트롤러가 아니고 옵저버패턴으로 체력바에서 이벤트를 구독받아 기능하게끔 할 예정이기 때문에 우선은 설계를 하고자 한다.
+
+    - UI 시각적 디자인 자체는 어떻게 할지 아직은 잘 모르겠지만 일단 정신력이나 체력 등의 수치를 시각화 하는 것이 목적이므로 인터페이스나 추상클래스를 적절히 이용하면 되지 않을까 싶다.
+    - UGUI의 Image와 Sprite는 작동 방식 자체가 다르기 때문에 공통 인터페이스를 분리하고 필드에 표시되는 Sprite용 abstract나 virtual을 쓰고 오버라이드 하면 될 것 같다
+    - Image는 그냥 인터페이스 상속만 받게 하면 될 것 같다.
+    - 값 변화 이벤트 -> 인터페이스를 통해 실행, 이런식이 된다.
+        - 사실 제일 편한건 그냥 UIManager 욱여넣기인데, 그렇게 했다가 유지보수 때문에 지옥된 적이 좀 많았다
+
+* **체력바 관련 구현**
+    - 기존의 클래스도 일부 수정하게 되었다.
+        - ResourceStat 클래스의 OnValueCheck를 abstract에서 virtual로 변경하고 퍼센티지 변경 옵저버를 위해 NotifyPercentageChange를 넣었다.
+            - NotifyPercentageChange는 OnPercentageChanged 이벤트를 Inoke하는데, 나중에 퍼센트에 따른 효과같은게 추가될지 모르지만 일단은 Vital, Mental같은 바형 UI 지원을 위해 넣었다.
+                - Percentage 구조체로 작동한다.
+    - IUIBar 인터페이스
+        - UniTask를 통해 구현하기에 Dispose도 가능한 넣고자 하였고 IDisposal을 통해 구현하였다.
+            - Dispose를 굳이 사용하는 이유는 UniTask에서 CancellataionToken이 남아있는채로 언제 사라질지 확신할 수 없다는 문제로 수동 Dispose를 해주기 위함이다.
+        - 기본 인터페이스 자체는 SetGauge라는 함수 하나만 있는데, Percentage를 매개변수로 받아서 fillAmount를 변화하는 용도로 사용된다.
+        - SpriteBar와 ImageBar는 각각 SpriteRenderer와 Image의 fillAmount를 조정한다.
+            - 2개의 Bar를 겹쳐 만들었다.
+                - 예상 피해량의 경우 애니메이션이 필요없고 피해를 받거나 회복할 때 1차로 빠르게 차는 게이지, 2차로 천천히 차는 게이지가 필요하기 때문이다.
+                <br><img src="image-3.png" width=200 height=70/>
+            - SpriteBar는 SpriteRenderer는 fillAmount가 없기에 기존처럼 머티리얼과 셰이더를 통해 진행하였으며 머티리얼의 fillAmount 프로퍼티를 통해 구현했다.
+                - 때문에 스크립트에서 PropertyBlock와 PropertyID가 필요한데, 그 부분은 공통이므로 메모리를 생각해서 static으로 만들었다.
+                    - static으로 하여도 사용할 때는 해당 필드를 복제하여 사용하기 때문에 문제가 없다.
+            - ImageBar는 fillAmount가 있기 때문에 그냥 쉽게 구현했다.
+            - SmoothSpriteBar와 SmoothImageBar는 부드러운 UI 애니메이션을 구현하기 위해 만들었다.
+                - async UniTask를 이용해 비동기로 구현하였다.
+                - UniTask 비동기가 아직도 익숙하지는 않은데, 구조부터가 코루틴보다 훨씬 유연하고 깔끔한 것 같다.
+
+* **Percentage구조체**
+    - 목적 자체는 간단하다. 0~100까지의 범위를 갖는 데이터가 필요하고 요즘 컴퓨터나 모바일 기기 환경이 int 몇개로 큰 영향을 받지는 않지만 그래도 줄일 수 있다면 좋지 않을까?
+        - byte는 1바이트로 255까지 가능하니까 충분하다. 바이트를 사용하려하면 계산시 int로 캐스팅이 일어난다.
+            - 캐스팅으로 인한 오버헤드 vs 1byte/4byte의 크기를 감안했을 때
+            - 최적화 메모리 누수로 인한 문제가 더 쉽게 와닿아서(작년 스토커2) byte기반으로 해보자 생각했다.
+    - Percentage 구조체는 Byte기반의 구조체로 생성하면 0~100까지 clamp를 갖는다
+    - IEquaptable, IComparable 인터페이스를 상속받아 구현한다
+    - toString도 지원해서 디버깅에 조금이라도 용이하게 만들었다.
+    - implicit을 통해 int, float, byte 전부 가능하다.
+        - flaot는 *0.01f를 한다.
+    - 생성자는 편의성을 위해 byte, int가 가능하며 float는 0.5 => 50처럼 인식한다.
+
+* **UI디자인과 폰트**
+    - UI 디자인은 리뱀프? 이전부터 인게이지를 레퍼런스로 삼긴 했는데, 디자인은 워낙 젬병이라 시간이 제일 오래걸리는 듯 하다.
+        - 하이어라키 상의 오브젝트 이름이 조금 지저분하긴 한데, 나중에 제미나이한테 네이밍이나 좀 부탁할까 한다
+        - Content Size Fitter랑 Horizontal(Vertical) Layout Group으로 동적으로 UI배치를 했다.
+    - 폰트는 몇 개 추가했다. 산돌 가웨인 폰트가 이뻤는데 유료여서 그냥 눈누에서 무료폰트 찾아서 넣었다.
+        - TMPro Asset으로 만들었다.

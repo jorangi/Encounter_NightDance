@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a76ec2578a3a944ac6cffe0ceb34c3, type: 3}
   m_Name: WalkingCostsSO
   m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.ScriptableObjects.MovementStrategySO
-  costSettings: []
+  costSettings:
+  - terrainType: 0
+    cost: 0

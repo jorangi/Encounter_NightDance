@@ -25,11 +25,14 @@ namespace Encounter.NightDance.Status
             base.TakeDamage(damage);
         }
         /// <summary>
-        /// 체력 피해 값 변화 함수
+        /// 체력 값 변화 함수
         /// </summary>
         /// <param name="damage"></param>
-        public override void OnValueCheck(int damage)
+        public override void OnValueCheck(int damage, bool isSilent = false)
         {
+            base.OnValueCheck(damage, isSilent);
+            if(isSilent) return; // isSilent이 true인 경우 이벤트 발생 없이 조용히 값만 변경
+
             if(damage > 0) OnDamaged?.Invoke();
             else if(damage < 0) OnHealed?.Invoke();
             if(IsDead) OnDied?.Invoke();
