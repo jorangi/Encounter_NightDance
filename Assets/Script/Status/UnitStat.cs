@@ -1,5 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Encounter.NightDance.Core;
+using Encounter.NightDance.Core.Feafures;
+using Encounter.NightDance.UI;
 using UnityEngine;
 
 namespace Encounter.NightDance.Status
@@ -15,10 +20,11 @@ namespace Encounter.NightDance.Status
         [field: SerializeField]Stat mobility;
         
         [field: Header("성장 & 레벨 관련")]
-        [field:SerializeField] public int Experience{get; private set;} = 0;
+        public event Action<Percentage> OnExperienceChanged;
+        [field:SerializeField] public Percentage Experience{get; private set;} = new(0);
         const int maxLevel = 20;
         [field:SerializeField] public int Level{get; private set;} = 1;
-        public event Action<int> OnLevelUp;
+        public event Action<int> OnLevelChange;
         [field:SerializeField] public int Sp {get; private set;} = 0;
         [field: SerializeField]Stat boost_sp;
         [field: SerializeField]Stat boost_experience;
@@ -143,7 +149,7 @@ namespace Encounter.NightDance.Status
                 chance_speed = 0;
             }
             stringBuilder.AppendLine($"{speed.Value} / {speed_up}만큼 상승");
-            OnLevelUp?.Invoke(Level);
+            OnLevelChange?.Invoke(Level);
             Debug.Log(stringBuilder.ToString());
         }
         /// <summary>
@@ -158,7 +164,7 @@ namespace Encounter.NightDance.Status
         public void GainExperience(int exp)
         {
             //버프 받은 경험치량 계산
-            int boostedExp = Mathf.RoundToInt(exp * boost_experience.Value);
+            Percentage boostedExp = new Percentage(Mathf.RoundToInt(exp * boost_experience.Value));
             Debug.Log($"획득한 경험치: {boostedExp}");
             //만렙일경우 SP 환산
             if (Level >= maxLevel)
@@ -166,7 +172,7 @@ namespace Encounter.NightDance.Status
                 GainSP(boostedExp);
                 return;
             }
-            int totalAvailableExp = Experience + boostedExp;
+            Percentage totalAvailableExp = Experience + boostedExp;
             while (totalAvailableExp >= 100 && Level < maxLevel)
             {
                 totalAvailableExp -= 100;
@@ -177,11 +183,12 @@ namespace Encounter.NightDance.Status
                 {
                     // 만렙 도달 시, 남은 모든 경험치를 SP로 환산
                     GainSP(totalAvailableExp);
-                    totalAvailableExp = 0; // 경험치 소모 완료
+                    totalAvailableExp = new(0); // 경험치 소모 완료
                     break; // 루프 탈출
                 }
             }
             Experience = totalAvailableExp;
+            OnExperienceChanged?.Invoke(Experience);
         }
         /// <summary>
         /// SP 획득 로직
@@ -232,6 +239,53 @@ namespace Encounter.NightDance.Status
             }
             stringBuilder.AppendLine($"{mental.MaxValue.Value} / {mental_up}만큼 상승");
             Debug.Log(stringBuilder.ToString());
+        }
+    }
+    /// <summary>
+    /// 특성들을 컴포넌트 형식으로 관리하는 유닛 클래스(아마 최종?)
+    /// </summary>
+    public class _UnitStat : MonoBehaviour, IUnitStat
+    {
+        /// <summary>
+        /// 유닛이 갖는 특성 Dictionary
+        /// </summary>
+        private readonly Dictionary<Type, IUnitFeature> features = new();
+        /// <summary>
+        /// 유닛에게 특성을 추가하는 메서드
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="feature"></param>
+        public void AddFeature<T>(T feature) where T : class, IUnitFeature
+        {
+            features[typeof(T)] = feature;
+        }
+        /// <summary>
+        /// 유닛이 갖는 특성을 제너릭으로 반환하는 메서드
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetFeature<T>() where T : class, IUnitFeature
+        {
+            if(features.TryGetValue(typeof(T), out IUnitFeature feature))
+            {
+                return feature as T;
+            }
+            Debug.LogWarning($"해당 {typeof(T).Name}특성이 대상에게 존재하지 않습니다.");
+            return null;
+        }
+        /// <summary>
+        /// 대상이 지닌 모든 특성을 반환하는 메서드(일단은 구현)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IUnitFeature[] GetFeatures<T>() where T : class, IUnitFeature
+        {
+            if(features.Count == 0)
+            {
+                Debug.LogWarning("대상에 어떤 특성도 존재하지 않습니다.");
+                return null;
+            }
+            return features.Values.ToArray();
         }
     }
 }

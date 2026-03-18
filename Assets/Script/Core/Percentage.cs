@@ -17,7 +17,18 @@ namespace Encounter.NightDance.Core
             _value = (byte)(value < 0 ? 0 : value > 100 ? 100 : value);
         }
         public static implicit operator byte(Percentage percentage) => percentage._value;
+        public static implicit operator int(Percentage percentage) => percentage._value;
         public static implicit operator float(Percentage percentage) => percentage._value / 100f;
+
+        public static Percentage operator + (Percentage a, Percentage b) => new((byte)(a._value + b._value));
+        public static Percentage operator + (Percentage a, int b) => new((byte)(a._value + b));
+        public static Percentage operator - (Percentage a, Percentage b) => new((byte)(a._value - b._value));
+        public static Percentage operator - (Percentage a, int b) => new((byte)(a._value - b));
+        public static Percentage operator * (Percentage a, int b) => new((byte)(a._value * b));
+        public static Percentage operator * (Percentage a, float b) => new((byte)(a._value * b));
+        public static Percentage operator / (Percentage a, int b) => new((byte)(a._value / b));
+        public static Percentage operator / (Percentage a, float b) => new((byte)(a._value / b));
+
         public bool Equals(Percentage percentage) => _value == percentage._value;
         public int CompareTo(Percentage percentage) => _value.CompareTo(percentage);
         public override string ToString() => $"{_value}%";

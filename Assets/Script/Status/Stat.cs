@@ -38,6 +38,7 @@ namespace Encounter.NightDance.Status
         {
             statModifiers.Add(mod);
             isDirty = true;
+            OnChanged?.Invoke();
         }
         /// <summary>
         /// 특정 소스 제거할 때 연관된 모디파이어 제거
