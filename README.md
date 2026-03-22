@@ -397,3 +397,4 @@ Gemini + Qwen 개인용 프로젝트던 ToyGemini 프로젝트가 얼추 마무�
 그래서 빌더가 아니라 비슷한식으로 취사선택해서 내입맛에 맞는 객체를 만들 수 있는 방식이 뭐가 있을까 했는데, 컴포지트를 쓰면 되겠다 싶었다.
 제네릭으로 IUnitFeature을 상속받은 각종 Feature들을 만들고 Dictionary로 만들면 나중에 추가하고 관리하기도 편하지 않을까 생각했다.
 이렇게 하고 유닛 데이터를 담은 SO에서 Feature를 연결하면 되지 않을까? 생각중이다.
+장비 같은 부분은 IUnitFeature로 인터페이스화해서 꺼내고, ObjectHealth같은 Stat은 Dictionary

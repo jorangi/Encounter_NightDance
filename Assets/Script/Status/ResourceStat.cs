@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Encounter.NightDance.Core;
+using Encounter.NightDance.Core.Features;
 using UnityEngine;
 
 namespace Encounter.NightDance.Status
@@ -8,7 +9,7 @@ namespace Encounter.NightDance.Status
     [Serializable]
     public abstract class ResourceStat
     {
-        private Percentage _cachedPercentage;
+        private Percentage _cachedPercentage = new(100);
         public event Action<Percentage> OnPercentageChanged;
         [field: SerializeField]public Stat MaxValue {get; private set;}
         [field: SerializeField]public int CurValue {get; private set;}
@@ -35,15 +36,16 @@ namespace Encounter.NightDance.Status
         }
         public void ApplySnapshot(int curValue)
         {
+            int oldValue = CurValue;
             CurValue = Mathf.Clamp(curValue, 0, MaxValue.Value);
-            int delta = CurValue - curValue;
-            OnValueCheck(delta, isSlient: true);
+            int delta = oldValue - CurValue;
+            OnValueCheck(delta, isSilent: true);
         }
         /// <summary>
         /// 값 변화량 체크 함수, 기본적으로 NotifyPercentageChange를 호출하여 퍼센트 변화 이벤트를 발생시켜 UI 대응
         /// </summary>
         /// <param name="value"></param>
-        public virtual void OnValueCheck(int value, bool isSlient = false)
+        public virtual void OnValueCheck(int value, bool isSilent = false)
         {
             NotifyPercentageChange();
         }

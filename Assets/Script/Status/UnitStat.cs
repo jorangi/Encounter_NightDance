@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Encounter.NightDance.Core;
-using Encounter.NightDance.Core.Feafures;
+using Encounter.NightDance.Core.Features;
 using Encounter.NightDance.UI;
 using UnityEngine;
 
 namespace Encounter.NightDance.Status
 {
+    public enum StatType
+    {
+        Vitality,
+        Mental,
+        Intensity,
+        Control,
+        Speed,
+        Mobility
+    }
     public class VitalUnitStat: MonoBehaviour, IDamageable
     {
         [Header("기본 정보")]
@@ -244,48 +253,93 @@ namespace Encounter.NightDance.Status
     /// <summary>
     /// 특성들을 컴포넌트 형식으로 관리하는 유닛 클래스(아마 최종?)
     /// </summary>
-    public class _UnitStat : MonoBehaviour, IUnitStat
+    public class _UnitStat : MonoBehaviour, IUnitCore
     {
-        /// <summary>
-        /// 유닛이 갖는 특성 Dictionary
-        /// </summary>
-        private readonly Dictionary<Type, IUnitFeature> features = new();
-        /// <summary>
-        /// 유닛에게 특성을 추가하는 메서드
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="feature"></param>
+        [Header("기본 정보")]
+        [SerializeField] protected UnitData baseData;
+        
+        private readonly Dictionary<StatType, Stat> coreStats = new();
+        private readonly Dictionary<StatType, ResourceStat> resourceStats = new();
+        private class GrowthData{public Stat growth_stat; public int chance;}
+        private readonly Dictionary<StatType, GrowthData> growthStats = new();
+
+        [field: SerializeField]ObjectHealth vitality;
+        [field: SerializeField]Stat intensity;
+        [field: SerializeField]Stat control;
+        [field: SerializeField]Stat speed;
+        [field: SerializeField]Stat mobility;
+        
+        
+        private Dictionary<Type, IUnitFeature> Features {get; set;} = new();
+
         public void AddFeature<T>(T feature) where T : class, IUnitFeature
         {
-            features[typeof(T)] = feature;
+            Features[typeof(T)] = feature;
         }
-        /// <summary>
-        /// 유닛이 갖는 특성을 제너릭으로 반환하는 메서드
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
         public T GetFeature<T>() where T : class, IUnitFeature
         {
-            if(features.TryGetValue(typeof(T), out IUnitFeature feature))
+            if(Features.TryGetValue(typeof(T), out IUnitFeature feature))
             {
                 return feature as T;
             }
             Debug.LogWarning($"해당 {typeof(T).Name}특성이 대상에게 존재하지 않습니다.");
             return null;
         }
-        /// <summary>
-        /// 대상이 지닌 모든 특성을 반환하는 메서드(일단은 구현)
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public IUnitFeature[] GetFeatures<T>() where T : class, IUnitFeature
+        public T[] GetFeatures<T>() where T : class, IUnitFeature
         {
-            if(features.Count == 0)
+            if(Features.Count == 0)
             {
                 Debug.LogWarning("대상에 어떤 특성도 존재하지 않습니다.");
-                return null;
+                return Array.Empty<T>();
             }
-            return features.Values.ToArray();
+            return Features.Values.OfType<T>().ToArray();
         }
+        public void RemoveFeature<T>() where T : class, IUnitFeature
+        {
+            bool removed = Features.Remove(typeof(T));
+            if(!removed) Debug.LogWarning($"해당 {typeof(T).Name}특성이 대상에게 존재하지 않습니다.");
+            else Debug.Log($"해당 {typeof(T).Name}특성이 대상에게서 제거되었습니다.");
+        }
+        public void ClearFeature()
+        {
+            Features.Clear();
+            Debug.Log("대상의 모든 특성이 제거되었습니다.");
+        }
+
+
+        public virtual void Start()
+        {
+            if(baseData.MaxVitality > 0) resourceStats[StatType.Vitality] = new ObjectHealth(baseData.MaxVitality);
+            if(baseData.MaxMental > 0) resourceStats[StatType.Mental] = new ObjectMental(baseData.MaxMental);
+
+            vitality = new(baseData.MaxVitality);
+            intensity = new(baseData.Intensity);
+            control = new(baseData.Control);
+            speed = new(baseData.Speed);
+            mobility = new(baseData.Mobility);
+
+            growth_vitality = new(baseData.GrowthVitality);
+            growth_intensity = new(baseData.GrowthIntensity);
+            growth_control = new(baseData.GrowthControl);
+            growth_speed = new(baseData.GrowthSpeed);
+
+            boost_experience = new(1);
+            boost_sp = new(1);
+        }
+        public void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.L))
+            {
+                int val = 100;
+                Debug.Log($"경험치 {val} 획득");
+                GetFeature<LevelingFeature>()?.GainExperience(val);
+            }
+        }
+        /// <summary>
+        /// 피해를 입을시 ObjectHealth로 피해 함수 전가
+        /// </summary>
+        /// <param name="damage"></param>
+        public void TakeDamage(int damage) => vitality.TakeDamage(damage);
+
     }
 }

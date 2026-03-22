@@ -617,7 +617,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -522.3, y: 17.900024}
+  m_AnchoredPosition: {x: -522.2998, y: 17.899902}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &226132492
@@ -890,7 +890,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 146.07503, y: 0}
+  m_AnchoredPosition: {x: 146.0752, y: 0}
   m_SizeDelta: {x: -1186.75, y: 173.26}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &292867793
@@ -13954,7 +13954,6 @@ MonoBehaviour:
   mobility:
     <BaseValue>k__BackingField: 0
     value: 0
-  <Experience>k__BackingField: 0
   <Level>k__BackingField: 1
   <Sp>k__BackingField: 0
   boost_sp:

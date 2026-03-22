@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Encounter.NightDance.Core.Status;
 using UnityEngine;
 
 
 namespace Encounter.NightDance.Status
 {
     [Serializable]
-    public class Stat
+    public class Stat: IModifiableStat
     {
         public event Action OnSync; // 단순 데이터 동기화용(스냅샷 적용 등)
         public event Action OnChanged; // 값의 변화마다 호출(로직에 의한 변화)
@@ -26,7 +27,6 @@ namespace Encounter.NightDance.Status
                 }
                 return value;
             }
-            set => this.value = value;
         }
         private bool isDirty;
         public readonly List<StatModifier> statModifiers = new();
@@ -88,6 +88,12 @@ namespace Encounter.NightDance.Status
             statModifiers.AddRange(mods);
             isDirty = true;
             OnSync?.Invoke();
+        }
+        public void IncreaseBaseValue(int amount)
+        {
+            BaseValue += amount;
+            isDirty = true;
+            OnChanged?.Invoke();
         }
     }
 }
