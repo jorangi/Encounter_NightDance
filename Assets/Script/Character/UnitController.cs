@@ -12,20 +12,20 @@ namespace Encounter.NightDance.Character
     /// <summary>
     /// 유닛의 행동을 제어하는 컴포넌트 클래스
     /// </summary>
-    [RequireComponent(typeof(UnitStat))]
+    // [RequireComponent(typeof(UnitStat))]
     public class UnitController : Prototype_TileObject, IMovable
     {
-        [SerializeField] private MovementStrategySO terrainCostSO;
-        private UnitStat stat;
-        [SerializeField] private SpriteRenderer t_hpbar;
+        [SerializeField] private MovementStrategySO _terrainCostSO;
+        [SerializeField] private UnitStat _stat;
+        [SerializeField] private SpriteRenderer _tHpbar;
         private MaterialPropertyBlock mpb;
-        private IMovementStrategy movementStrategy;
+        [SerializeField]private IMovementStrategy _movementStrategy;
         private static readonly int FillAmountId = Shader.PropertyToID("_fillAmount");
 
         private void Awake()
         {
-            stat = stat != null ? stat : gameObject.GetComponent<UnitStat>();
-            movementStrategy = new WalkingStrategy(terrainCostSO);
+            _stat = _stat != null ? _stat : gameObject.GetComponent<UnitStat>();
+            _movementStrategy = new WalkingStrategy(_terrainCostSO);
         }
         /// <summary>
         /// 유닛 이동 메서드, transform의 위치를 업데이트
@@ -53,15 +53,15 @@ namespace Encounter.NightDance.Character
                 {
                     if(ct.IsCancellationRequested) return;
                     currentFill = Mathf.Lerp(currentFill, randomFill, lerpSpeed * Time.deltaTime);
-                    t_hpbar.GetPropertyBlock(mpb);
+                    _tHpbar.GetPropertyBlock(mpb);
                     mpb.SetFloat(FillAmountId, currentFill);
-                    t_hpbar.SetPropertyBlock(mpb);
+                    _tHpbar.SetPropertyBlock(mpb);
                     await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: ct);
                 }
                 currentFill = randomFill;
-                t_hpbar.GetPropertyBlock(mpb);
+                _tHpbar.GetPropertyBlock(mpb);
                 mpb.SetFloat(FillAmountId, currentFill);
-                t_hpbar.SetPropertyBlock(mpb);
+                _tHpbar.SetPropertyBlock(mpb);
             }
         }
     }

@@ -1,17 +1,18 @@
+using Encounter.NightDance.Core.Datas;
 using UnityEngine;
 
-namespace Encounter.NightDance.Status
+namespace Encounter.NightDance.Core.Features
 {
     /// <summary>
     /// 피해를 입을 수 있는 오브젝트 인터페이스
     /// </summary>
-    public interface IDamageable
+    public interface IDamageableFeature: IUnitFeature
     {
         /// <summary>
         /// vitality 피해를 입는 함수
         /// </summary>
         /// <param name="damage"></param>
-        public void TakeDamage(int damage);
+        public void TakeDamage(DamageData damage);
     }
     /// <summary>
     /// 정신 피해를 입을 수 있는 오브젝트 인터페이스
@@ -22,6 +23,6 @@ namespace Encounter.NightDance.Status
         /// mental 피해를 입는 함수
         /// </summary>
         /// <param name="damage"></param>
-        public void TakeDamage_M(int damage);
+        public void TakeDamage_M(DamageData damage);
     }
 }

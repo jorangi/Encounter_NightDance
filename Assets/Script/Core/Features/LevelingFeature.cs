@@ -13,9 +13,15 @@ namespace Encounter.NightDance.Core.Features
         public event Action<int> OnLevelChange;
         const int maxLevel = 20;
         public int SP {get; private set;} = 0;
-        Stat boost_experience;
-        Stat boost_sp;
-        _UnitStat owner;
+        private Stat boost_experience;
+        private Stat boost_sp;
+        private IUnitCore _owner;
+        public LevelingFeature(IUnitCore owner)
+        {
+            _owner = owner;
+            boost_experience = new Stat(1);
+            boost_sp = new Stat(1);
+        }
         public void GainExperience(int exp)
         {
             //버프 받은 경험치량 계산
@@ -50,12 +56,10 @@ namespace Encounter.NightDance.Core.Features
         /// </summary>
         /// <param name="val"></param>
         public void GainSP(int val) => SP += val * boost_sp.Value;
-        public static StringBuilder sb = new();
         public virtual void LevelUp()
         {
             Level++;
-            sb.AppendLine($"--- 레벨업 {Level - 1} -> {Level} ---");
-            IGrowableFeature[] growables = owner.GetFeatures<IGrowableFeature>();
+            IGrowableFeature[] growables = _owner.GetFeatures<IGrowableFeature>();
             foreach (IGrowableFeature growable in growables)
             {
                 growable.ApplyGrowthOnLevelUp(Level);

@@ -1,4 +1,5 @@
 using System;
+using Encounter.NightDance.Core.Features;
 using UnityEngine;
 
 namespace Encounter.NightDance.Status

@@ -30,39 +30,6 @@ namespace Encounter.NightDance.Core.Features
         public bool IsActive {get; private set;}
     }
     /// <summary>
-    /// 생명력 특성을 가진 유닛의 인터페이스
-    /// </summary>
-    public class VitalityFeature : UnitFeatureBase
-    {
-        ObjectHealth Vitality {get;}
-        Stat Growth_vitality{get;}
-
-        public override void OnRegister(IUnitCore owner)
-        {
-        }
-        public override void OnUnregister(IUnitCore owner)
-        {
-        }
-        /// <summary>
-        /// ObjectHealth의 TakeDamage를 호출하는 메서드
-        /// </summary>
-        /// <param name="damage"></param>
-        public void TakeDamage(int damage)
-        {
-            if(!IsActive) return;
-            Vitality.TakeDamage(damage);
-        }
-        public void LevelUp(int amount)
-        {
-            Vitality.MaxValue.IncreaseBaseValue(amount);
-            
-        }
-    }
-    /// <summary>
-    /// 정신력 특성을 가진 유닛의 인터페이스
-    /// </summary>
-    public interface MentalityFeature : IUnitFeature {ObjectMental ObjectMental{get;}}
-    /// <summary>
     /// 장비 관련 특성을 가진 유닛의 인터페이스
     /// </summary>
     public interface IEquipmentFeature : IUnitFeature {

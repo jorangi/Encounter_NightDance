@@ -13905,8 +13905,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6db815bb20b64489adbd7a377f9415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitController
-  terrainCostSO: {fileID: 0}
-  t_hpbar: {fileID: 1905038548}
+  _terrainCostSO: {fileID: 11400000, guid: f6b2f1cd9e7a6304a93bd9878141215a, type: 2}
+  _stat: {fileID: 2054259104}
+  _tHpbar: {fileID: 1905038548}
 --- !u!4 &2054259103
 Transform:
   m_ObjectHideFlags: 0
@@ -13937,56 +13938,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.Status.UnitStat
   baseData: {fileID: 11400000, guid: 027845b13e0394f4d9f7d4b2d6e0b199, type: 2}
-  vitality:
-    <MaxValue>k__BackingField:
-      <BaseValue>k__BackingField: 0
-      value: 0
-    <CurValue>k__BackingField: 0
-  intensity:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  control:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  speed:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  mobility:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  <Level>k__BackingField: 1
-  <Sp>k__BackingField: 0
-  boost_sp:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  boost_experience:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  growth_vitality:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  growth_intensity:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  growth_control:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  growth_speed:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  chance_vitality: 0
-  chance_intensity: 0
-  chance_control: 0
-  chance_speed: 0
-  mental:
-    <MaxValue>k__BackingField:
-      <BaseValue>k__BackingField: 0
-      value: 0
-    <CurValue>k__BackingField: 0
-  growth_mental:
-    <BaseValue>k__BackingField: 0
-    value: 0
-  chance_mental: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

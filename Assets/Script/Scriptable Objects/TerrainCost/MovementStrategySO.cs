@@ -12,6 +12,7 @@ namespace Encounter.NightDance.ScriptableObjects
         public TerrainType terrainType;
         public int cost;
     }
+    [Serializable]
     [CreateAssetMenu(fileName = "TerrainCost", menuName = "Scriptable Objects/TerrainCost")]
     public class MovementStrategySO : ScriptableObject
     {

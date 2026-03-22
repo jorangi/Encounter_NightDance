@@ -72,7 +72,6 @@ namespace Encounter.NightDance.Status
             {
                 if(mod.Type == StatModifierType.PercentMul) finalValue *= 1+mod.Value;
             }
-            OnChanged?.Invoke();
             return Mathf.FloorToInt(finalValue);
         }
         public Stat(int baseValue)

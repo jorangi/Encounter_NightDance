@@ -8,12 +8,12 @@ namespace Encounter.NightDance.UI
     /// </summary>
     public static class FocusUnitService
     {
-        private static VitalUnitStat CurrentTarget {get; set;}
-        public static event Action<VitalUnitStat> OnFocusChanged;
-        public static void SetFocus(VitalUnitStat stat)
+        private static IUnitCore CurrentTarget {get; set;}
+        public static event Action<IUnitCore> OnFocusChanged;
+        public static void SetFocus(IUnitCore unit)
         {
-            if(CurrentTarget == stat) return;
-            CurrentTarget = stat;
+            if(CurrentTarget == unit) return;
+            CurrentTarget = unit;
             OnFocusChanged?.Invoke(CurrentTarget);
         }
         public static void ClearFocus()

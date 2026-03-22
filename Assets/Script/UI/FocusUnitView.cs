@@ -34,7 +34,7 @@ namespace Encounter.NightDance.UI
             //TODO: 각종 컴포넌트 유효성 검사
             FocusUnitService.OnFocusChanged += BindUnitStat;
         }
-        private void BindUnitStat(VitalUnitStat stat)
+        private void BindUnitStat(IUnitCore unit)
         {
         }
     }
