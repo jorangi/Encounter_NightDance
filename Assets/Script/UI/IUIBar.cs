@@ -14,6 +14,6 @@ namespace Encounter.NightDance.UI
         /// 게이지의 값(비율)을 설정하는 함수
         /// </summary>
         /// <param name="percentage"></param>
-        public UniTask SetGauge(Percentage percentage, CancellationToken ct = default);
+        public UniTask SetGauge(Percentage percentage, float dur = -1f, CancellationToken ct = default);
     }
 }

@@ -7407,6 +7407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a438f446c8366e8499fc78c853eb9a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.UI.FocusUnitView
+  _unit: {fileID: 2054259104}
   _vitalBar:
     _brightBar: {fileID: 1853444956}
     _darkerBar: {fileID: 961855989}
@@ -13794,6 +13795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2025693229}
   - component: {fileID: 2025693230}
+  - component: {fileID: 2025693231}
   m_Layer: 0
   m_Name: DarkerHealthBar
   m_TagString: Untagged
@@ -13875,6 +13877,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2025693231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025693228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5ab3281fd3f5f4e9ef57ede6ec1ed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.UI.View.UnitHealthView
+  _brightHpBarRenderer: {fileID: 1905038548}
+  _darkerHpBarRenderer: {fileID: 2025693230}
+  _unitStat: {fileID: 2054259104}
+  _fastDuration: 0.02
+  _slowDuration: 0.5
+  _delay: 0.5
 --- !u!1 &2054259100
 GameObject:
   m_ObjectHideFlags: 0

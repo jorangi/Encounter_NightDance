@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Encounter.NightDance.Status;
 
 namespace Encounter.NightDance.Core.Status
@@ -16,11 +17,11 @@ namespace Encounter.NightDance.Core.Status
         /// <summary>
         /// 스탯 값이 변경될 때 이벤트
         /// </summary>
-        public event Action OnChanged;
+        public event Action<IModifiableStat> OnChanged;
         /// <summary>
         /// 스탯 값이 동기화될 때 이벤트(예: 스냅샷 적용 등)
         /// </summary>
-        public event Action OnSync;
+        public event Action<IModifiableStat> OnSync;
         /// <summary>
         /// 스탯 모디파이어 추가, 모디파이어는 스탯 계산에 영향을 주며, 추가 시 스탯 값이 다시 계산됨
         /// </summary>
@@ -32,5 +33,6 @@ namespace Encounter.NightDance.Core.Status
         /// <param name="source"></param>
         /// <returns></returns>
         public bool RemoveAllModifiersFromSource(object source);
+        public IReadOnlyList<StatModifier> Modifiers {get;}
     }
 }

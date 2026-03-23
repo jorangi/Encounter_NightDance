@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Encounter.NightDance.Core;
 using Encounter.NightDance.Core.Features;
+using Encounter.NightDance.Core.Status;
 using UnityEngine;
 
 namespace Encounter.NightDance.Status
@@ -17,9 +18,9 @@ namespace Encounter.NightDance.Status
         {
             MaxValue = new(baseValue);
             CurValue = MaxValue.Value;
-            MaxValue.OnChanged += () => NotifyPercentageChange();
+            MaxValue.OnChanged += (stat) => NotifyPercentageChange(stat);
         }
-        protected void NotifyPercentageChange()
+        protected void NotifyPercentageChange(IModifiableStat stat)
         {
             int currentRaw = MaxValue.Value > 0 ? CurValue * 100 / MaxValue.Value : 0;
             Percentage newPercentage = new(currentRaw);
@@ -47,7 +48,7 @@ namespace Encounter.NightDance.Status
         /// <param name="value"></param>
         public virtual void OnValueCheck(int value, bool isSilent = false)
         {
-            NotifyPercentageChange();
+            NotifyPercentageChange(MaxValue);
         }
     }
 }

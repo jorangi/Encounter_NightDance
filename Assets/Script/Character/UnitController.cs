@@ -39,7 +39,7 @@ namespace Encounter.NightDance.Character
         }
         private void Start()
         {
-            TestFillMaterialAmount(this.GetCancellationTokenOnDestroy()).Forget();
+            // TestFillMaterialAmount(this.GetCancellationTokenOnDestroy()).Forget();
         }
         private async UniTaskVoid TestFillMaterialAmount(CancellationToken ct)
         {

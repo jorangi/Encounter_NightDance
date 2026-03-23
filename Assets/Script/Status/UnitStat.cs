@@ -300,7 +300,7 @@ namespace Encounter.NightDance.Status
         }
 
 
-        public virtual void Start()
+        public virtual void Awake()
         {
             BaseStatFeature baseStat = new(baseData);
             AddFeature<IBaseStats>(baseStat);

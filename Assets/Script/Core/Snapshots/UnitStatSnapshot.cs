@@ -36,7 +36,7 @@ namespace Encounter.NightDance.Core.Snapshot
         {
             TargetId = targetId;
             BaseValue = stat.BaseValue;
-            List<StatModifier> mods = stat.statModifiers;
+            IReadOnlyList<StatModifier> mods = stat.Modifiers;
             int count = mods.Count;
             ModifierCount = count;
 

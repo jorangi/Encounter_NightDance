@@ -31,7 +31,7 @@ namespace Encounter.NightDance.UI
             mpb ??= new MaterialPropertyBlock();
             SetGauge(percentage);
         }
-        public virtual UniTask SetGauge(Percentage percentage, CancellationToken ct = default)
+        public virtual UniTask SetGauge(Percentage percentage, float dur = -1f, CancellationToken ct = default)
         {
             mpb.SetFloat(FillAmountID, percentage);
             spriteRenderer.SetPropertyBlock(mpb);
