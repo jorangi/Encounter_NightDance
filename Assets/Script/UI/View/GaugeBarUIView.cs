@@ -1,4 +1,7 @@
 using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using Encounter.NightDance.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +14,67 @@ namespace Encounter.NightDance.UI
     /// </summary>
     public class GaugeBarUIView
     {
-        [SerializeField]private Image _brightBar;
-        [SerializeField]private Image _darkerBar;
+        [Header("UI 컴포넌트")]
+        [SerializeField]private Image _brightBarImage;
+        [SerializeField]private Image _darkerBarImage;
         [SerializeField]private TextMeshProUGUI _valueText;
+        [Space(10)]
+        [Header("애니메이션 보간 속도 및 지연 시간")]
+        [SerializeField]private float _fastDuration = 0.05f;
+        [SerializeField]private float _slowDuration = 0.5f;
+        [SerializeField]private float _delay = 0.5f;
+
+        private SmoothImageBar _brightBar;
+        private SmoothImageBar _darkerBar;
+        private Percentage _cachedPercentage;
+        private CancellationTokenSource _cts;
+
+        public void Initialize(Percentage percentage, string text = "")
+        {
+            _brightBar = new SmoothImageBar(_brightBarImage);
+            _darkerBar = new SmoothImageBar(_darkerBarImage);
+
+            _cachedPercentage = percentage;
+
+            _brightBarImage.fillAmount = percentage;
+            _darkerBarImage.fillAmount = percentage;
+            _valueText.text = text;
+        }
+        public void UpdateGauge(Percentage percentage, string text = "")
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = new();
+            _valueText.text = text;
+            SetGauge(percentage, _cts.Token).Forget();
+        }
+        private async UniTaskVoid SetGauge(Percentage percentage, CancellationToken token)
+        {
+            try
+            {
+                bool isDamage = percentage <= _cachedPercentage;
+                _cachedPercentage = percentage;
+                if(isDamage)
+                {
+                    _brightBar.SetGauge(percentage, _fastDuration).Forget();
+                    await UniTask.Delay((int)(_delay * 1000), cancellationToken: token);
+                    await _darkerBar.SetGauge(percentage, _slowDuration);
+                }
+                else
+                {
+                    _darkerBar.SetGauge(percentage, _fastDuration).Forget();
+                    await UniTask.Delay((int)(_delay * 1000), cancellationToken: token);
+                    await _brightBar.SetGauge(percentage, _slowDuration);
+                }
+            }
+            catch(OperationCanceledException){}
+        }
+        public void Dispose()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _brightBar.Dispose();
+            _darkerBar.Dispose();
+        }
     }
 }

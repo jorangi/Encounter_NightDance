@@ -306,6 +306,7 @@ namespace Encounter.NightDance.Status
             AddFeature<IBaseStats>(baseStat);
 
             LevelingFeature levelingFeature = new(this);
+            levelingFeature.Activate();
             AddFeature(levelingFeature);
 
             VitalityFeature vitalityFeature = new(new ObjectHealth(baseData.MaxVitality), new Stat(baseData.GrowthVitality));
@@ -318,7 +319,7 @@ namespace Encounter.NightDance.Status
         {
             if(Input.GetKeyDown(KeyCode.L))
             {
-                int val = 100;
+                int val = 30;
                 Debug.Log($"경험치 {val} 획득");
                 GetFeature<LevelingFeature>()?.GainExperience(val);
             }

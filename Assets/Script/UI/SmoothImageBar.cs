@@ -23,12 +23,11 @@ namespace Encounter.NightDance.UI
             _cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
             float startValue = image.fillAmount;
             float endValue = percentage;
-            float duration = 0.5f; //일단은 0.5초, 나중에 조절할지 생각해볼것
             float elapsed = 0f;
-            while(elapsed < duration)
+            while(elapsed < dur)
             {
                 elapsed += Time.deltaTime;
-                image.fillAmount = Mathf.Lerp(startValue, endValue, elapsed / duration);
+                image.fillAmount = Mathf.Lerp(startValue, endValue, elapsed / dur);
                 await UniTask.Yield(PlayerLoopTiming.Update, _cts.Token);
             }
             image.fillAmount = endValue;

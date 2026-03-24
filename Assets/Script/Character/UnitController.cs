@@ -6,6 +6,10 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using Encounter.NightDance.ScriptableObjects;
 using Encounter.NightDance.Core.Strategies;
+using Encounter.NightDance.UI.Presenter;
+using Encounter.NightDance.UI.View;
+using Encounter.NightDance.Core.Features;
+using Encounter.NightDance.UI;
 
 namespace Encounter.NightDance.Character
 {
@@ -16,16 +20,33 @@ namespace Encounter.NightDance.Character
     public class UnitController : Prototype_TileObject, IMovable
     {
         [SerializeField] private MovementStrategySO _terrainCostSO;
+        [SerializeField] private UnitHealthView _unitHealthView;
         [SerializeField] private UnitStat _stat;
         [SerializeField] private SpriteRenderer _tHpbar;
         private MaterialPropertyBlock mpb;
         [SerializeField]private IMovementStrategy _movementStrategy;
+        private UnitHealthPresenter _unitHealthPresenter;
         private static readonly int FillAmountId = Shader.PropertyToID("_fillAmount");
 
         private void Awake()
         {
             _stat = _stat != null ? _stat : gameObject.GetComponent<UnitStat>();
             _movementStrategy = new WalkingStrategy(_terrainCostSO);
+        }
+        private void Start()
+        {
+            VitalityFeature vitalityFeature = _stat.GetFeature<VitalityFeature>();
+            vitalityFeature.Activate();
+            _unitHealthPresenter = new UnitHealthPresenter(_unitHealthView, vitalityFeature);
+
+            FocusUnitService.SetFocus(_stat);
+        }
+        private void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.H))
+            {
+                _stat.GetFeature<VitalityFeature>().TakeDamage(new Core.Datas.DamageData(null, UnityEngine.Random.Range(-101, 100), Core.Datas.DamageType.Vitality, false));
+            }
         }
         /// <summary>
         /// 유닛 이동 메서드, transform의 위치를 업데이트
@@ -37,32 +58,9 @@ namespace Encounter.NightDance.Character
             mpb = new();
             // TODO: 이동 실행, 애니메이션 등
         }
-        private void Start()
+        private void OnDestroy()
         {
-            // TestFillMaterialAmount(this.GetCancellationTokenOnDestroy()).Forget();
-        }
-        private async UniTaskVoid TestFillMaterialAmount(CancellationToken ct)
-        {
-            float currentFill = 1f;
-            float lerpSpeed = 5f;
-            float threshold = 0.01f;
-            while(!ct.IsCancellationRequested)
-            {
-                float randomFill = LinearCongruentialGenerator.Instance.NextFloat();
-                while(Mathf.Abs(currentFill - randomFill) > threshold)
-                {
-                    if(ct.IsCancellationRequested) return;
-                    currentFill = Mathf.Lerp(currentFill, randomFill, lerpSpeed * Time.deltaTime);
-                    _tHpbar.GetPropertyBlock(mpb);
-                    mpb.SetFloat(FillAmountId, currentFill);
-                    _tHpbar.SetPropertyBlock(mpb);
-                    await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: ct);
-                }
-                currentFill = randomFill;
-                _tHpbar.GetPropertyBlock(mpb);
-                mpb.SetFloat(FillAmountId, currentFill);
-                _tHpbar.SetPropertyBlock(mpb);
-            }
+            _unitHealthPresenter.Dispose();    
         }
     }
 }

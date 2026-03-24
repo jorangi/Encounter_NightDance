@@ -8,7 +8,7 @@ namespace Encounter.NightDance.UI
     /// </summary>
     public static class FocusUnitService
     {
-        private static IUnitCore CurrentTarget {get; set;}
+        public static IUnitCore CurrentTarget {get; private set;}
         public static event Action<IUnitCore> OnFocusChanged;
         public static void SetFocus(IUnitCore unit)
         {

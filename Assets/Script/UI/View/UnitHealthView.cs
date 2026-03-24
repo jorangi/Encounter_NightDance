@@ -19,8 +19,6 @@ namespace Encounter.NightDance.UI.View
         [SerializeField] SpriteRenderer _darkerHpBarRenderer;
         [Space(10)]
         [Header("유닛 스탯 컴포넌트")]
-        [SerializeField] private UnitStat _unitStat;
-        private VitalityFeature _vitalityFeature;
         private Percentage _cachedPercentage;
         private CancellationTokenSource _cts;
         [Space(10)]
@@ -33,27 +31,13 @@ namespace Encounter.NightDance.UI.View
         {
             _brightHpBar = new SmoothSpriteBar(_brightHpBarRenderer, 0.001f);
             _darkerHpBar = new SmoothSpriteBar(_darkerHpBarRenderer, 0.5f);
-            _vitalityFeature = _unitStat.GetFeature<VitalityFeature>();
-            _vitalityFeature.Activate();
-            _vitalityFeature.Vitality.OnPercentageChanged += OnPercentageChanged;
         }
         private void OnDestroy()
         {
-            if (_vitalityFeature != null && _vitalityFeature.Vitality != null)
-            {
-                _vitalityFeature.Vitality.OnPercentageChanged -= OnPercentageChanged;
-            }
             _cts?.Cancel();
             _cts?.Dispose();
         }
-        public void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.H))
-            {
-                _vitalityFeature.TakeDamage(new Core.Datas.DamageData(null, UnityEngine.Random.Range(-101, 100), Core.Datas.DamageType.Vitality, false));
-            }
-        }
-        public void OnPercentageChanged(Percentage percentage)
+        public void UpdateGauge(Percentage percentage)
         {
             _cts?.Cancel();
             _cts?.Dispose();
@@ -70,13 +54,13 @@ namespace Encounter.NightDance.UI.View
                 if(isDamage)
                 {
                     _brightHpBar.SetGauge(percentage, _fastDuration).Forget();
-                    await UniTask.Delay((int)(_delay * 1000));
+                    await UniTask.Delay((int)(_delay * 1000), cancellationToken: ct);
                     await _darkerHpBar.SetGauge(percentage, _slowDuration);
                 }
                 else
                 {
                     _darkerHpBar.SetGauge(percentage, _fastDuration).Forget();
-                    await UniTask.Delay((int)(_delay * 1000));
+                    await UniTask.Delay((int)(_delay * 1000), cancellationToken: ct);
                     await _brightHpBar.SetGauge(percentage, _slowDuration);
                 }
             }

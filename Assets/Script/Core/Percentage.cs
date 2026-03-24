@@ -16,6 +16,10 @@ namespace Encounter.NightDance.Core
         {
             _value = (byte)(value < 0 ? 0 : value > 100 ? 100 : value);
         }
+        public Percentage(float value)
+        {
+            _value = (byte)(value < 0 ? 0 : value > 1 ? 1 : value * 100);
+        }
         public static implicit operator byte(Percentage percentage) => percentage._value;
         public static implicit operator int(Percentage percentage) => percentage._value;
         public static implicit operator float(Percentage percentage) => percentage._value / 100f;

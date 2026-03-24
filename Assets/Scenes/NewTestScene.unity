@@ -229,7 +229,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 8
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -289,7 +289,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 13}
+  m_SizeDelta: {x: 0, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &123313166
 GameObject:
@@ -7361,6 +7361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1142422808}
   - component: {fileID: 1142422809}
+  - component: {fileID: 1142422810}
   m_Layer: 5
   m_Name: FocusedUnit
   m_TagString: Untagged
@@ -7407,16 +7408,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a438f446c8366e8499fc78c853eb9a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.UI.FocusUnitView
-  _unit: {fileID: 2054259104}
   _vitalBar:
-    _brightBar: {fileID: 1853444956}
-    _darkerBar: {fileID: 961855989}
+    _brightBarImage: {fileID: 1853444956}
+    _darkerBarImage: {fileID: 961855989}
     _valueText: {fileID: 975777738}
+    _fastDuration: 0.05
+    _slowDuration: 0.5
+    _delay: 0.5
   _mentalBar:
-    _brightBar: {fileID: 202369271}
-    _darkerBar: {fileID: 1658639826}
+    _brightBarImage: {fileID: 202369271}
+    _darkerBarImage: {fileID: 1658639826}
     _valueText: {fileID: 806836343}
-  _expBar: {fileID: 839942617}
+    _fastDuration: 0.05
+    _slowDuration: 0.5
+    _delay: 0.5
+  _expBarImage: {fileID: 839942617}
   _levelText: {fileID: 722522095}
   _classNameText: {fileID: 243768871}
   _unitNameText: {fileID: 1350947481}
@@ -7424,6 +7430,19 @@ MonoBehaviour:
   _ControlText: {fileID: 356206580}
   _SpeedText: {fileID: 445042729}
   _mobilityText: {fileID: 1245796186}
+--- !u!114 &1142422810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142422807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d9ac90f8e74640ad06f9dd0f9c9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.UI.FocusUnitSetup
+  _focusUnitView: {fileID: 1142422809}
 --- !u!1 &1154105387
 GameObject:
   m_ObjectHideFlags: 0
@@ -7551,7 +7570,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 66.4}
+  m_SizeDelta: {x: 0, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1244786064
 GameObject:
@@ -7932,7 +7951,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 846.15, y: -248.71}
+  m_AnchoredPosition: {x: 846.15, y: -246.4}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &1336818493
@@ -7973,8 +7992,8 @@ MonoBehaviour:
     m_Left: 425
     m_Right: 31
     m_Top: 47
-    m_Bottom: 16
-  m_ChildAlignment: 2
+    m_Bottom: 21
+  m_ChildAlignment: 8
   m_Spacing: 0.2
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -13891,7 +13910,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.UI.View.UnitHealthView
   _brightHpBarRenderer: {fileID: 1905038548}
   _darkerHpBarRenderer: {fileID: 2025693230}
-  _unitStat: {fileID: 2054259104}
   _fastDuration: 0.02
   _slowDuration: 0.5
   _delay: 0.5
@@ -13926,6 +13944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitController
   _terrainCostSO: {fileID: 11400000, guid: f6b2f1cd9e7a6304a93bd9878141215a, type: 2}
+  _unitHealthView: {fileID: 2025693231}
   _stat: {fileID: 2054259104}
   _tHpbar: {fileID: 1905038548}
 --- !u!4 &2054259103
