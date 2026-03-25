@@ -31,24 +31,21 @@ namespace Encounter.NightDance.UI
 
         public void Initialize(Percentage percentage, string text = "")
         {
-            _brightBar = new SmoothImageBar(_brightBarImage);
-            _darkerBar = new SmoothImageBar(_darkerBarImage);
+            _brightBar = new SmoothImageBar(_brightBarImage, percentage);
+            _darkerBar = new SmoothImageBar(_darkerBarImage, percentage);
 
             _cachedPercentage = percentage;
-
-            _brightBarImage.fillAmount = percentage;
-            _darkerBarImage.fillAmount = percentage;
             _valueText.text = text;
         }
-        public void UpdateGauge(Percentage percentage, string text = "")
+        public void UpdateGauge(Percentage percentage, string text = "", bool ignoreAnimation = false)
         {
             _cts?.Cancel();
             _cts?.Dispose();
             _cts = new();
             _valueText.text = text;
-            SetGauge(percentage, _cts.Token).Forget();
+            SetGauge(percentage, _cts.Token, ignoreAnimation).Forget();
         }
-        private async UniTaskVoid SetGauge(Percentage percentage, CancellationToken token)
+        private async UniTaskVoid SetGauge(Percentage percentage, CancellationToken token, bool ignoreAnimation = false)
         {
             try
             {
@@ -56,15 +53,15 @@ namespace Encounter.NightDance.UI
                 _cachedPercentage = percentage;
                 if(isDamage)
                 {
-                    _brightBar.SetGauge(percentage, _fastDuration).Forget();
-                    await UniTask.Delay((int)(_delay * 1000), cancellationToken: token);
-                    await _darkerBar.SetGauge(percentage, _slowDuration);
+                    _brightBar.SetGauge(percentage, _fastDuration, ignoreAnimation: ignoreAnimation).Forget();
+                    if(!ignoreAnimation) await UniTask.Delay((int)(_delay * 1000), cancellationToken: token);
+                    await _darkerBar.SetGauge(percentage, _slowDuration, ignoreAnimation: ignoreAnimation);
                 }
                 else
                 {
-                    _darkerBar.SetGauge(percentage, _fastDuration).Forget();
-                    await UniTask.Delay((int)(_delay * 1000), cancellationToken: token);
-                    await _brightBar.SetGauge(percentage, _slowDuration);
+                    _darkerBar.SetGauge(percentage, _fastDuration, ignoreAnimation: ignoreAnimation).Forget();
+                    if(!ignoreAnimation) await UniTask.Delay((int)(_delay * 1000), cancellationToken: token);
+                    await _brightBar.SetGauge(percentage, _slowDuration, ignoreAnimation: ignoreAnimation);
                 }
             }
             catch(OperationCanceledException){}

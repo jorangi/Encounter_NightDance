@@ -21,7 +21,6 @@ namespace Encounter.NightDance.UI
         [Header("유닛 레벨, 경험치, 클래스, 이름")]
         [SerializeField]private SmoothImageBar _expBar;
         [SerializeField]private Image _expBarImage;
-        //[SerializeField]private Image _expBar;
         [SerializeField]private TextMeshProUGUI _levelText;
         [SerializeField]private TextMeshProUGUI _classNameText;
         [SerializeField]private TextMeshProUGUI _unitNameText;
@@ -32,12 +31,11 @@ namespace Encounter.NightDance.UI
         [SerializeField]private TextMeshProUGUI _ControlText;
         [SerializeField]private TextMeshProUGUI _SpeedText;
         [SerializeField]private TextMeshProUGUI _mobilityText;
-        public void InitBars(Percentage vitalP, string vitalText, Percentage mentalP, string mentalText, Percentage _expBarP, string level)
+        private void Awake()
         {
-            _vitalBar.Initialize(vitalP, vitalText);
-            _mentalBar.Initialize(mentalP, mentalText);
-            _expBar = new(_expBarImage, _expBarP);
-            _levelText.text = level;
+            _vitalBar.Initialize(new Percentage(100), "100/100");
+            _mentalBar.Initialize(new Percentage(100), "100/100");
+            _expBar = new SmoothImageBar(_expBarImage, new Percentage(0));
         }
         public void SetUnitInfo(string nickname, string name, string className, int level)
         {
@@ -46,14 +44,20 @@ namespace Encounter.NightDance.UI
             _levelText.text = $"Lv: {level}";
         }
         public void SetLevel(int level) => _levelText.text = $"Lv: {level}";
-        public void UpdateExperience(Percentage p, string text)
+        public void InitializeExperience(Percentage p, string text)
         {
-            _expBar.SetGauge(p, 0.05f).Forget();
+            _expBar.SetGauge(p, 0.05f, ignoreAnimation: true).Forget();
             _levelText.text = text;
         }
-        public void UpdateVital(Percentage p, string text) => _vitalBar.UpdateGauge(p, text);
-        public void UpdateMental(Percentage p, string text) => _mentalBar.UpdateGauge(p, text);
-
+        public void UpdateExperience(Percentage p, string text, bool ignoreAnimation = false)
+        {
+            _expBar.SetGauge(p, 0.05f, ignoreAnimation: ignoreAnimation).Forget();
+            _levelText.text = text;
+        }
+        public void InitializeVitality(Percentage p, string text) => _vitalBar.UpdateGauge(p, text, ignoreAnimation: true);
+        public void UpdateVital(Percentage p, string text, bool ignoreAnimation = false) => _vitalBar.UpdateGauge(p, text, ignoreAnimation: ignoreAnimation);
+        public void UpdateMental(Percentage p, string text, bool ignoreAnimation = false) => _mentalBar.UpdateGauge(p, text, ignoreAnimation: ignoreAnimation);
+        public void InitializeMental(Percentage p, string text) => _mentalBar.UpdateGauge(p, text, ignoreAnimation: true);
         public void UpdateIntensity(string intensity) => _IntensityText.text = $"강도: {intensity}";
         public void UpdateControl(string control) => _ControlText.text = $"제어: {control}";
         public void UpdateSpeed(string speed) => _SpeedText.text = $"속도: {speed}";

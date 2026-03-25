@@ -19,9 +19,10 @@ namespace Encounter.NightDance.UI
         public SmoothSpriteBar(SpriteRenderer spriteRenderer, int percentage , float duration) : base(spriteRenderer, percentage){_duration = duration;}
         public SmoothSpriteBar(SpriteRenderer spriteRenderer, Percentage percentage) : base(spriteRenderer, percentage){}
         public SmoothSpriteBar(SpriteRenderer spriteRenderer, Percentage percentage, float duration) : base(spriteRenderer, percentage){_duration = duration;}
-        public override async UniTask SetGauge(Percentage percentage, float dur = -1f, CancellationToken ct = default)
+        public override async UniTask SetGauge(Percentage percentage, float dur = -1f, CancellationToken ct = default, bool ignoreAnimation = false)
         {
             if(dur < 0) dur = _duration;
+            if(ignoreAnimation) dur = 0f;
             Dispose(); // 이전 애니메이션 취소, CancellationTokenSource 정리
             _cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
             spriteRenderer.GetPropertyBlock(mpb);

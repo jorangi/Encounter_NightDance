@@ -27,7 +27,7 @@ namespace Encounter.NightDance.UI
             this.image = image;
             SetGauge(percentage);
         }
-        public virtual UniTask SetGauge(Percentage percentage, float dur = -1f, CancellationToken ct = default)
+        public virtual UniTask SetGauge(Percentage percentage, float dur = -1f, CancellationToken ct = default, bool ignoreAnimation = false)
         {
             image.fillAmount = percentage;
             return UniTask.CompletedTask;

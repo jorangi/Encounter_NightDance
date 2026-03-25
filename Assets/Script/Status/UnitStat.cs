@@ -320,17 +320,17 @@ namespace Encounter.NightDance.Status
             if(Input.GetKeyDown(KeyCode.L))
             {
                 int val = 30;
-                Debug.Log($"경험치 {val} 획득");
+                // Debug.Log($"경험치 {val} 획득");
                 GetFeature<LevelingFeature>()?.GainExperience(val);
             }
-            StringBuilder sb = new();
-            VitalityFeature vitalityFeature = GetFeature<VitalityFeature>();
-            MentalFeature mentalFeature = GetFeature<MentalFeature>();
-            sb.AppendLine($"레벨: {GetFeature<LevelingFeature>()?.Level} / 경험치: {GetFeature<LevelingFeature>()?.Experience} / SP: {GetFeature<LevelingFeature>()?.SP}");
-            sb.AppendLine($"체력: {vitalityFeature?.Vitality.MaxValue.Value}/{vitalityFeature?.Vitality.CurValue}");
-            sb.AppendLine($"정신: {mentalFeature?.Mental.MaxValue.Value}/{mentalFeature?.Mental.CurValue}");
-            sb.AppendLine($"강도: {GetFeature<IBaseStats>()?.Intensity.Value} / 통제: {GetFeature<IBaseStats>()?.Control.Value} / 속도: {GetFeature<IBaseStats>()?.Speed.Value} / 기동성: {GetFeature<IBaseStats>()?.Mobility.Value}");
-            Debug.Log(sb.ToString());
+            // VitalityFeature vitalityFeature = GetFeature<VitalityFeature>();
+            // MentalFeature mentalFeature = GetFeature<MentalFeature>();
+            // StringBuilder sb = new();
+            // sb.AppendLine($"레벨: {GetFeature<LevelingFeature>()?.Level} / 경험치: {GetFeature<LevelingFeature>()?.Experience} / SP: {GetFeature<LevelingFeature>()?.SP}");
+            // sb.AppendLine($"체력: {vitalityFeature?.Vitality.MaxValue.Value}/{vitalityFeature?.Vitality.CurValue}");
+            // sb.AppendLine($"정신: {mentalFeature?.Mental.MaxValue.Value}/{mentalFeature?.Mental.CurValue}");
+            // sb.AppendLine($"강도: {GetFeature<IBaseStats>()?.Intensity.Value} / 통제: {GetFeature<IBaseStats>()?.Control.Value} / 속도: {GetFeature<IBaseStats>()?.Speed.Value} / 기동성: {GetFeature<IBaseStats>()?.Mobility.Value}");
+            // Debug.Log(sb.ToString());
         }
         /// <summary>
         /// 피해를 입을시 ObjectHealth로 피해 함수 전가

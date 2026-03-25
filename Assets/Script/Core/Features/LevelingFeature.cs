@@ -13,19 +13,19 @@ namespace Encounter.NightDance.Core.Features
         public event Action<int> OnLevelChange;
         const int maxLevel = 20;
         public int SP {get; private set;} = 0;
-        private Stat boost_experience;
-        private Stat boost_sp;
+        private Stat _boost_experience;
+        private Stat _boost_sp;
         private IUnitCore _owner;
         public LevelingFeature(IUnitCore owner)
         {
             _owner = owner;
-            boost_experience = new Stat(1);
-            boost_sp = new Stat(1);
+            _boost_experience = new Stat(1);
+            _boost_sp = new Stat(1);
         }
         public void GainExperience(int exp)
         {
             //버프 받은 경험치량 계산
-            Percentage boostedExp = new Percentage(Mathf.RoundToInt(exp * boost_experience.Value));
+            Percentage boostedExp = new Percentage(Mathf.RoundToInt(exp * _boost_experience.Value));
             Debug.Log($"획득한 경험치: {boostedExp}");
             //만렙일경우 SP 환산
             if (Level >= maxLevel)
@@ -55,7 +55,7 @@ namespace Encounter.NightDance.Core.Features
         /// SP 획득 로직
         /// </summary>
         /// <param name="val"></param>
-        public void GainSP(int val) => SP += val * boost_sp.Value;
+        public void GainSP(int val) => SP += val * _boost_sp.Value;
         public virtual void LevelUp()
         {
             Level++;
