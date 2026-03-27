@@ -13,11 +13,13 @@ namespace Encounter.NightDance.Status
     {
         public readonly float Value;
         public readonly StatModifierType Type;
+        public readonly StatType TargetStat;
         public readonly object Source;
-        public StatModifier(float value, StatModifierType type, object source)
+        public StatModifier(float value, StatModifierType type, StatType target, object source)
         {
             Value = value;
             Type = type;
+            TargetStat = target;
             Source = source;
         }
     }

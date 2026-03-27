@@ -298,8 +298,6 @@ namespace Encounter.NightDance.Status
             Features.Clear();
             Debug.Log("대상의 모든 특성이 제거되었습니다.");
         }
-
-
         public virtual void Awake()
         {
             BaseStatFeature baseStat = new(baseData);
@@ -323,19 +321,6 @@ namespace Encounter.NightDance.Status
                 // Debug.Log($"경험치 {val} 획득");
                 GetFeature<LevelingFeature>()?.GainExperience(val);
             }
-            // VitalityFeature vitalityFeature = GetFeature<VitalityFeature>();
-            // MentalFeature mentalFeature = GetFeature<MentalFeature>();
-            // StringBuilder sb = new();
-            // sb.AppendLine($"레벨: {GetFeature<LevelingFeature>()?.Level} / 경험치: {GetFeature<LevelingFeature>()?.Experience} / SP: {GetFeature<LevelingFeature>()?.SP}");
-            // sb.AppendLine($"체력: {vitalityFeature?.Vitality.MaxValue.Value}/{vitalityFeature?.Vitality.CurValue}");
-            // sb.AppendLine($"정신: {mentalFeature?.Mental.MaxValue.Value}/{mentalFeature?.Mental.CurValue}");
-            // sb.AppendLine($"강도: {GetFeature<IBaseStats>()?.Intensity.Value} / 통제: {GetFeature<IBaseStats>()?.Control.Value} / 속도: {GetFeature<IBaseStats>()?.Speed.Value} / 기동성: {GetFeature<IBaseStats>()?.Mobility.Value}");
-            // Debug.Log(sb.ToString());
         }
-        /// <summary>
-        /// 피해를 입을시 ObjectHealth로 피해 함수 전가
-        /// </summary>
-        /// <param name="damage"></param>
-        // public void TakeDamage(int damage) => GetFeature<VitalityFeature>()?.TakeDamage(damage);
     }
 }

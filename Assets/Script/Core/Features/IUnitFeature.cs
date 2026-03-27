@@ -29,11 +29,4 @@ namespace Encounter.NightDance.Core.Features
         public void Deactivate() => IsActive = false;
         public bool IsActive {get; private set;}
     }
-    /// <summary>
-    /// 장비 관련 특성을 가진 유닛의 인터페이스
-    /// </summary>
-    public interface IEquipmentFeature : IUnitFeature {
-        //TODO: 장비 관련 인터페이스
-    }
-    //TODO: 이후 기능 추가시 이하에 기재
 }

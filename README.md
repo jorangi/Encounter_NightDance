@@ -503,3 +503,35 @@ View가 Model에 너무 깊이까지 파헤치고 있다는 문제다.<br>
 
 테스트삼아 Terrain과 Tree로 배경을 배치해볼까 했는데, 상상이상으로 안어울렸다. 찾은 에셋이 무료 LowPoly와 공식 에셋이라 그럴 수 있긴 한데, 나중에 작업하거나 할듯 하다.
 <hr>
+
+### 2026-03-27
+<br>장비시스템을 만들고자 한다.
+
+인벤토리 + 무기 + 옷 으로 UI가 구성되어 있고, 인벤토리에서 상황에 따라 변경가능하게끔 할 수 있게끔 할 것이다.
+<br>장비 착용이 가능한 아이템의 경우 IEquipable 인터페이스를 제공하여 OnEquip과 OnUnequip을 실행할 수 있다.
+<br>EquipmentFeature은 UnitFeatureBase를 상속받은 Feature 클래스로 몬스터 유닛은 따로 장비 착용이 없는 경우도 있기에 GetFeature를 통해 구분할 예정이다.
+<br>EquipmentData는 SO이며 Id와 이름, 장비의 타입(검, 창, 단검 등등)을 받는 등이다.
+<br>ArmorData, WeaponData만 우선 생각을 하였다. 이들은 EquipmentData를 상속받는다.
+<br>일단은 Armor, Weapon말고 Accessory도 enum에 넣어놓긴 했는데 뺄 수도 있다.
+
+ 백엔드를 통해 DB에도 아이템을 저장할 것이기에 Id는 백엔드에서 입력할 것이다.
+<br>DB, Addressables와 개발자가 눈으로 보게될 정보는 string으로 된 Id일것이고 런타임 내에서는 uint로 된 id를 읽게끔 할 것이다.
+<br>string 비교보다 uint 비교가 훨씬 빠르기 때문인데, 필수적인 작업은 아니지만 그래도 최적화 작업을 해보고 싶었다.
+<br>string은 MappingId이며 런타임에서 비교 등의 연산에 쓰일 것은 uint로된 Id이다.
+<br>Id는 직접 짓는것이 아닌 MappingId를 기반으로 해싱된 값을 가지게할텐데, 처음에는 string에 GetHashCode를 쓰려했으나 환경마다 값이 달라진다 하여 해시 라이브러리나 알고리즘을 찾아보기로 했다.
+<br>암호화를 하고자 하는것이 아닌 속도와 성능에 중점을 둔 해시 알고리즘을 찾다보니 Murmur3, xxHash64라는 것을 찾게되었다.
+<br>xxHash는 64비트에 최적화되어있어서 uint말고 ulong을 쓰면 되긴 하는데, 크기를 생각하면 Murmur3 + uint가 낫다고 생각한다.
+[Murmur3](https://openkmj.tistory.com/20)
+링크에서 확인해보니 곱셈과 비트 회전을 통해 해시값을 만든다고 한다. 비트 회전에 대해 [비트회전](https://en.wikipedia.org/wiki/Circular_shift)링크를 확인해보니, 쉬프트 연산으로 될 것 같다.
+
+1. 4바이트씩 나누고 각각 곱, 회전으로 비트 섞기
+2. 조각을 다시 결합
+3. 다시 섞기
+
+일단 상수 몇개가 필요한데, <br><img alt="Magic Const" src="https://github.com/user-attachments/assets/108aa2f3-94e7-4c7f-92fb-7074387ad382" width="300" height="400">
+<br>검색해서 나온 걸 쓰려고 한다.
+
+[MurmurHash](https://en.wikipedia.org/wiki/MurmurHash)위키에서 보고 이해가 잘 안가는 부분은 Gemini의 도움을 받아서 Murmur3Hash.cs를 작성했다.
+<br>갈수록 점점 주석에 뭐라 작성할지 생각이 안나서 생략한 감이 있긴 한데, 매직넘버에 대해서는 그냥 이미 누가 노가다로 찾은 상수값이라니 따로 쓸 주석이 없는게 컸다.
+
+무튼 Murmur3에서 MappingId를 건네고 받은 uint값은 런타임마다 계산하는 것이 아닌 SO에 저장할 값이며 일종의 캐싱작업이다. 

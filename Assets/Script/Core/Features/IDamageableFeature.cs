@@ -14,15 +14,4 @@ namespace Encounter.NightDance.Core.Features
         /// <param name="damage"></param>
         public void TakeDamage(DamageData damage);
     }
-    /// <summary>
-    /// 정신 피해를 입을 수 있는 오브젝트 인터페이스
-    /// </summary>
-    public interface IDamageable_M
-    {
-        /// <summary>
-        /// mental 피해를 입는 함수
-        /// </summary>
-        /// <param name="damage"></param>
-        public void TakeDamage_M(DamageData damage);
-    }
 }
