@@ -114,7 +114,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""Zoom"",
                     ""type"": ""Value"",
                     ""id"": ""4e6da400-c994-41b8-b841-775a85c6ee07"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -272,7 +272,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Keyboard"",
                     ""id"": ""ca0e6785-7b8d-4dba-b367-e96fc215d837"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -281,7 +281,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
+                    ""name"": ""Negative"",
                     ""id"": ""71763616-08a9-4d01-b844-783afcd75f66"",
                     ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
@@ -292,7 +292,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
+                    ""name"": ""Positive"",
                     ""id"": ""6973bb9b-b611-44e1-8b2c-3dc6933e7baa"",
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
@@ -388,7 +388,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""RightHold"",
                     ""type"": ""Button"",
                     ""id"": ""d2d98a75-8d7b-4edc-8433-bf3fca153efe"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false

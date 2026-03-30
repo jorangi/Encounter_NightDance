@@ -2,10 +2,11 @@ using System;
 using Encounter.NightDance.Core;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Composites;
+using Cysharp.Threading.Tasks;
 using UnityEngine.Tilemaps;
+using System.Threading;
+using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 /// <summary>
 /// 카메라 회전 방향, 기존 int enum에서 sbyte enum으로 변경하여 4byte -> 1byte로 메모리 최적화
@@ -38,7 +39,14 @@ public class CameraController : MonoBehaviour
     float zoomPos;
     Vector2 movePos;
     [SerializeField]private FieldManager fieldManager;
+    private Vector2 _moveInput;
+    private CancellationTokenSource _moveCts;
+    private const float _moveIntervalSeconds = 0.1f;
+    private const float INPUT_THRESHOLD = 0.05f;
+    private float _lastMoveTime;
     private Vector2Int focusPos = Vector2Int.zero;
+    private float _zoomInput;
+    private const float ZOOM_SENSITIVITY = 0.2f;
     void Awake()
     {
         _action = new();
@@ -55,17 +63,17 @@ public class CameraController : MonoBehaviour
     void OnEnable()
     {
         _action.Enable();
-        _action.KeyboardControl.Rotation.performed += ctx => CameraRotate(ctx.ReadValue<float>() == -1f);
-        _action.KeyboardControl.Move.performed += ctx =>
-        {
-            Vector2 v = ctx.ReadValue<Vector2>();
-            v.x = Mathf.RoundToInt(v.x);
-            v.y = -1 * Mathf.RoundToInt(v.y); //필드에서는 좌상단이 0,0이므로 Y는 반전
-            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x + (int)v.x, focusPos.y + (int)v.y);
-            focusPos = clampedPos;
-            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
-            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
-        };
+        _action.KeyboardControl.Rotation.performed += OnRotateCamera;
+        _action.KeyboardControl.Move.performed += OnMovePerformed;
+        _action.KeyboardControl.Move.canceled += OnMoveCanceled;
+    }
+    void OnDisable()
+    {
+        _action.Disable();
+        _action.KeyboardControl.Rotation.performed -= OnRotateCamera;
+        _action.KeyboardControl.Move.performed -= OnMovePerformed;
+        _action.KeyboardControl.Move.canceled -= OnMoveCanceled;
+        _moveCts?.Cancel();
     }
     void Update()
     {
@@ -109,8 +117,14 @@ public class CameraController : MonoBehaviour
         //마우스 휠 스크롤 조작 줌인/줌아웃
         if(!Mathf.Approximately(Input.mouseScrollDelta.y, 0.0f))
         {
-            CameraZoom(Input.mouseScrollDelta.y);
+            _zoomInput = Input.mouseScrollDelta.y;
         }
+        if(_action.KeyboardControl.Zoom.ReadValue<float>() != 0)
+        {
+            _zoomInput = _action.KeyboardControl.Zoom.ReadValue<float>() * ZOOM_SENSITIVITY; //키보드 줌 입력은 마우스 휠 입력보다 덜 민감하게 처리
+        }
+        CameraZoom(_zoomInput);
+        _zoomInput = 0.0f;
         //줌 선형 보간(휠 스크롤)
         if(Mathf.Abs(follow.CameraDistance - _targetDistance) > 0.01f)
         {
@@ -130,15 +144,6 @@ public class CameraController : MonoBehaviour
                 Mathf.Clamp(focus.position.z, tilemap.cellBounds.min.y+0.5f, tilemap.cellBounds.max.y-0.5f)
             );
         }
-        //키보드 줌인/줌아웃
-        if(Input.GetKey(KeyCode.R)) //줌인
-        {
-            CameraZoom(true);
-        }
-        if(Input.GetKey(KeyCode.F)) //줌아웃
-        {
-            CameraZoom(false);
-        }
         //회전 감지
         if(rotDirty)
         {
@@ -150,7 +155,76 @@ public class CameraController : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 비동기 키보드 이동 UniTask, 홀드용
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    private async UniTaskVoid Move(CancellationToken token)
+    {
+        Move();
+        _lastMoveTime = Time.time;
+        if(await UniTask.Delay(500, cancellationToken: token).SuppressCancellationThrow()) return;
+        
+        while(!token.IsCancellationRequested)
+        {
+            Move();
+            _lastMoveTime = Time.time;
+            await UniTask.Delay((int)(_moveIntervalSeconds * 1000), cancellationToken: token);
+        }
+    }
+    /// <summary>
+    /// 이동 입력 처리
+    /// </summary>
+    /// <param name="ctx"></param>
+    private void OnMovePerformed(InputAction.CallbackContext ctx)
+    {
+        Vector2 _curInput = ctx.ReadValue<Vector2>();
+            _curInput.x = Mathf.RoundToInt(_curInput.x);
+            _curInput.y = -1 * Mathf.RoundToInt(_curInput.y);
 
+
+            //키보드 이동이 바뀌면 초기화
+            if(_curInput != _moveInput)
+            {
+                if(Time.time - _lastMoveTime < INPUT_THRESHOLD) return;
+                _moveInput = _curInput;
+                _moveCts?.Cancel();
+                _moveCts = new();
+                Move(_moveCts.Token).Forget();
+            }
+    }
+    /// <summary>
+    /// 이동 입력 취소
+    /// </summary>
+    /// <param name="ctx"></param>
+    private void OnMoveCanceled(InputAction.CallbackContext ctx)
+    {
+        _moveCts?.Cancel();
+        _moveInput = Vector2.zero;
+    }
+    /// <summary>
+    /// 포커스 이동 구현
+    /// </summary>
+    private void Move()
+    {
+        Vector2 input = _action.KeyboardControl.Move.ReadValue<Vector2>();
+        if(input == Vector2.zero) return;
+        input.x = Mathf.RoundToInt(input.x);
+        input.y = -1 * Mathf.RoundToInt(input.y); //필드에서는 좌상단이 0,0이므로 Y는 반전
+        Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x + (int)input.x, focusPos.y + (int)input.y);
+        focusPos = clampedPos;
+        Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
+        focus.position = new(cellPos.x, focus.position.y, cellPos.y);
+    }
+    /// <summary>
+    /// 회전 입력 처리
+    /// </summary>
+    /// <param name="ctx"></param>
+    private void OnRotateCamera(InputAction.CallbackContext ctx)
+    {
+        CameraRotate(ctx.ReadValue<float>() == -1f);
+    }
     /// <summary>
     /// 카메라 회전 구현
     /// </summary>
@@ -169,7 +243,6 @@ public class CameraController : MonoBehaviour
     {
         float zoomAmount = isIn ? -ZoomSpeed : ZoomSpeed;
        _targetDistance = Mathf.Clamp(follow.CameraDistance + 8 * zoomAmount * Time.deltaTime, ARMMIN, ARMMAX);
-        // Debug.Log($"Camera Distance: {follow.CameraDistance}");
     }
     /// <summary>
     /// 카메라 줌인/줌아웃 구현 (스크롤 입력)
