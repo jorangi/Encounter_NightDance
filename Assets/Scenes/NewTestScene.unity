@@ -14084,7 +14084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e9b12a8fdc53342978bfd3b54b5851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.Status.UnitStat
-  baseData: {fileID: 11400000, guid: 027845b13e0394f4d9f7d4b2d6e0b199, type: 2}
+  baseData: {fileID: 11400000, guid: 1d2bd2e9faaaaad4dab89f8e53ad5128, type: 2}
 --- !u!1001 &6446276379588024929
 PrefabInstance:
   m_ObjectHideFlags: 0
