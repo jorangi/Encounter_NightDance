@@ -1,7 +1,6 @@
 using System;
 using Encounter.NightDance.Core;
 using Encounter.NightDance.Core.Features;
-using Encounter.NightDance.Core.Status;
 using Encounter.NightDance.Status;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Encounter.NightDance.Core.Status;
+using Encounter.NightDance.Status;
 using UnityEngine;
 
 

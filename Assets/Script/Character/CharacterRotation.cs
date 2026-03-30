@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Encounter.NightDance.Core
+namespace Encounter.NightDance.Character
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class CharacterRotation : MonoBehaviour

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Encounter.NightDance.Status;
 
-namespace Encounter.NightDance.Core.Status
+namespace Encounter.NightDance.Status
 {
     public interface IModifiableStat
     {

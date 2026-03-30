@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Encounter.NightDance.Core;
 using Encounter.NightDance.Core.Features;
-using Encounter.NightDance.Core.Status;
+using Encounter.NightDance.Status;
 using UnityEngine;
 
 namespace Encounter.NightDance.Status

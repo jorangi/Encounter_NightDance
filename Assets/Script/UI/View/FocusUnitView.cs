@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Encounter.NightDance.Core;
 using Encounter.NightDance.Core.Features;
-using Encounter.NightDance.Core.Status;
 using Encounter.NightDance.Status;
 using TMPro;
 using UnityEngine;

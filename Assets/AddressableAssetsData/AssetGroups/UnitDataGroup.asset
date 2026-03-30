@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: UnitDataGroup
   m_GUID: 6aba5d16de0571e4fadd6ab0ea406d32
   m_SerializeEntries:
-  - m_GUID: 027845b13e0394f4d9f7d4b2d6e0b199
+  - m_GUID: 1d2bd2e9faaaaad4dab89f8e53ad5128
     m_Address: testunit
     m_ReadOnly: 0
     m_SerializedLabels: []

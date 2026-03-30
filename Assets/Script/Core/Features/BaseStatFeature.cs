@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Text;
-using Encounter.NightDance.Core.Status;
 using Encounter.NightDance.Status;
-using UnityEngine;
 
 namespace Encounter.NightDance.Core.Features
 {

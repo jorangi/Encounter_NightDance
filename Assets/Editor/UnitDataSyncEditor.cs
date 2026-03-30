@@ -13,7 +13,7 @@ namespace Encounter.NightDance.Editor
     public class UnitDataSyncEditor : EditorWindow
     {
         private const string API_URL = "http://138.2.109.131:8001/api/units"; //OCI 서버
-        private const string SAVE_PATH = "Assets/Script/Scriptable Objects/UnitData";
+        private const string SAVE_PATH = "Assets/ScriptableObjects/UnitData";
 
         /// <summary>
         /// 메뉴와 GUI 생성
