@@ -69,11 +69,11 @@ public class CameraController : MonoBehaviour
     }
     void OnDisable()
     {
-        _action.Disable();
+        _moveCts?.Cancel();
         _action.Camera.Rotation.started -= OnRotateCamera;
         _action.Camera.Move.performed -= OnMovePerformed;
         _action.Camera.Move.canceled -= OnMoveCanceled;
-        _moveCts?.Cancel();
+        _action.Disable();
     }
     void Update()
     {
