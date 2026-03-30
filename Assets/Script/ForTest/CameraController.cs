@@ -63,32 +63,32 @@ public class CameraController : MonoBehaviour
     void OnEnable()
     {
         _action.Enable();
-        _action.KeyboardControl.Rotation.performed += OnRotateCamera;
-        _action.KeyboardControl.Move.performed += OnMovePerformed;
-        _action.KeyboardControl.Move.canceled += OnMoveCanceled;
+        _action.Camera.Rotation.started += OnRotateCamera;
+        _action.Camera.Move.performed += OnMovePerformed;
+        _action.Camera.Move.canceled += OnMoveCanceled;
     }
     void OnDisable()
     {
         _action.Disable();
-        _action.KeyboardControl.Rotation.performed -= OnRotateCamera;
-        _action.KeyboardControl.Move.performed -= OnMovePerformed;
-        _action.KeyboardControl.Move.canceled -= OnMoveCanceled;
+        _action.Camera.Rotation.started -= OnRotateCamera;
+        _action.Camera.Move.performed -= OnMovePerformed;
+        _action.Camera.Move.canceled -= OnMoveCanceled;
         _moveCts?.Cancel();
     }
     void Update()
     {
         //마우스 우클릭 트리거 -> 회전, 줌인/아웃
-        if(Input.GetMouseButtonDown(1))
+        if(_action.MouseControl.Right.WasPressedThisFrame())
         {
-            rotatePos = Input.mousePosition.x;
-            zoomPos = Input.mousePosition.y;
+            rotatePos = _action.MouseControl.Position.ReadValue<Vector2>().x;
+            zoomPos = _action.MouseControl.Position.ReadValue<Vector2>().y;
         }
         //마우스 휠클릭 트리거 -> 이동
-        if(Input.GetMouseButtonDown(2))
+        if(_action.MouseControl.Middle.WasPressedThisFrame())
         {
-            movePos = Input.mousePosition;
+            movePos = _action.MouseControl.Position.ReadValue<Vector2>();
         }
-        if(Input.GetMouseButtonUp(2))
+        if(_action.MouseControl.Middle.WasReleasedThisFrame())
         {
             //마우스 휠클릭 이동 종료 시 focus의 위치를 타일맵 셀에 고정
             //유닛 이동과의 일관성을 위해 GetTilePos를 사용
@@ -101,9 +101,10 @@ public class CameraController : MonoBehaviour
             focusPos = offsetV; //focusPos 업데이트
             movePos = Vector2.zero;
         }
-        float rotateDelta = Input.GetMouseButton(1) ? Input.mousePosition.x - rotatePos : 0.0f; // 우클릭 X 이동량
-        float zoomDelta = Input.GetMouseButton(1) ? Input.mousePosition.y - zoomPos : 0.0f; // 우클릭 Y 이동량
-        Vector2 moveDelta = Input.GetMouseButton(2) ? (Vector2)Input.mousePosition - movePos : Vector2.zero; //휠클릭 이동량
+        Vector2 mousePos = _action.MouseControl.Position.ReadValue<Vector2>();
+        float rotateDelta = _action.MouseControl.Right.IsPressed() ? mousePos.x - rotatePos : 0.0f; // 우클릭 X 이동량
+        float zoomDelta = _action.MouseControl.Right.IsPressed() ? mousePos.y - zoomPos : 0.0f; // 우클릭 Y 이동량
+        Vector2 moveDelta = _action.MouseControl.Middle.IsPressed() ? mousePos - movePos : Vector2.zero; //휠클릭 이동량
         //마우스 조작 회전
         if(Mathf.Abs(rotateDelta) > Screen.width * 0.3f)
         {
@@ -115,13 +116,13 @@ public class CameraController : MonoBehaviour
             CameraZoom(zoomDelta > 0);
         }
         //마우스 휠 스크롤 조작 줌인/줌아웃
-        if(!Mathf.Approximately(Input.mouseScrollDelta.y, 0.0f))
+        if(!Mathf.Approximately(_action.MouseControl.Scroll.ReadValue<float>(), 0.0f))
         {
-            _zoomInput = Input.mouseScrollDelta.y;
+            _zoomInput = _action.MouseControl.Scroll.ReadValue<float>();
         }
-        if(_action.KeyboardControl.Zoom.ReadValue<float>() != 0)
+        if(_action.Camera.Zoom.ReadValue<float>() != 0)
         {
-            _zoomInput = _action.KeyboardControl.Zoom.ReadValue<float>() * ZOOM_SENSITIVITY; //키보드 줌 입력은 마우스 휠 입력보다 덜 민감하게 처리
+            _zoomInput = _action.Camera.Zoom.ReadValue<float>() * ZOOM_SENSITIVITY; //키보드 줌 입력은 마우스 휠 입력보다 덜 민감하게 처리
         }
         CameraZoom(_zoomInput);
         _zoomInput = 0.0f;
@@ -208,7 +209,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        Vector2 input = _action.KeyboardControl.Move.ReadValue<Vector2>();
+        Vector2 input = _action.Camera.Move.ReadValue<Vector2>();
         if(input == Vector2.zero) return;
         input.x = Mathf.RoundToInt(input.x);
         input.y = -1 * Mathf.RoundToInt(input.y); //필드에서는 좌상단이 0,0이므로 Y는 반전
@@ -223,7 +224,7 @@ public class CameraController : MonoBehaviour
     /// <param name="ctx"></param>
     private void OnRotateCamera(InputAction.CallbackContext ctx)
     {
-        CameraRotate(ctx.ReadValue<float>() == -1f);
+        CameraRotate(ctx.ReadValue<float>() < 0f);
     }
     /// <summary>
     /// 카메라 회전 구현
@@ -231,7 +232,7 @@ public class CameraController : MonoBehaviour
     /// <param name="isLeft"></param>
     private void CameraRotate(bool isLeft)
     {
-        rotatePos = Input.mousePosition.x;
+        rotatePos = _action.MouseControl.Position.ReadValue<Vector2>().x;
         rot = isLeft ? (CameraRot)Mathf.Max(-1, (int)rot - 1) : (CameraRot)Mathf.Min(1, (int)rot + 1);
         rotDirty = true;
     }

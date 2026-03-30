@@ -3,7 +3,7 @@
     "name": "MainAction",
     "maps": [
         {
-            "name": "KeyboardControl",
+            "name": "Camera",
             "id": "20587219-0232-4330-8b67-8317765ee981",
             "actions": [
                 {
@@ -46,7 +46,7 @@
                     "name": "Map",
                     "type": "Button",
                     "id": "d917b44a-efda-44f6-8bfb-1678457b0103",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -55,7 +55,7 @@
                     "name": "MainInteract",
                     "type": "Button",
                     "id": "bab45d5e-a03f-4171-b547-b58a6469117f",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -118,8 +118,107 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "GamePad",
+                    "id": "aedf5ce9-05ad-47cf-a757-943106b54c06",
+                    "path": "2DVector(mode=1)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "b3a18a73-adc6-4166-84c2-e2de21721f31",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "up",
+                    "id": "a9d68d1a-1535-4b09-97c7-749b965f7c80",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "a049a462-c1b1-4396-a08b-a20f7071e5b1",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "39998dac-363a-4cd8-8ce4-51115904b4b5",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "c0815d32-e2d0-4850-bcea-23eeb93fe58e",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "10d84798-0435-45b5-8d6c-6208a3fb14ac",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "3c32704c-7c0f-4121-a65b-0759a9168286",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "c1008852-853c-46b2-9fc4-a7fc79f1ef38",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "Keyboard",
-                    "id": "158ad21c-14fa-462c-82f2-c1fbd96033a4",
+                    "id": "49c6d47b-7c4c-4915-8ef3-282f548f3b5f",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
@@ -130,7 +229,7 @@
                 },
                 {
                     "name": "Negative",
-                    "id": "339542c8-af6a-49e0-850a-ab743dedba01",
+                    "id": "469dcdc4-c3ce-42f1-af90-e3a8a88f9908",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
@@ -141,8 +240,41 @@
                 },
                 {
                     "name": "Positive",
-                    "id": "ae6cb25b-4f1d-4394-b3a8-ba59a7e780ed",
+                    "id": "a7fd5389-c147-47fe-909a-b18e3f109d47",
                     "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "GamePad",
+                    "id": "8a04875d-a6aa-4a0d-8d1e-19c2f377fd26",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "5399175f-05a0-4e5d-859b-d3d8999a8b25",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "e3cc9162-cdb2-4f9e-b29e-2b4825823bee",
+                    "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -217,6 +349,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "GamePad",
+                    "id": "aadc9001-c472-4619-8100-c47bbe041fe8",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "42f79074-e888-404b-8b42-e154eab4fe6e",
+                    "path": "<Gamepad>/rightStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "4d71f42b-be51-4935-8d5a-5da5bd550bae",
+                    "path": "<Gamepad>/rightStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "fdcd4410-8283-4881-bf76-db930b7f356b",
                     "path": "<Keyboard>/m",
@@ -275,7 +440,7 @@
                     "name": "Middle",
                     "type": "Button",
                     "id": "bb8f42de-4de0-4b4e-9c27-11cf8a924dd9",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -293,7 +458,7 @@
                     "name": "Scroll",
                     "type": "Value",
                     "id": "37d459b6-2550-48b8-88f8-5583a1a0cb02",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -365,7 +530,7 @@
                 {
                     "name": "",
                     "id": "d67d4071-2ce2-466b-a175-956d7192d420",
-                    "path": "<Mouse>/scroll",
+                    "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -416,7 +581,7 @@
                     "name": "Brush",
                     "type": "Button",
                     "id": "f1639f24-403e-431f-b318-37ded2154bb3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

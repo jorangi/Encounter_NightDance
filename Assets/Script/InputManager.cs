@@ -116,7 +116,7 @@ public class InputManager : MonoBehaviour
         {
             if(MoveHoldDur >= MoveHoldCycle)
             {
-                movement = mainAction.KeyboardControl.Move.ReadValue<Vector2>();
+                movement = mainAction.Camera.Move.ReadValue<Vector2>();
                 MoveHoldDur = 0f;
             }
              movement = movement.x != 0 ? new Vector2(Mathf.Sign(movement.x), movement.y) : new Vector2(0, movement.y);
@@ -274,12 +274,12 @@ public class InputManager : MonoBehaviour
         {
             MouseMovement = (MousePos - mainAction.MouseControl.Position.ReadValue<Vector2>()) * 0.005f;
         }
-        rot = Mathf.Clamp(rot - (MouseMovement.y + mainAction.KeyboardControl.Skew.ReadValue<Vector2>().y) * SkewSpeed, 10, 60);
+        rot = Mathf.Clamp(rot - (MouseMovement.y + mainAction.Camera.Skew.ReadValue<Vector2>().y) * SkewSpeed, 10, 60);
         tiles.transform.eulerAngles = new Vector3(Mathf.Clamp(rot, 10, 60), 0, tiles.transform.eulerAngles.z);
 }
     private void Zoom()
     {
-        switch(mainAction.KeyboardControl.Zoom.ReadValue<Vector2>())
+        switch(mainAction.Camera.Zoom.ReadValue<Vector2>())
         {
             case Vector2 v when v.Equals(Vector2.up):
                 camDistance = Mathf.Clamp(camDistance - ZoomSpeed, 3, 15);
@@ -365,21 +365,21 @@ public class InputManager : MonoBehaviour
     }
     private void OnEnable() 
     {
-        mainAction.KeyboardControl.Enable();
-        mainAction.KeyboardControl.Rotation.performed += Rotation;
-        mainAction.KeyboardControl.Move.performed += (e) => 
+        mainAction.Camera.Enable();
+        mainAction.Camera.Rotation.performed += Rotation;
+        mainAction.Camera.Move.performed += (e) => 
         {
             MoveOn = true; 
-            movement = mainAction.KeyboardControl.Move.ReadValue<Vector2>();
+            movement = mainAction.Camera.Move.ReadValue<Vector2>();
         };
-        mainAction.KeyboardControl.Move.canceled += (e) => 
+        mainAction.Camera.Move.canceled += (e) => 
         {
             MoveHoldDur = 0f;
             MoveOn = false;
             MoveHoldCycle = 0.5f;
         };
-        mainAction.KeyboardControl.Map.performed += (e) => {GameManager.Inst.uiCon.MapExpand();};
-        mainAction.KeyboardControl.MainInteract.performed += (e) => 
+        mainAction.Camera.Map.performed += (e) => {GameManager.Inst.uiCon.MapExpand();};
+        mainAction.Camera.MainInteract.performed += (e) => 
         {
             if(tiles.FocusPos != tiles.TurnChar.POS && tiles.TurnAct == Act.Ready)
             {
@@ -484,8 +484,8 @@ public class InputManager : MonoBehaviour
     }
     private void OnDisable() 
     {
-        mainAction.KeyboardControl.Rotation.performed -= Rotation;
-        mainAction.KeyboardControl.Disable();  
+        mainAction.Camera.Rotation.performed -= Rotation;
+        mainAction.Camera.Disable();  
     }
     private Tile ImportTileData()
     {

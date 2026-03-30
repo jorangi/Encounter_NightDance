@@ -89,7 +89,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
     ""name"": ""MainAction"",
     ""maps"": [
         {
-            ""name"": ""KeyboardControl"",
+            ""name"": ""Camera"",
             ""id"": ""20587219-0232-4330-8b67-8317765ee981"",
             ""actions"": [
                 {
@@ -132,7 +132,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""Map"",
                     ""type"": ""Button"",
                     ""id"": ""d917b44a-efda-44f6-8bfb-1678457b0103"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -141,7 +141,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""MainInteract"",
                     ""type"": ""Button"",
                     ""id"": ""bab45d5e-a03f-4171-b547-b58a6469117f"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -204,8 +204,107 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""GamePad"",
+                    ""id"": ""aedf5ce9-05ad-47cf-a757-943106b54c06"",
+                    ""path"": ""2DVector(mode=1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""b3a18a73-adc6-4166-84c2-e2de21721f31"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""a9d68d1a-1535-4b09-97c7-749b965f7c80"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a049a462-c1b1-4396-a08b-a20f7071e5b1"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""39998dac-363a-4cd8-8ce4-51115904b4b5"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""c0815d32-e2d0-4850-bcea-23eeb93fe58e"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""10d84798-0435-45b5-8d6c-6208a3fb14ac"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""3c32704c-7c0f-4121-a65b-0759a9168286"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""c1008852-853c-46b2-9fc4-a7fc79f1ef38"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": ""Keyboard"",
-                    ""id"": ""158ad21c-14fa-462c-82f2-c1fbd96033a4"",
+                    ""id"": ""49c6d47b-7c4c-4915-8ef3-282f548f3b5f"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -216,7 +315,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Negative"",
-                    ""id"": ""339542c8-af6a-49e0-850a-ab743dedba01"",
+                    ""id"": ""469dcdc4-c3ce-42f1-af90-e3a8a88f9908"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -227,8 +326,41 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Positive"",
-                    ""id"": ""ae6cb25b-4f1d-4394-b3a8-ba59a7e780ed"",
+                    ""id"": ""a7fd5389-c147-47fe-909a-b18e3f109d47"",
                     ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""GamePad"",
+                    ""id"": ""8a04875d-a6aa-4a0d-8d1e-19c2f377fd26"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""5399175f-05a0-4e5d-859b-d3d8999a8b25"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""e3cc9162-cdb2-4f9e-b29e-2b4825823bee"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -303,6 +435,39 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""GamePad"",
+                    ""id"": ""aadc9001-c472-4619-8100-c47bbe041fe8"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""42f79074-e888-404b-8b42-e154eab4fe6e"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""4d71f42b-be51-4935-8d5a-5da5bd550bae"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""fdcd4410-8283-4881-bf76-db930b7f356b"",
                     ""path"": ""<Keyboard>/m"",
@@ -361,7 +526,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""Middle"",
                     ""type"": ""Button"",
                     ""id"": ""bb8f42de-4de0-4b4e-9c27-11cf8a924dd9"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -379,7 +544,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""Scroll"",
                     ""type"": ""Value"",
                     ""id"": ""37d459b6-2550-48b8-88f8-5583a1a0cb02"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -451,7 +616,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d67d4071-2ce2-466b-a175-956d7192d420"",
-                    ""path"": ""<Mouse>/scroll"",
+                    ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -502,7 +667,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""Brush"",
                     ""type"": ""Button"",
                     ""id"": ""f1639f24-403e-431f-b318-37ded2154bb3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -731,14 +896,14 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // KeyboardControl
-        m_KeyboardControl = asset.FindActionMap("KeyboardControl", throwIfNotFound: true);
-        m_KeyboardControl_Move = m_KeyboardControl.FindAction("Move", throwIfNotFound: true);
-        m_KeyboardControl_Rotation = m_KeyboardControl.FindAction("Rotation", throwIfNotFound: true);
-        m_KeyboardControl_Zoom = m_KeyboardControl.FindAction("Zoom", throwIfNotFound: true);
-        m_KeyboardControl_Skew = m_KeyboardControl.FindAction("Skew", throwIfNotFound: true);
-        m_KeyboardControl_Map = m_KeyboardControl.FindAction("Map", throwIfNotFound: true);
-        m_KeyboardControl_MainInteract = m_KeyboardControl.FindAction("MainInteract", throwIfNotFound: true);
+        // Camera
+        m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
+        m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
+        m_Camera_Rotation = m_Camera.FindAction("Rotation", throwIfNotFound: true);
+        m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
+        m_Camera_Skew = m_Camera.FindAction("Skew", throwIfNotFound: true);
+        m_Camera_Map = m_Camera.FindAction("Map", throwIfNotFound: true);
+        m_Camera_MainInteract = m_Camera.FindAction("MainInteract", throwIfNotFound: true);
         // MouseControl
         m_MouseControl = asset.FindActionMap("MouseControl", throwIfNotFound: true);
         m_MouseControl_Left = m_MouseControl.FindAction("Left", throwIfNotFound: true);
@@ -766,7 +931,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
 
     ~@MainAction()
     {
-        UnityEngine.Debug.Assert(!m_KeyboardControl.enabled, "This will cause a leak and performance issues, MainAction.KeyboardControl.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Camera.enabled, "This will cause a leak and performance issues, MainAction.Camera.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_MouseControl.enabled, "This will cause a leak and performance issues, MainAction.MouseControl.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_CreateMapControl.enabled, "This will cause a leak and performance issues, MainAction.CreateMapControl.Disable() has not been called.");
     }
@@ -841,54 +1006,54 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // KeyboardControl
-    private readonly InputActionMap m_KeyboardControl;
-    private List<IKeyboardControlActions> m_KeyboardControlActionsCallbackInterfaces = new List<IKeyboardControlActions>();
-    private readonly InputAction m_KeyboardControl_Move;
-    private readonly InputAction m_KeyboardControl_Rotation;
-    private readonly InputAction m_KeyboardControl_Zoom;
-    private readonly InputAction m_KeyboardControl_Skew;
-    private readonly InputAction m_KeyboardControl_Map;
-    private readonly InputAction m_KeyboardControl_MainInteract;
+    // Camera
+    private readonly InputActionMap m_Camera;
+    private List<ICameraActions> m_CameraActionsCallbackInterfaces = new List<ICameraActions>();
+    private readonly InputAction m_Camera_Move;
+    private readonly InputAction m_Camera_Rotation;
+    private readonly InputAction m_Camera_Zoom;
+    private readonly InputAction m_Camera_Skew;
+    private readonly InputAction m_Camera_Map;
+    private readonly InputAction m_Camera_MainInteract;
     /// <summary>
-    /// Provides access to input actions defined in input action map "KeyboardControl".
+    /// Provides access to input actions defined in input action map "Camera".
     /// </summary>
-    public struct KeyboardControlActions
+    public struct CameraActions
     {
         private @MainAction m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public KeyboardControlActions(@MainAction wrapper) { m_Wrapper = wrapper; }
+        public CameraActions(@MainAction wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "KeyboardControl/Move".
+        /// Provides access to the underlying input action "Camera/Move".
         /// </summary>
-        public InputAction @Move => m_Wrapper.m_KeyboardControl_Move;
+        public InputAction @Move => m_Wrapper.m_Camera_Move;
         /// <summary>
-        /// Provides access to the underlying input action "KeyboardControl/Rotation".
+        /// Provides access to the underlying input action "Camera/Rotation".
         /// </summary>
-        public InputAction @Rotation => m_Wrapper.m_KeyboardControl_Rotation;
+        public InputAction @Rotation => m_Wrapper.m_Camera_Rotation;
         /// <summary>
-        /// Provides access to the underlying input action "KeyboardControl/Zoom".
+        /// Provides access to the underlying input action "Camera/Zoom".
         /// </summary>
-        public InputAction @Zoom => m_Wrapper.m_KeyboardControl_Zoom;
+        public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
         /// <summary>
-        /// Provides access to the underlying input action "KeyboardControl/Skew".
+        /// Provides access to the underlying input action "Camera/Skew".
         /// </summary>
-        public InputAction @Skew => m_Wrapper.m_KeyboardControl_Skew;
+        public InputAction @Skew => m_Wrapper.m_Camera_Skew;
         /// <summary>
-        /// Provides access to the underlying input action "KeyboardControl/Map".
+        /// Provides access to the underlying input action "Camera/Map".
         /// </summary>
-        public InputAction @Map => m_Wrapper.m_KeyboardControl_Map;
+        public InputAction @Map => m_Wrapper.m_Camera_Map;
         /// <summary>
-        /// Provides access to the underlying input action "KeyboardControl/MainInteract".
+        /// Provides access to the underlying input action "Camera/MainInteract".
         /// </summary>
-        public InputAction @MainInteract => m_Wrapper.m_KeyboardControl_MainInteract;
+        public InputAction @MainInteract => m_Wrapper.m_Camera_MainInteract;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_KeyboardControl; }
+        public InputActionMap Get() { return m_Wrapper.m_Camera; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -896,9 +1061,9 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="KeyboardControlActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="CameraActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(KeyboardControlActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -906,11 +1071,11 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="KeyboardControlActions" />
-        public void AddCallbacks(IKeyboardControlActions instance)
+        /// <seealso cref="CameraActions" />
+        public void AddCallbacks(ICameraActions instance)
         {
-            if (instance == null || m_Wrapper.m_KeyboardControlActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_KeyboardControlActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_CameraActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -937,8 +1102,8 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="KeyboardControlActions" />
-        private void UnregisterCallbacks(IKeyboardControlActions instance)
+        /// <seealso cref="CameraActions" />
+        private void UnregisterCallbacks(ICameraActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -961,12 +1126,12 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="KeyboardControlActions.UnregisterCallbacks(IKeyboardControlActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="CameraActions.UnregisterCallbacks(ICameraActions)" />.
         /// </summary>
-        /// <seealso cref="KeyboardControlActions.UnregisterCallbacks(IKeyboardControlActions)" />
-        public void RemoveCallbacks(IKeyboardControlActions instance)
+        /// <seealso cref="CameraActions.UnregisterCallbacks(ICameraActions)" />
+        public void RemoveCallbacks(ICameraActions instance)
         {
-            if (m_Wrapper.m_KeyboardControlActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_CameraActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -976,21 +1141,21 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="KeyboardControlActions.AddCallbacks(IKeyboardControlActions)" />
-        /// <seealso cref="KeyboardControlActions.RemoveCallbacks(IKeyboardControlActions)" />
-        /// <seealso cref="KeyboardControlActions.UnregisterCallbacks(IKeyboardControlActions)" />
-        public void SetCallbacks(IKeyboardControlActions instance)
+        /// <seealso cref="CameraActions.AddCallbacks(ICameraActions)" />
+        /// <seealso cref="CameraActions.RemoveCallbacks(ICameraActions)" />
+        /// <seealso cref="CameraActions.UnregisterCallbacks(ICameraActions)" />
+        public void SetCallbacks(ICameraActions instance)
         {
-            foreach (var item in m_Wrapper.m_KeyboardControlActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_CameraActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_KeyboardControlActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="KeyboardControlActions" /> instance referencing this action map.
+    /// Provides a new <see cref="CameraActions" /> instance referencing this action map.
     /// </summary>
-    public KeyboardControlActions @KeyboardControl => new KeyboardControlActions(this);
+    public CameraActions @Camera => new CameraActions(this);
 
     // MouseControl
     private readonly InputActionMap m_MouseControl;
@@ -1384,11 +1549,11 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         }
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "KeyboardControl" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Camera" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="KeyboardControlActions.AddCallbacks(IKeyboardControlActions)" />
-    /// <seealso cref="KeyboardControlActions.RemoveCallbacks(IKeyboardControlActions)" />
-    public interface IKeyboardControlActions
+    /// <seealso cref="CameraActions.AddCallbacks(ICameraActions)" />
+    /// <seealso cref="CameraActions.RemoveCallbacks(ICameraActions)" />
+    public interface ICameraActions
     {
         /// <summary>
         /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
