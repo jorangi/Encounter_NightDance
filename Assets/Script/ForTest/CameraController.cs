@@ -2,6 +2,9 @@ using System;
 using Encounter.NightDance.Core;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Composites;
 using UnityEngine.Tilemaps;
 
 /// <summary>
@@ -18,6 +21,7 @@ public enum CameraRot:sbyte
 /// </summary>
 public class CameraController : MonoBehaviour
 {
+    private MainAction _action;
     [SerializeField] CinemachineThirdPersonFollow follow;
     private const float ZoomSpeed = 15f;
     private const float MoveSpeed = 0.01f;
@@ -37,6 +41,7 @@ public class CameraController : MonoBehaviour
     private Vector2Int focusPos = Vector2Int.zero;
     void Awake()
     {
+        _action = new();
         fieldManager = fieldManager != null ? fieldManager : GetComponent<FieldManager>();
         follow = follow != null ? follow : GetComponent<CinemachineThirdPersonFollow>();
         // Debug.Log($"tilemap Size: {tilemap.size}");
@@ -49,6 +54,11 @@ public class CameraController : MonoBehaviour
         focusPos = clampedPos;
         Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
         focus.position = new(cellPos.x, 0.1f, cellPos.y);
+    }
+    void OnEnable()
+    {
+        _action.Enable();
+        _action.KeyboardControl.Rotation.performed += ctx => CameraRotate(ctx.ReadValue<float>() == -1f);
     }
     void Update()
     {
@@ -143,14 +153,14 @@ public class CameraController : MonoBehaviour
             focus.position = new(cellPos.x, focus.position.y, cellPos.y);
         }
         //키보드 회전
-        if(Input.GetKeyDown(KeyCode.Q)) //좌회전
-        {
-            CameraRotate(true);
-        }
-        if(Input.GetKeyDown(KeyCode.E)) //우회전
-        {
-            CameraRotate(false);
-        }
+        // if(Input.GetKeyDown(KeyCode.Q)) //좌회전
+        // {
+        //     CameraRotate(true);
+        // }
+        // if(Input.GetKeyDown(KeyCode.E)) //우회전
+        // {
+        //     CameraRotate(false);
+        // }
         //키보드 줌인/줌아웃
         if(Input.GetKey(KeyCode.R)) //줌인
         {
@@ -171,6 +181,7 @@ public class CameraController : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// 카메라 회전 구현
     /// </summary>

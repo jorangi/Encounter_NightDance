@@ -105,7 +105,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""Rotation"",
                     ""type"": ""Value"",
                     ""id"": ""5bb0914d-f8ec-416f-b608-340d496c1f7f"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -206,7 +206,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Keyboard"",
                     ""id"": ""158ad21c-14fa-462c-82f2-c1fbd96033a4"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -215,7 +215,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Left"",
+                    ""name"": ""Negative"",
                     ""id"": ""339542c8-af6a-49e0-850a-ab743dedba01"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
@@ -226,7 +226,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Right"",
+                    ""name"": ""Positive"",
                     ""id"": ""ae6cb25b-4f1d-4394-b3a8-ba59a7e780ed"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
