@@ -151,7 +151,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Keyboard"",
                     ""id"": ""1ddce7b7-2e55-4c5f-bd95-4e4aa08ba73e"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=1)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

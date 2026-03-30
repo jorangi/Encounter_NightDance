@@ -44,9 +44,6 @@ public class CameraController : MonoBehaviour
         _action = new();
         fieldManager = fieldManager != null ? fieldManager : GetComponent<FieldManager>();
         follow = follow != null ? follow : GetComponent<CinemachineThirdPersonFollow>();
-        // Debug.Log($"tilemap Size: {tilemap.size}");
-        // Debug.Log($"tilemap Cell Bounds Size: {tilemap.cellBounds.size}");
-        // Debug.Log($"tilemap Cell Bounds: {tilemap.cellBounds.min} to {tilemap.cellBounds.max}");
     }
     void Start()
     {
@@ -59,6 +56,16 @@ public class CameraController : MonoBehaviour
     {
         _action.Enable();
         _action.KeyboardControl.Rotation.performed += ctx => CameraRotate(ctx.ReadValue<float>() == -1f);
+        _action.KeyboardControl.Move.performed += ctx =>
+        {
+            Vector2 v = ctx.ReadValue<Vector2>();
+            v.x = Mathf.RoundToInt(v.x);
+            v.y = -1 * Mathf.RoundToInt(v.y); //필드에서는 좌상단이 0,0이므로 Y는 반전
+            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x + (int)v.x, focusPos.y + (int)v.y);
+            focusPos = clampedPos;
+            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
+            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
+        };
     }
     void Update()
     {
@@ -123,44 +130,6 @@ public class CameraController : MonoBehaviour
                 Mathf.Clamp(focus.position.z, tilemap.cellBounds.min.y+0.5f, tilemap.cellBounds.max.y-0.5f)
             );
         }
-        //키보드 이동 조작
-        if(Input.GetKeyDown(KeyCode.W)) //상향
-        {
-            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x, focusPos.y - 1);
-            focusPos = clampedPos;
-            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
-            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
-        }
-        if(Input.GetKeyDown(KeyCode.A)) //좌향
-        {
-            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x - 1, focusPos.y);
-            focusPos = clampedPos;
-            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
-            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
-        }
-        if(Input.GetKeyDown(KeyCode.S)) //하향
-        {
-            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x, focusPos.y + 1);
-            focusPos = clampedPos;
-            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
-            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
-        }
-        if(Input.GetKeyDown(KeyCode.D)) //우향
-        {
-            Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x + 1, focusPos.y);
-            focusPos = clampedPos;
-            Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
-            focus.position = new(cellPos.x, focus.position.y, cellPos.y);
-        }
-        //키보드 회전
-        // if(Input.GetKeyDown(KeyCode.Q)) //좌회전
-        // {
-        //     CameraRotate(true);
-        // }
-        // if(Input.GetKeyDown(KeyCode.E)) //우회전
-        // {
-        //     CameraRotate(false);
-        // }
         //키보드 줌인/줌아웃
         if(Input.GetKey(KeyCode.R)) //줌인
         {
