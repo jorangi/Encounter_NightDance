@@ -5,6 +5,7 @@ using Encounter.NightDance.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Text;
 
 namespace Encounter.NightDance.UI
 {
@@ -35,14 +36,14 @@ namespace Encounter.NightDance.UI
             _darkerBar = new SmoothImageBar(_darkerBarImage, percentage);
 
             _cachedPercentage = percentage;
-            _valueText.text = text;
+            _valueText.SetTextFormat("{0}", text);
         }
         public void UpdateGauge(Percentage percentage, string text = "", bool ignoreAnimation = false)
         {
             _cts?.Cancel();
             _cts?.Dispose();
             _cts = new();
-            _valueText.text = text;
+            _valueText.SetTextFormat("{0}", text);
             SetGauge(percentage, _cts.Token, ignoreAnimation).Forget();
         }
         private async UniTaskVoid SetGauge(Percentage percentage, CancellationToken token, bool ignoreAnimation = false)

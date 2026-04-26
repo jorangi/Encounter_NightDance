@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Encounter.NightDance.Status;
+using R3;
 using UnityEngine;
 
 
@@ -9,6 +10,8 @@ namespace Encounter.NightDance.Status
     [Serializable]
     public class Stat: IModifiableStat
     {
+        public readonly Subject<IModifiableStat> _onChangedSubject = new();
+        public readonly Subject<IModifiableStat> _onSyncSubject = new();
         public event Action<IModifiableStat> OnSync; // 단순 데이터 동기화용(스냅샷 적용 등)
         public event Action<IModifiableStat> OnChanged; // 값의 변화마다 호출(로직에 의한 변화)
         [field: SerializeField]public int BaseValue{get; private set;}
@@ -31,6 +34,8 @@ namespace Encounter.NightDance.Status
         private bool isDirty;
         private readonly List<StatModifier> statModifiers = new();
         public IReadOnlyList<StatModifier> Modifiers => statModifiers.AsReadOnly();
+        public Observable<IModifiableStat> OnChangedAsObservable() => _onChangedSubject;
+        public Observable<IModifiableStat> OnSyncAsObservable() => _onSyncSubject;
 
         /// <summary>
         /// 모디파이어 추가
@@ -40,7 +45,7 @@ namespace Encounter.NightDance.Status
         {
             statModifiers.Add(mod);
             isDirty = true;
-            OnChanged?.Invoke(this);
+            _onChangedSubject.OnNext(this);
         }
         /// <summary>
         /// 특정 소스 제거할 때 연관된 모디파이어 제거
@@ -53,7 +58,7 @@ namespace Encounter.NightDance.Status
             if (removeCount > 0)
             {
                 isDirty = true;
-                OnChanged?.Invoke(this);
+                _onChangedSubject.OnNext(this);
                 return true;
             }
             return false;
@@ -84,7 +89,7 @@ namespace Encounter.NightDance.Status
         {
             this.BaseValue = baseValue;
             isDirty = true;
-            OnSync?.Invoke(this);
+            _onSyncSubject.OnNext(this);
         }
         public void RestoreFromSnapshot(int baseVal, IEnumerable<StatModifier> mods)
         {
@@ -92,14 +97,14 @@ namespace Encounter.NightDance.Status
             statModifiers.Clear();
             statModifiers.AddRange(mods);
             isDirty = true;
-            OnSync?.Invoke(this);
+            _onSyncSubject.OnNext(this);
         }
         public void IncreaseBaseValue(int amount)
         {
             BaseValue += amount;
             isDirty = true;
-            OnSync?.Invoke(this);
-            OnChanged?.Invoke(this);
+            _onSyncSubject.OnNext(this);
+            _onChangedSubject.OnNext(this);
         }
     }
 }

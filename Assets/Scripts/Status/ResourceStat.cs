@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Encounter.NightDance.Core;
 using Encounter.NightDance.Core.Features;
 using Encounter.NightDance.Status;
+using R3;
 using UnityEngine;
 
 namespace Encounter.NightDance.Status
@@ -11,7 +12,9 @@ namespace Encounter.NightDance.Status
     public abstract class ResourceStat
     {
         private Percentage _cachedPercentage = new(100);
-        public event Action<Percentage> OnPercentageChanged;
+        public Subject<Percentage> _onPercentageChangedSubject = new();
+        public Observable<Percentage> OnPercentageChangedAsObservable() => _onPercentageChangedSubject;
+        // public event Action<Percentage> OnPercentageChanged;
         [field: SerializeField]public Stat MaxValue {get; private set;}
         [field: SerializeField]public int CurValue {get; private set;}
         public ResourceStat(int baseValue)
@@ -26,7 +29,7 @@ namespace Encounter.NightDance.Status
             Percentage newPercentage = new(currentRaw);
             if(!_cachedPercentage.Equals(newPercentage))
             {
-                OnPercentageChanged?.Invoke(new Percentage(currentRaw));
+                _onPercentageChangedSubject.OnNext(newPercentage);
                 _cachedPercentage = newPercentage;
             }
         }
