@@ -9,19 +9,23 @@ using UnityEngine;
 namespace Encounter.NightDance.Status
 {
     [Serializable]
-    public abstract class ResourceStat
+    public abstract class ResourceStat: IDisposable
     {
         private Percentage _cachedPercentage = new(100);
-        public Subject<Percentage> _onPercentageChangedSubject = new();
+        private DisposableBag _statDisposables = new();
+        private readonly ReactiveProperty<Percentage> _onPercentageChangedSubject = new();
         public Observable<Percentage> OnPercentageChangedAsObservable() => _onPercentageChangedSubject;
-        // public event Action<Percentage> OnPercentageChanged;
         [field: SerializeField]public Stat MaxValue {get; private set;}
         [field: SerializeField]public int CurValue {get; private set;}
         public ResourceStat(int baseValue)
         {
+            _statDisposables = new();
             MaxValue = new(baseValue);
             CurValue = MaxValue.Value;
-            MaxValue.OnChanged += (stat) => NotifyPercentageChange(stat);
+            _onPercentageChangedSubject = new(new Percentage(MaxValue.Value > 0 ? CurValue * 100 / MaxValue.Value : 0));
+            MaxValue.OnChangedAsObservable()
+                .Subscribe(this, (s, state) => state.NotifyPercentageChange(s))
+                .AddTo(ref _statDisposables);
         }
         protected void NotifyPercentageChange(IModifiableStat stat)
         {
@@ -52,6 +56,13 @@ namespace Encounter.NightDance.Status
         public virtual void OnValueCheck(int value, bool isSilent = false)
         {
             NotifyPercentageChange(MaxValue);
+        }
+        /// <summary>
+        /// ResourceStat은 구독 해제시 Dispose하여 이벤트 정리
+        /// </summary>
+        public virtual void Dispose()
+        {
+            _statDisposables.Dispose();
         }
     }
 }

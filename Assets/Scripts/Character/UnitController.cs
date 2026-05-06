@@ -20,12 +20,15 @@ namespace Encounter.NightDance.Character
     public class UnitController : Prototype_TileObject, IMovable
     {
         [SerializeField] private MovementStrategySO _terrainCostSO;
-        [SerializeField] private UnitHealthView _unitHealthView;
+        [SerializeField] private UnitGaugeBarView _unitHealthView;
+        [SerializeField] private UnitGaugeBarView _unitMentalView;
         [SerializeField] private UnitStat _stat;
-        [SerializeField] private SpriteRenderer _tHpbar;
+        [SerializeField] private SpriteRenderer _tVitalitybar;
+        [SerializeField] private SpriteRenderer _tMentalbar;
         private MaterialPropertyBlock mpb;
         [SerializeField]private IMovementStrategy _movementStrategy;
-        private UnitHealthPresenter _unitHealthPresenter;
+        private UnitVitalityPresenter _unitHealthPresenter;
+        private UnitMentalPresenter _unitMentalPresenter;
         private static readonly int FillAmountId = Shader.PropertyToID("_fillAmount");
 
         private void Awake()
@@ -37,8 +40,11 @@ namespace Encounter.NightDance.Character
         {
             VitalityFeature vitalityFeature = _stat.GetFeature<VitalityFeature>();
             vitalityFeature.Activate();
-            _unitHealthPresenter = new UnitHealthPresenter(_unitHealthView, vitalityFeature);
+            _unitHealthPresenter = new UnitVitalityPresenter(_unitHealthView, vitalityFeature);
 
+            MentalFeature mentalFeature = _stat.GetFeature<MentalFeature>();
+            mentalFeature.Activate();
+            _unitMentalPresenter = new UnitMentalPresenter(_unitMentalView, mentalFeature);
             FocusUnitService.SetFocus(_stat);
         }
         private void Update()
@@ -61,6 +67,7 @@ namespace Encounter.NightDance.Character
         private void OnDestroy()
         {
             _unitHealthPresenter.Dispose();    
+            _unitMentalPresenter.Dispose();
         }
     }
 }

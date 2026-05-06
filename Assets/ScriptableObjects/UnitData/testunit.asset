@@ -19,8 +19,8 @@ MonoBehaviour:
   control: 10
   speed: 5
   mobility: 3
-  growthVitality: 37
-  growthMental: 62
+  growthVitality: 350
+  growthMental: 250
   growthIntensity: 37
   growthControl: 87
   growthSpeed: 73

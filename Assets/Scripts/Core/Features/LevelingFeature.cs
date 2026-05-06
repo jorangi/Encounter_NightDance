@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using Encounter.NightDance.Status;
+using R3;
 using UnityEngine;
 
 namespace Encounter.NightDance.Core.Features
@@ -8,9 +9,11 @@ namespace Encounter.NightDance.Core.Features
     public class LevelingFeature : UnitFeatureBase
     {
         public Percentage Experience{get; private set;} = new(0);
-        public event Action<Percentage> OnExperienceChanged;
+        private ReactiveProperty<Percentage> _onExperienceChangedSubject = new();
+        public Observable<Percentage> OnExperienceChangedAsObservable() => _onExperienceChangedSubject;
         public int Level {get; private set;} = 1;
-        public event Action<int> OnLevelChange;
+        private ReactiveProperty<int> _onLevelChangeSubject = new();
+        public Observable<int> OnLevelChangeAsObservable() => _onLevelChangeSubject;
         const int maxLevel = 20;
         public int SP {get; private set;} = 0;
         private Stat _boost_experience;
@@ -49,7 +52,7 @@ namespace Encounter.NightDance.Core.Features
                 }
             }
             Experience = totalAvailableExp;
-            OnExperienceChanged?.Invoke(Experience);
+            _onExperienceChangedSubject.OnNext(Experience);
         }
         /// <summary>
         /// SP 획득 로직
@@ -64,7 +67,7 @@ namespace Encounter.NightDance.Core.Features
             {
                 growable.ApplyGrowthOnLevelUp(Level);
             }
-            OnLevelChange?.Invoke(Level);
+            _onLevelChangeSubject.OnNext(Level);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Encounter.NightDance.UI
     {
         [SerializeField] private FocusUnitView _focusUnitView;
         private FocusUnitPresenter _presenter;
-        private void Start()
+        private void Awake()
         {
             _presenter = new FocusUnitPresenter(_focusUnitView);
         }

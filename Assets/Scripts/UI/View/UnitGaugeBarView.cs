@@ -10,13 +10,13 @@ using UnityEngine.ResourceManagement.Exceptions;
 
 namespace Encounter.NightDance.UI.View
 {
-    public class UnitHealthView : MonoBehaviour
+    public class UnitGaugeBarView : MonoBehaviour
     {
-        private SmoothSpriteBar _brightHpBar;
-        private SmoothSpriteBar _darkerHpBar;
-        [Header("체력바 렌더러")]
-        [SerializeField] SpriteRenderer _brightHpBarRenderer;
-        [SerializeField] SpriteRenderer _darkerHpBarRenderer;
+        private SmoothSpriteBar _brightGaugeBar;
+        private SmoothSpriteBar _darkerGaugeBar;
+        [Header("게이지 바 렌더러")]
+        [SerializeField] SpriteRenderer _brightGaugeBarRenderer;
+        [SerializeField] SpriteRenderer _darkerGaugeBarRenderer;
         [Space(10)]
         [Header("유닛 스탯 컴포넌트")]
         private Percentage _cachedPercentage;
@@ -29,8 +29,8 @@ namespace Encounter.NightDance.UI.View
 
         public void Start()
         {
-            _brightHpBar = new SmoothSpriteBar(_brightHpBarRenderer, 0.001f);
-            _darkerHpBar = new SmoothSpriteBar(_darkerHpBarRenderer, 0.5f);
+            _brightGaugeBar = new SmoothSpriteBar(_brightGaugeBarRenderer, 0.001f);
+            _darkerGaugeBar = new SmoothSpriteBar(_darkerGaugeBarRenderer, 0.5f);
         }
         private void OnDestroy()
         {
@@ -53,15 +53,15 @@ namespace Encounter.NightDance.UI.View
 
                 if(isDamage)
                 {
-                    _brightHpBar.SetGauge(percentage, _fastDuration).Forget();
+                    _brightGaugeBar.SetGauge(percentage, _fastDuration).Forget();
                     await UniTask.Delay((int)(_delay * 1000), cancellationToken: ct);
-                    await _darkerHpBar.SetGauge(percentage, _slowDuration);
+                    await _darkerGaugeBar.SetGauge(percentage, _slowDuration);
                 }
                 else
                 {
-                    _darkerHpBar.SetGauge(percentage, _fastDuration).Forget();
+                    _darkerGaugeBar.SetGauge(percentage, _fastDuration).Forget();
                     await UniTask.Delay((int)(_delay * 1000), cancellationToken: ct);
-                    await _brightHpBar.SetGauge(percentage, _slowDuration);
+                    await _brightGaugeBar.SetGauge(percentage, _slowDuration);
                 }
             }
             catch(OperationCanceledException){}

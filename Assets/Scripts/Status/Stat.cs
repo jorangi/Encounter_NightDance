@@ -10,10 +10,13 @@ namespace Encounter.NightDance.Status
     [Serializable]
     public class Stat: IModifiableStat
     {
-        public readonly Subject<IModifiableStat> _onChangedSubject = new();
-        public readonly Subject<IModifiableStat> _onSyncSubject = new();
-        public event Action<IModifiableStat> OnSync; // 단순 데이터 동기화용(스냅샷 적용 등)
-        public event Action<IModifiableStat> OnChanged; // 값의 변화마다 호출(로직에 의한 변화)
+        public readonly ReactiveProperty<IModifiableStat> _onChangedSubject = new();
+        public readonly ReactiveProperty<IModifiableStat> _onSyncSubject = new();
+        public Observable<IModifiableStat> OnChangedAsObservable() => _onChangedSubject;// 단순 데이터 동기화용(스냅샷 적용 등)
+        public Observable<IModifiableStat> OnSyncAsObservable() => _onSyncSubject;// 값의 변화마다 호출(로직에 의한 변화)
+        private bool isDirty;
+        private readonly List<StatModifier> statModifiers = new();
+        public IReadOnlyList<StatModifier> Modifiers => statModifiers.AsReadOnly();
         [field: SerializeField]public int BaseValue{get; private set;}
         [field: SerializeField]private int value;
         /// <summary>
@@ -31,11 +34,6 @@ namespace Encounter.NightDance.Status
                 return value;
             }
         }
-        private bool isDirty;
-        private readonly List<StatModifier> statModifiers = new();
-        public IReadOnlyList<StatModifier> Modifiers => statModifiers.AsReadOnly();
-        public Observable<IModifiableStat> OnChangedAsObservable() => _onChangedSubject;
-        public Observable<IModifiableStat> OnSyncAsObservable() => _onSyncSubject;
 
         /// <summary>
         /// 모디파이어 추가

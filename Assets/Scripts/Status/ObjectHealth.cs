@@ -1,5 +1,6 @@
 using System;
 using Encounter.NightDance.Core.Features;
+using Encounter.NightDance.UI;
 using R3;
 using UnityEngine;
 
@@ -9,12 +10,12 @@ namespace Encounter.NightDance.Status
     /// 유닛 생존 수치 스냅샷
     /// </summary>
     [Serializable]
-    public class ObjectHealth: ResourceStat, IDisposable
+    public class ObjectHealth: ResourceStat
     {
-        public readonly Subject<Unit> _onDamageSubject = new();
-        public readonly Subject<Unit> _onHealSubject = new();
-        public readonly Subject<Unit> _onDeathSubject = new();
-        public readonly Subject<Unit> _onAliveSubject = new();
+        private readonly ReactiveProperty<Unit> _onDamageSubject = new();
+        private readonly ReactiveProperty<Unit> _onHealSubject = new();
+        private readonly ReactiveProperty<Unit> _onDeathSubject = new();
+        private readonly ReactiveProperty<Unit> _onAliveSubject = new();
         public Observable<Unit> OnDamagedAsObservable() => _onDamageSubject;
         public Observable<Unit> OnHealedAsObservable() => _onHealSubject;
         public Observable<Unit> OnDeathAsObservable() => _onDeathSubject;
@@ -44,8 +45,7 @@ namespace Encounter.NightDance.Status
             if(IsDead) _onDeathSubject.OnNext(Unit.Default);
             else _onAliveSubject.OnNext(Unit.Default);
         }
-
-        public void Dispose()
+        public override void Dispose()
         {
             _onDamageSubject.Dispose();
             _onHealSubject.Dispose();

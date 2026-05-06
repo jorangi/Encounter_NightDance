@@ -55,10 +55,10 @@ namespace Encounter.NightDance.UI
         public void UpdateVital(Percentage p, string text, bool ignoreAnimation = false) => _vitalBar.UpdateGauge(p, text, ignoreAnimation: ignoreAnimation);
         public void UpdateMental(Percentage p, string text, bool ignoreAnimation = false) => _mentalBar.UpdateGauge(p, text, ignoreAnimation: ignoreAnimation);
         public void InitializeMental(Percentage p, string text) => _mentalBar.UpdateGauge(p, text, ignoreAnimation: true);
-        public void UpdateIntensity(string intensity) => _IntensityText.SetTextFormat("{0}", intensity);
-        public void UpdateControl(string control) => _ControlText.SetTextFormat("{0}", control);
-        public void UpdateSpeed(string speed) => _SpeedText.SetTextFormat("{0}", speed);
-        public void UpdateMobility(string mobility) => _mobilityText.SetTextFormat("{0}", mobility);
+        public void UpdateIntensity(string intensity) => _IntensityText.SetTextFormat("강도: {0}", intensity);
+        public void UpdateControl(string control) => _ControlText.SetTextFormat("통제: {0}", control);
+        public void UpdateSpeed(string speed) => _SpeedText.SetTextFormat("속도: {0}", speed);
+        public void UpdateMobility(string mobility) => _mobilityText.SetTextFormat("기동: {0}", mobility);
     }
 }
 
