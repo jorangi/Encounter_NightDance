@@ -7,7 +7,7 @@ namespace Encounter.NightDance.Core
     /// </summary>
     public class Prototype_TileObject : MonoBehaviour, IFieldObject
     {
-        private Vector2Int _pos;
+        private Vector2Int _pos = new(-1, -1);
         public Vector2Int Pos 
         { 
             get=>_pos;
@@ -26,10 +26,9 @@ namespace Encounter.NightDance.Core
                 transform.position = new Vector3(worldPos.x, 0, worldPos.y);
             }
         }
-        public void SetPos(Vector2Int pos, Vector2 worldPos)
+        public void SetPos(Vector2Int pos)
         {
             Pos = pos;
-            WorldPos = worldPos;
         }
     }
 }

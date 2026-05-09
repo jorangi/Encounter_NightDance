@@ -12,5 +12,6 @@ namespace Encounter.NightDance.Core
         /// </summary>
         public Vector2 WorldPos{get; set;}
         public Vector2Int Pos{get; set;}
+        public string ToString();
     }
 }

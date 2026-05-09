@@ -27,7 +27,7 @@ namespace Encounter.NightDance.UI.View
         [SerializeField] private float _slowDuration = 0.5f;
         [SerializeField] private float _delay = 0.5f;
 
-        public void Start()
+        public void Awake()
         {
             _brightGaugeBar = new SmoothSpriteBar(_brightGaugeBarRenderer, 0.001f);
             _darkerGaugeBar = new SmoothSpriteBar(_darkerGaugeBarRenderer, 0.5f);
@@ -50,7 +50,7 @@ namespace Encounter.NightDance.UI.View
             {
                 bool isDamage = percentage <= _cachedPercentage;
                 _cachedPercentage = percentage;
-
+                
                 if(isDamage)
                 {
                     _brightGaugeBar.SetGauge(percentage, _fastDuration).Forget();

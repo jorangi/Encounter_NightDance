@@ -7,6 +7,7 @@ namespace Encounter.NightDance.Core.Commands
     public interface IUnitCommand
     {
         public Stack<IHistoryRecord> records {get;}
+        public bool CanExecute();
         public void Execute();
         public void Undo();
         public void Redo();

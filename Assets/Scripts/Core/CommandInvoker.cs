@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Encounter.NightDance.Core.Commands;
+using UnityEngine;
 namespace Encounter.NightDance.Core
 {
     /// <summary>
@@ -13,6 +14,11 @@ namespace Encounter.NightDance.Core
 
         public void ExecuteCommand(IUnitCommand command)
         {
+            if (!command.CanExecute())
+            {
+                Debug.LogWarning($"{command.GetType().Name}을 실행할 수 없습니다.");
+                return;
+            }
             command.Execute();
             undoStack.Push(command);
             redoStack.Clear();

@@ -57,7 +57,7 @@ public class CameraController : MonoBehaviour
     {
         Vector2Int clampedPos = FieldManager.ClampToField(0, 0);
         focusPos = clampedPos;
-        Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
+        Vector2 cellPos = fieldManager.GetWorldPos(clampedPos);
         focus.position = new(cellPos.x, 0.1f, cellPos.y);
     }
     void OnEnable()
@@ -96,7 +96,7 @@ public class CameraController : MonoBehaviour
             Vector2Int __p = new(Mathf.RoundToInt(p.x+0.5f), Mathf.RoundToInt(p.z-0.5f)); //focus의 월드 셀 좌표, focus의 좌표를 우선 보정
             // __p를 셀 좌표로 변환할 것
             Vector2Int offsetV = fieldManager.FocusOffset(__p); //보정된 focus의 셀 좌표에서 타일맵의 셀 좌표로 변환한 오프셋
-            Vector2 v = fieldManager.GetTilePos(offsetV); //오프셋이 적용된 focus의 월드 좌표
+            Vector2 v = fieldManager.GetWorldPos(offsetV); //오프셋이 적용된 focus의 월드 좌표
             focus.position = new Vector3(v.x, focus.position.y, v.y);
             focusPos = offsetV; //focusPos 업데이트
             movePos = Vector2.zero;
@@ -215,8 +215,9 @@ public class CameraController : MonoBehaviour
         input.y = -1 * Mathf.RoundToInt(input.y); //필드에서는 좌상단이 0,0이므로 Y는 반전
         Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x + (int)input.x, focusPos.y + (int)input.y);
         focusPos = clampedPos;
-        Vector2 cellPos = fieldManager.GetTilePos(clampedPos);
-        focus.position = new(cellPos.x, focus.position.y, cellPos.y);
+        Vector2 cellWorldPos = fieldManager.GetWorldPos(clampedPos);
+        Debug.Log(fieldManager.GetTileObject(clampedPos));
+        focus.position = new(cellWorldPos.x, focus.position.y, cellWorldPos.y);
     }
     /// <summary>
     /// 회전 입력 처리

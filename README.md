@@ -540,3 +540,32 @@ View가 Model에 너무 깊이까지 파헤치고 있다는 문제다.<br>
 카메라의 조작을 Update에서 Input.Get...으로 하던 내용을 Input Actions 시스템으로 변경하였다.
 과정에서 패드 조작도 추가하였다.
 전반적인 조작은 파이어엠블렘의 인게이지를 레퍼런스로 삼았다.
+
+### 2026-05-06
+R3를 이용해서 기존 이벤트 방식을 리팩토링 해보고 있는데, 그 사이에 면접도 보고 자격증 공부도 하느라 빈 시간이 길었던 것 같다.<br>
+3월경부터 Gemini API는 구글 클라우드 크레딧을 사용하지 않는다는 이슈로 인해 ToyGemini관련 문제 해결을 하는 부분도 있었고<br>
+마인크래프트가 업데이트해서 서버 업데이트하는데도 다소 애를 먹었다.<br>
+아무튼, 현재는 R3방식을 사용하여 리팩토링을 해보고 있는데, 메모리 프로파일러를 보니 메모리 할당이 줄었단 것 같기는 한데, 엄청 유의미한 차이는 아직 없는 것 같다.<br>
+아마도 아직은 체력이니 뭐니 구독하는 쪽이 UI밖에 없어서 그렇긴 한데, 나중에 구독이 늘어나면 유의미하지 않을까
+
+### 2026-05-09
+Command와 MoveCommand, 그리고 IFieldObject를 조금 건드렸다.
+- IFieldObject에는 ToString을 추가하였다.<br>
+유닛이든 오브젝트든 이름을 좀 표시할 기능이 필요하다고 생각하여서.<br>
+다만 Monobehaviour에 내장된 ToString도 있기 때문에 override로 처리하였다.
+
+
+- Command에 CanExecute 추가, CommandInvoker에 CanExecute 조건분기 추가<br>
+CommandInvoker는 커맨드를 실행시키지만, 실제로 작동할 수 없는 커맨드의 경우 우선적으로 bool 반환을 통해 Execute할 필요가 있음을 느꼈다.<br>
+계기는 유닛이 이동할 때 이미 오브젝트가 있다면 해당 위치로는 이동할 수 없게끔 해야하기 때문에 추가하게 되었다.
+
+- MoveCommand 수정<br>
+MoveCommand는 기존에는 자신의 이전 위치에 null을 SetTileObject하고 이동한 뒤 이동한 위치에 SetTileObject(본인)을 하게끔 하였었다<br>
+하지만, 해당 방식은 SetTileObject를 한 번 더 실행하기에 오버헤드가 발생하기에 SetTileObject에서는 IFieldObject를 매개변수로 갖기 때문에, 기존 위치를 null처리하게 하였다.<br>
+그리고 추가로 Vector의 default값은 (0,0)이었기에 (-1,-1)로 처리하여 (0,0)위치의 오브젝트가 null데이터화되는 일을 방지하였다.<br>
+그리고 MoveCommand에서는 기존에 SetPos가 먼저 일어났고, 그러다보니 SetTileObject의 기존 위치 값이 이미 이동된 값으로 들어가는 버그가 있어 순서를 바꿔 수정해주었다.
+
+- 일부 Start 라이프 사이클에서 실행되는 함수로직들을 Awake로 변경하였다.<br>
+이유는 유닛의 생성시점과 UI의 등록시점이 꼬이기 때문에 Awake로 변경하였다.<br>
+추가로 FieldManager의 필드 사이즈 갱신 시점과 유닛의 초기위치 설정시점 둘 다 Awake로 동일하여 이는 문제가 되었다.<br>
+Script Execute Order를 조정하여 FieldManager의 시점을 앞당겨 문제를 해결하였다.

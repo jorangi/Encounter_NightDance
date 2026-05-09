@@ -14,7 +14,7 @@ namespace Encounter.NightDance.Core
         public static Vector2Int FieldSize{private set; get;}
         private readonly Dictionary<Vector2Int, IFieldObject> objectOnField = new();
         private Dictionary<Vector2Int, ITile> tiles = new();
-        private void Start()
+        private void Awake()
         {
             tilemap = tilemap != null ? tilemap : gameObject.GetComponent<Tilemap>();
             int width = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
@@ -26,7 +26,7 @@ namespace Encounter.NightDance.Core
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        private IFieldObject CheckUnitOnTile(Vector2Int pos)
+        public IFieldObject GetTileObject(Vector2Int pos)
         {
             if(objectOnField.TryGetValue(pos, out IFieldObject objectOnTile))
             {
@@ -35,13 +35,25 @@ namespace Encounter.NightDance.Core
             return null;
         }
         /// <summary>
+        /// 월드 좌표를 입력하여 보정된 셀 좌표로 변환하는 함수(오브젝트 오프셋 보정)
+        /// </summary>
+        /// <param name="worldPos"></param>
+        /// <returns></returns>
+        public Vector2Int GetTilePos(Vector2 worldPos)
+        {
+            Vector3Int cellPos = tilemap.WorldToCell(worldPos);
+            int offsetX = Mathf.Abs(cellPos.x - tilemap.cellBounds.xMin);
+            int offsetY = Mathf.Abs(cellPos.y - tilemap.cellBounds.yMax);
+            return new Vector2Int(offsetX, offsetY);
+        }
+        /// <summary>
         /// 보정된 셀 좌표를 입력하여 월드 좌표로 변환하는 함수(오브젝트 오프셋 보정)
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public Vector2 GetTilePos(Vector2Int pos)
+        public Vector2 GetWorldPos(Vector2Int pos)
         {
-            Vector2 result = GetTilePosWithoutOffset(pos);
+            Vector2 result = GetWorldPosWithoutOffset(pos);
             result.x += 0.5f;
             result.y -= 0.5f;
             return result;
@@ -51,29 +63,12 @@ namespace Encounter.NightDance.Core
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public Vector2Int GetTilePosWithoutOffset(Vector2Int pos)
+        public Vector2Int GetWorldPosWithoutOffset(Vector2Int pos)
         {
             int offsetX = tilemap.cellBounds.xMin + pos.x;
             int offsetY = tilemap.cellBounds.yMax - pos.y;
             Vector3 tilePos = tilemap.CellToWorld(new Vector3Int(offsetX, offsetY, 0));
             return new Vector2Int((int)tilePos.x, (int)tilePos.z);
-        }
-        [Obsolete("이 함수는 MoveCommand로 대체되었습니다.")]
-        /// <summary>
-        /// 유닛의 위치를 설정하는 함수, 타일에 이미 오브젝트가 존재하는 경우 위치 변경 불가
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="pos"></param>
-        public void SetUnitPos(UnitController unit, Vector2Int pos)
-        {
-            if(CheckUnitOnTile(pos) != null)
-            {
-                Debug.Log("이미 오브젝트가 존재하는 타일입니다.");
-                return;
-            }
-            Vector2Int tilePos = GetTilePosWithoutOffset(pos);
-            unit.SetPos(pos, tilePos);
-            objectOnField[tilePos] = unit;
         }
         public static Vector2Int ClampToField(int x, int y)
         {
@@ -90,6 +85,18 @@ namespace Encounter.NightDance.Core
         public static bool IsWithinField(Vector2Int pos)
         {
             return pos.x >= 0 && pos.x < FieldSize.x && pos.y >= 0 && pos.y < FieldSize.y;
+        }
+        public void SetObjectOnTile(IFieldObject fieldObject, Vector2Int pos)
+        {
+            if(IsWithinField(pos))
+            {
+                if(GetTileObject(pos) == null)
+                {
+                    objectOnField[fieldObject.Pos] = null;
+                    objectOnField[pos] = fieldObject;
+                }
+                else Debug.LogWarning($"[{pos}]이미 해당 위치에 {fieldObject}가 존재합니다.");
+            }
         }
     }
 }

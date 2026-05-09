@@ -30,7 +30,7 @@ namespace Encounter.NightDance.Character
         private UnitVitalityPresenter _unitHealthPresenter;
         private UnitMentalPresenter _unitMentalPresenter;
         private static readonly int FillAmountId = Shader.PropertyToID("_fillAmount");
-
+        public override string ToString() => _stat == null ? "null" : _stat.name;
         private void Awake()
         {
             _stat = _stat != null ? _stat : gameObject.GetComponent<UnitStat>();

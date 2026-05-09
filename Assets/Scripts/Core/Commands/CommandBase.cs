@@ -15,6 +15,7 @@ namespace Encounter.NightDance.Core.Commands
         {
             records.Clear();
         }
+        public abstract bool CanExecute();
         public abstract void Execute();
         public abstract void Redo();
         public virtual void Undo()
