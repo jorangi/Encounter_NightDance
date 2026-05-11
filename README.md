@@ -569,3 +569,26 @@ MoveCommand는 기존에는 자신의 이전 위치에 null을 SetTileObject하�
 이유는 유닛의 생성시점과 UI의 등록시점이 꼬이기 때문에 Awake로 변경하였다.<br>
 추가로 FieldManager의 필드 사이즈 갱신 시점과 유닛의 초기위치 설정시점 둘 다 Awake로 동일하여 이는 문제가 되었다.<br>
 Script Execute Order를 조정하여 FieldManager의 시점을 앞당겨 문제를 해결하였다.
+
+### 2026-05-12
+PathFinder의 GetMoveRange완성과 실제 타일에 적용해보았다.<br>
+수정사항이 꽤나 많아 기억나는 부분을 작성하자면
+
+- 유닛의 이동관련인 IMovable을 Feature화 하였다.<br>
+IUnitCore에서 GetFeature로 사용해야 하기 때문이다.<br>
+또한 이동 전략 필드 역시 UnitController에서 여기로 이동했다.<br>
+- UnitController의 책임 대부분을 Unit이라는 별도의 클래스로 분리하였다.<br>
+Unit은 UnitController와 UnitStat을 갖고있는데, UnitController는 말 그대로 직접적인 움직임만을 책임지게끔 하기 위함이다.<br>
+이에 따라 TileObject클래스와 IUnitCore 역시 Unit으로 옮겨갔고, UnitController는 단순한 MonoBeaviour만을 상속받게 하였다.
+- FieldManager에 SetTiles함수와 ShowUnitActivated 추가, 논리적 좌표 변환 추가<br>
+타일을 칠하는 함수랑, GameManager에서 포커싱 유닛을 변경하는 이벤트를 구독하는 함수이다.<br>
+타일을 칠하는 함수는 SetTile말고 SetTiles를 이용해 Batch로 처리하기 때문에 최적화를 나름 신경썼다.<br>
+<br>
+그리고 셀 좌표를 논리적좌표로 변환하는 로직이 아직까지 없었다.<br>
+유사한게 있긴 했는데, 정확히 그 역할을 수행하지는 못하는 함수였고, 새롭게 만들었다.<br>
+그래서 기존의 유닛이나 포커스 관련의 로직들을 변한 논리좌표 기반으로 수정하는 작업이 필요했다.
+
+이외에도 뭔가 한 일이 많지만 머리가 복잡해서 기억이 안난다.<br>
+최종면접에 떨어져서인지 많이 울적하고 슬픈데, 그 감정을 그냥 코딩하면서 풀고있다...<br>
+전체 서탈에 한 군데 동앗줄처럼 믿고있었던 느낌이 컸기에 최종탈락의 충격이 너무 크다.<br>
+앞으로 준비하면서 소켓 통신같은 것도 직접 해보고, 포톤같은 것도 해보고, 직접 서비스도 한 번 해봐야 할 것 같긴 하다.<br>

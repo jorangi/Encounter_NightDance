@@ -57,8 +57,8 @@ public class CameraController : MonoBehaviour
     {
         Vector2Int clampedPos = FieldManager.ClampToField(0, 0);
         focusPos = clampedPos;
-        Vector2 cellPos = fieldManager.GetWorldPos(clampedPos);
-        focus.position = new(cellPos.x, 0.1f, cellPos.y);
+        Vector3 worldPos = fieldManager.GetWorldPos(clampedPos);
+        focus.position = new(worldPos.x, 0.1f, worldPos.z);
     }
     void OnEnable()
     {
@@ -90,15 +90,11 @@ public class CameraController : MonoBehaviour
         }
         if(_action.MouseControl.Middle.WasReleasedThisFrame())
         {
-            //마우스 휠클릭 이동 종료 시 focus의 위치를 타일맵 셀에 고정
-            //유닛 이동과의 일관성을 위해 GetTilePos를 사용
-            Vector3 p = focus.position; //focus의 월드 좌표
-            Vector2Int __p = new(Mathf.RoundToInt(p.x+0.5f), Mathf.RoundToInt(p.z-0.5f)); //focus의 월드 셀 좌표, focus의 좌표를 우선 보정
-            // __p를 셀 좌표로 변환할 것
-            Vector2Int offsetV = fieldManager.FocusOffset(__p); //보정된 focus의 셀 좌표에서 타일맵의 셀 좌표로 변환한 오프셋
-            Vector2 v = fieldManager.GetWorldPos(offsetV); //오프셋이 적용된 focus의 월드 좌표
-            focus.position = new Vector3(v.x, focus.position.y, v.y);
-            focusPos = offsetV; //focusPos 업데이트
+            Vector2Int logicalPos = fieldManager.GetTilePos(focus.position);
+            logicalPos = FieldManager.ClampToField(logicalPos.x, logicalPos.y);
+            Vector3 snappedWorldPos = fieldManager.GetWorldPos(logicalPos);
+            focus.position = new Vector3(snappedWorldPos.x, focus.position.y, snappedWorldPos.z);
+            focusPos = logicalPos;
             movePos = Vector2.zero;
         }
         Vector2 mousePos = _action.MouseControl.Position.ReadValue<Vector2>();
@@ -211,13 +207,12 @@ public class CameraController : MonoBehaviour
     {
         Vector2 input = _action.Camera.Move.ReadValue<Vector2>();
         if(input == Vector2.zero) return;
-        input.x = Mathf.RoundToInt(input.x);
-        input.y = -1 * Mathf.RoundToInt(input.y); //필드에서는 좌상단이 0,0이므로 Y는 반전
-        Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x + (int)input.x, focusPos.y + (int)input.y);
+        int moveX = Mathf.RoundToInt(input.x);
+        int moveY = -Mathf.RoundToInt(input.y); //필드에서는 좌상단이 0,0이므로 Y는 반전
+        Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x + moveX, focusPos.y + moveY);
         focusPos = clampedPos;
-        Vector2 cellWorldPos = fieldManager.GetWorldPos(clampedPos);
-        Debug.Log(fieldManager.GetTileObject(clampedPos));
-        focus.position = new(cellWorldPos.x, focus.position.y, cellWorldPos.y);
+        Vector3 worldPos = fieldManager.GetWorldPos(clampedPos);
+        focus.position = new Vector3(worldPos.x, focus.position.y, worldPos.z);
     }
     /// <summary>
     /// 회전 입력 처리

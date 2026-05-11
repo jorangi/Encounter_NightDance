@@ -10,6 +10,9 @@ using Encounter.NightDance.UI.Presenter;
 using Encounter.NightDance.UI.View;
 using Encounter.NightDance.Core.Features;
 using Encounter.NightDance.UI;
+using System.Text;
+using Encounter.NightDance.Map;
+using System.Collections.Generic;
 
 namespace Encounter.NightDance.Character
 {
@@ -17,57 +20,21 @@ namespace Encounter.NightDance.Character
     /// 유닛의 행동을 제어하는 컴포넌트 클래스
     /// </summary>
     // [RequireComponent(typeof(UnitStat))]
-    public class UnitController : Prototype_TileObject, IMovable
+    public class UnitController : MonoBehaviour
     {
-        [SerializeField] private MovementStrategySO _terrainCostSO;
-        [SerializeField] private UnitGaugeBarView _unitHealthView;
-        [SerializeField] private UnitGaugeBarView _unitMentalView;
         [SerializeField] private UnitStat _stat;
-        [SerializeField] private SpriteRenderer _tVitalitybar;
-        [SerializeField] private SpriteRenderer _tMentalbar;
         private MaterialPropertyBlock mpb;
-        [SerializeField]private IMovementStrategy _movementStrategy;
-        private UnitVitalityPresenter _unitHealthPresenter;
-        private UnitMentalPresenter _unitMentalPresenter;
         private static readonly int FillAmountId = Shader.PropertyToID("_fillAmount");
         public override string ToString() => _stat == null ? "null" : _stat.name;
-        private void Awake()
-        {
-            _stat = _stat != null ? _stat : gameObject.GetComponent<UnitStat>();
-            _movementStrategy = new WalkingStrategy(_terrainCostSO);
-        }
-        private void Start()
-        {
-            VitalityFeature vitalityFeature = _stat.GetFeature<VitalityFeature>();
-            vitalityFeature.Activate();
-            _unitHealthPresenter = new UnitVitalityPresenter(_unitHealthView, vitalityFeature);
-
-            MentalFeature mentalFeature = _stat.GetFeature<MentalFeature>();
-            mentalFeature.Activate();
-            _unitMentalPresenter = new UnitMentalPresenter(_unitMentalView, mentalFeature);
-            FocusUnitService.SetFocus(_stat);
-        }
-        private void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.H))
-            {
-                _stat.GetFeature<VitalityFeature>().TakeDamage(new Core.Datas.DamageData(null, UnityEngine.Random.Range(-101, 100), Core.Datas.DamageType.Vitality, false));
-            }
-        }
         /// <summary>
         /// 유닛 이동 메서드, transform의 위치를 업데이트
         /// </summary>
         /// <param name="newPos"></param>
-        public void MoveTo(Vector2 newPos)
+        public void MoveTo(Vector3 newPos)
         {
-            transform.position = new(newPos.x, transform.position.y, newPos.y);
+            transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);
             mpb = new();
             // TODO: 이동 실행, 애니메이션 등
-        }
-        private void OnDestroy()
-        {
-            _unitHealthPresenter.Dispose();    
-            _unitMentalPresenter.Dispose();
         }
     }
 }

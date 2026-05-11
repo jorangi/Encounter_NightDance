@@ -16,7 +16,7 @@ namespace Encounter.NightDance.Core.Strategies
             this.costData = costSO;
             costData.Initialize();
         }
-        public float Calc(ITile tile)
+        public int Calc(ITile tile)
         {
             return costData.GetCost(tile.Terrain);
         }

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Encounter.NightDance.ScriptableObjects.MovementStrategySO
   costSettings:
   - terrainType: 0
-    cost: 0
+    cost: 1

@@ -15,6 +15,6 @@ namespace Encounter.NightDance.Map
     {
         Vector2Int Pos {get;}
         TerrainType Terrain {get;}
-        IFieldObject Occupant {get;}
+        IFieldObject Occupant {get; set;}
     }
 }

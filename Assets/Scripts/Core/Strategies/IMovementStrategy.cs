@@ -9,6 +9,6 @@ namespace Encounter.NightDance.Core.Strategies
         /// </summary>
         /// <param name="tile"></param>
         /// <returns></returns>
-        public float Calc(ITile tile);
+        public int Calc(ITile tile);
     }
 }
