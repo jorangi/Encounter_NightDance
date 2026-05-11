@@ -38,6 +38,7 @@ namespace Encounter.NightDance.Core
             int height = tilemap.cellBounds.yMax - tilemap.cellBounds.yMin;
             foreach(Vector3Int _v in tilemap.cellBounds.allPositionsWithin)
             {
+                if(!tilemap.HasTile(_v)) continue;
                 Vector2Int logicalPos = CellToLogical(_v);
                 tiles[logicalPos] = new PlainTile(logicalPos, TerrainType.Plain, null);
             }
