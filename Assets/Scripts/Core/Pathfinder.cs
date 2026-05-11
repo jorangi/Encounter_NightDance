@@ -41,6 +41,7 @@ namespace Encounter.NightDance.Core
                     Vector2Int neighbor = currentPos + dir;
                     if(!FieldManager.IsWithinField(neighbor)) continue; //필드 범위를 벗어난 경우 무시
                     ITile neighborTile = FieldManager.GetTile(neighbor);
+                    if(neighborTile == null) continue;
                     int cost = strategy.Calc(neighborTile);//이동 전략에 따른 이동 비용 계산
                     int remainingMovement = currentMovement - cost;
                     if(remainingMovement < 0) continue; //이동력이 부족하면 무시
