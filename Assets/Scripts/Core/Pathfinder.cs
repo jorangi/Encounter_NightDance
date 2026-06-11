@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using Encounter.NightDance.Core.Strategies;
 using Encounter.NightDance.Map;
 using UnityEngine;
+using Encounter.NightDance.ScriptableObjects;
+using Encounter.NightDance.Core;
+using System;
 
 namespace Encounter.NightDance.Core
 {
@@ -10,6 +13,20 @@ namespace Encounter.NightDance.Core
     /// </summary>
     public static class PathFinder
     {
+        private class PathFinderNode : IComparable<PathFinderNode>
+        {
+            public Vector2Int Position { get; set; }
+            public PathFinderNode Parent { get; set; }
+            public int G { get; set; }
+            public int H { get; set; }
+            public int F => G + H;
+            public PathFinderNode(Vector2Int pos, PathFinderNode pa)
+            {
+                this.Position = pos;
+                this.Parent = pa;
+            }
+            public int CompareTo(PathFinderNode other) => this.F - other.F;
+        }
         /// <summary>
         /// 시작 지점에서 이동 가능한 범위를 계산하는 메서드, 반환의 key는 좌표, value는 남는 이동력
         /// </summary>
@@ -53,6 +70,100 @@ namespace Encounter.NightDance.Core
                 }
             }
             return closeSet;
+        }
+        /// <summary>
+        /// A* 탐색 알고리즘으로 길 찾는 알고리즘
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        public static List<Vector2Int>GetPath(Vector2Int start, Vector2Int end, IMovementStrategy strategy)
+        {
+            //필요한 정보: 셀 좌표, 셀의 이동 비용, 이동 불가능여부?
+            MinHeap<PathFinderNode> openList = new();
+            HashSet<Vector2Int> closeList = new();
+            Dictionary<Vector2Int, PathFinderNode> allNodes = new();
+            Vector2Int[] direction = new Vector2Int[]
+            {
+                Vector2Int.up,
+                Vector2Int.down,
+                Vector2Int.left,
+                Vector2Int.right
+            };
+            PathFinderNode startNode = new(start, null)
+            {
+                G = 0,
+                H = GetHeuristic(start, end)
+            };
+            openList.Push(startNode);
+            allNodes.Add(start, startNode);
+            while(openList.Count > 0)
+            {
+                PathFinderNode current = openList.Pop();
+                if(current.Position == end)
+                {
+                    return RetracePath(current);
+                }
+                if (!closeList.Add(current.Position))
+                {
+                    continue; 
+                }
+                foreach(var dir in direction)
+                {
+                    Vector2Int neighborPos = current.Position + dir;
+                    var tile = FieldManager.GetTile(neighborPos);
+                    if(tile == null) continue;
+                    int cost = strategy.Calc(tile);
+                    if(cost >= 999) continue;
+                    int newCost = current.G + cost;
+                    if(closeList.Contains(neighborPos))
+                    {
+                        if(allNodes.TryGetValue(neighborPos, out PathFinderNode closedNode))
+                        {
+                            if (newCost < closedNode.G) 
+                            {
+                                closeList.Remove(neighborPos);
+                                closedNode.Parent = current;
+                                closedNode.G = newCost;
+                                openList.Push(closedNode);
+                            }
+                        }
+                        continue;
+                    }
+                    if(!allNodes.TryGetValue(neighborPos, out PathFinderNode neighborNode))
+                    {
+                        neighborNode = new(neighborPos, current)
+                        {
+                            G = newCost,
+                            H = GetHeuristic(neighborPos, end)
+                        };
+                        allNodes.Add(neighborPos, neighborNode);
+                        openList.Push(neighborNode);
+                    }
+                    else if(newCost < neighborNode.G)
+                    {
+                        neighborNode.Parent = current;
+                        neighborNode.G = newCost;
+                        openList.Push(neighborNode);
+                    }
+                }
+            }
+            return null;
+        }
+        private static int GetHeuristic(Vector2Int stdPos, Vector2Int endPos)
+        {
+            return Mathf.Abs(stdPos.x - endPos.x) + Mathf.Abs(stdPos.y - endPos.y);
+        }
+        private static List<Vector2Int> RetracePath(PathFinderNode node)
+        {
+            List<Vector2Int> path = new();
+            while(node != null)
+            {
+                path.Add(node.Position);
+                node = node.Parent;
+            }
+            path.Reverse();
+            return path;
         }
     }
 }

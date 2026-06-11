@@ -2,6 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using Encounter.NightDance.Core;
+using Encounter.NightDance.UI;
+using Cysharp.Threading.Tasks;
+using R3;
+using Encounter.NightDance.Core.Strategies;
+
 
 [RequireComponent(typeof(LineRenderer))]
 public class RouteRenderer : MonoBehaviour
@@ -9,10 +15,37 @@ public class RouteRenderer : MonoBehaviour
     [SerializeField]private LineRenderer lineRenderer;
     [SerializeField]private Tilemap tilemap;
     private MainAction inputAction;
+    private Vector2Int unitPos = Vector2Int.zero;
+    private DisposableBag disposableBag = new();
+    private Vector2Int cachedVector = Vector2Int.zero;
+    private ReactiveProperty<Vector2Int> _onMouseMovedsubject = new();
+    public Observable<Vector2Int> OnMouseMovedAsObservable() => _onMouseMovedsubject;
     private void Awake()
     {
         lineRenderer = lineRenderer != null ? lineRenderer : GetComponent<LineRenderer>();
         inputAction = new MainAction();
+    }
+    private void Start()
+    {
+        FocusUnitService.OnFocusChangedAsObservable()
+            .Subscribe(this, (u, state)=>
+            {
+                state.unitPos = u.Pos;
+            })
+            .AddTo(ref disposableBag);
+        OnMouseMovedAsObservable()
+            .Subscribe(this, (u, state)=>
+            {
+                var paths = PathFinder.GetPath(unitPos, u, new WalkingStrategy(MovementStrategyContainer.GetStrategySO(MovementType.Walking)));
+                lineRenderer.SetPositions(new Vector3[]{});
+                lineRenderer.positionCount = paths.Count;
+                for(int i = 0; i < paths.Count; i++)
+                {
+                    var p = CoordinateUtility.LogicalToCell(paths[i]);
+                    lineRenderer.SetPosition(i, new(p.x + 0.5f, 0.1f, p.y + 0.5f));
+                }
+            })
+            .AddTo(ref disposableBag);
     }
     private void OnEnable()
     {
@@ -37,7 +70,11 @@ public class RouteRenderer : MonoBehaviour
             Vector3Int cellPos = tilemap.WorldToCell(hitPoint);
             //타일 유무 조건 분기
             if(tilemap.HasTile(cellPos))
+            {
+                Vector2Int v = CoordinateUtility.CellToLogical(cellPos);
+                _onMouseMovedsubject.OnNext(v);
                 Debug.DrawLine(hitPoint, hitPoint + Vector3.up, Color.cyan);
+            }
         }
     }
 }

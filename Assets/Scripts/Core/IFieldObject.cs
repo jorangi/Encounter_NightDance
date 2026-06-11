@@ -8,9 +8,12 @@ namespace Encounter.NightDance.Core
     public interface IFieldObject
     {
         /// <summary>
-        /// 오브젝트의 위치 좌표
+        /// 오브젝트의 월드 transform 좌표
         /// </summary>
         public Vector2 WorldPos{get; set;}
+        /// <summary>
+        /// 오브젝트의 타일 기준 좌표
+        /// </summary>
         public Vector2Int Pos{get; set;}
         public string ToString();
     }

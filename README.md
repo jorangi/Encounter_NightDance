@@ -592,3 +592,34 @@ Unit은 UnitController와 UnitStat을 갖고있는데, UnitController는 말 그
 최종면접에 떨어져서인지 많이 울적하고 슬픈데, 그 감정을 그냥 코딩하면서 풀고있다...<br>
 전체 서탈에 한 군데 동앗줄처럼 믿고있었던 느낌이 컸기에 최종탈락의 충격이 너무 크다.<br>
 앞으로 준비하면서 소켓 통신같은 것도 직접 해보고, 포톤같은 것도 해보고, 직접 서비스도 한 번 해봐야 할 것 같긴 하다.<br>
+
+### 2026-06-11
+한동안 The Tower Of Trials라는 cpp기반의 MUD프로젝트를 진행하느라 해당 프로젝트를 전혀 손대지 못했다.<br>
+오늘은 간만에 환기도 시킬겸 다시 Encounter 프로젝트를 진행했다.<br>
+한 것은 크게 2~3가지 정도 있는 것 같다.
+
+- <b>CoordinateUtility</b>
+    - FieldManager의 CellPos와 관련된 Logical-World-Cell Pos의 변환 함수를 별도의 CoordinateUtility 라는 클래스로 분리했다.
+    - CoordinateUtility는 static이며 FieldManager가 Awake시 Initialize하여 CoordinateUtility에 tilemap을 주입하여 cellBounds를 통해 기존 로직을 사용한다.
+    - static으로 만든 클래스와 함수이기에 어디서든 Vector3, Vector3Int 좌표만 있다면 호출이 가능하다.
+
+- <b>PathFinder</b>
+    - 기존에는 이동 가능한 범위만을 반환하는 함수뿐이었다.
+    - 그래서 본격적으로 길을 찾는 GetPath함수를 추가했다.
+    - 리팩토링 이전의 PathFinder랑은 조금 차이가 있다.
+        - 기존에는 Tile이라는 Node클래스에 노드정보와 이동 관련 데이터를 전부 넣었던 걸로 기억한다.<br>
+        리팩토링에서는 PathfinderNode라는 클래스로 분리하여 오로지 A*를 위한 데이터만을 담았다.
+        - 기존 PathFinder에서는 openList와 closeList를 단순 List로 이용하였는데, 이 경우 탐색이 O(n)이 된다.<br>
+        이를 개선하고자 openList는 최소힙을 사용하여 o(log N)이 되므로 수개~수십개의 타일을 탐색하는 작업이 많아질 수록 효율성이 크게 향상된다.<br>
+        또한 closeList의 경우 마찬가지로 Contains 또한 o(n)에서 HashSet을 이용해 O(1)이 되어 효율이 향상된다.
+        - 이외에도 지형에 따른 MovementStrategy가 추가되었으므로 PathFinder에 MovementStrategy가 적용되고, 그 과정에서 FieldManager를 통해 Tile의 정보를 받아와, 지형과 이동 전략으로 비용을 검사한다.<br>
+        - 이 과정을 복잡한 If문을 써서 구현하는 것이 아니라 StrategySO의 내부에 있는 Tile에 관한 Calc 함수를 통해 진행되므로 유지보수도 굉장히 용이하고 추가도 쉽다.
+
+- <b>lineRenderer</b>
+    - 아직은 시각적이나 적용면에서는 완성되지 않은 기능이지만, 기능적인 요소는 필요한 조건을 충족시켰다.
+    - 마우스를 현재 기준으로 잡긴 했으나, R3를 통해 이벤트 구독으로 Publish하는 것이라 추가가 쉽다.
+    - 현재 포커스중인 유닛의 위치로부터 이동하고자 하는 새로운 포커스 지점까지의 경로를 LineRenderer를 통해 시각적으로 표현한다.
+        - 아직은 그냥 직선이긴 한데, 끝에 화살표를 붙이면 그럴싸할 것 같다.
+    - 테스트 과정에서는 마우스를 움직이면 해당 위치에서 포커스된 유닛까지의 경로를 보여준다.
+        - 다만 고민되는 부분은 휴리스틱 계산에서 인근 타일의 방향에 따라 휴리스틱 값이 동일한 경우 이전 타일을 부모로 유지하는데, 이로인해 ㄴ자로 갈 수 있는 길이 여러번 꺾이는 경우가 생기기도 한다.
+            - 이 부분을 수정할 방법으로는 휴리스틱계산에 int이기 때문에 *10을 하고 같은 방향일 경우 1을 가중한다거나, 아니면 동일한 방향에 대해서 우선탐색할 수 있는 권한?을 주면 될 것 같긴 하다.

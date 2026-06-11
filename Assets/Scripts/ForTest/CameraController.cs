@@ -57,7 +57,7 @@ public class CameraController : MonoBehaviour
     {
         Vector2Int clampedPos = FieldManager.ClampToField(0, 0);
         focusPos = clampedPos;
-        Vector3 worldPos = fieldManager.GetWorldPos(clampedPos);
+        Vector3 worldPos = CoordinateUtility.GetWorldPos(clampedPos);
         focus.position = new(worldPos.x, 0.1f, worldPos.z);
     }
     void OnEnable()
@@ -92,7 +92,7 @@ public class CameraController : MonoBehaviour
         {
             Vector2Int logicalPos = fieldManager.GetTilePos(focus.position);
             logicalPos = FieldManager.ClampToField(logicalPos.x, logicalPos.y);
-            Vector3 snappedWorldPos = fieldManager.GetWorldPos(logicalPos);
+            Vector3 snappedWorldPos = CoordinateUtility.GetWorldPos(logicalPos);
             focus.position = new Vector3(snappedWorldPos.x, focus.position.y, snappedWorldPos.z);
             focusPos = logicalPos;
             movePos = Vector2.zero;
@@ -211,7 +211,7 @@ public class CameraController : MonoBehaviour
         int moveY = -Mathf.RoundToInt(input.y); //필드에서는 좌상단이 0,0이므로 Y는 반전
         Vector2Int clampedPos = FieldManager.ClampToField(focusPos.x + moveX, focusPos.y + moveY);
         focusPos = clampedPos;
-        Vector3 worldPos = fieldManager.GetWorldPos(clampedPos);
+        Vector3 worldPos = CoordinateUtility.GetWorldPos(clampedPos);
         focus.position = new Vector3(worldPos.x, focus.position.y, worldPos.z);
     }
     /// <summary>

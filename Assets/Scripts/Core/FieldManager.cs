@@ -31,15 +31,17 @@ namespace Encounter.NightDance.Core
         private readonly Dictionary<Vector2Int, IFieldObject> objectOnField = new();
         private static Dictionary<Vector2Int, ITile> tiles = new();
         private DisposableBag _disposableBag = new();
+        private Vector2Int cachedFocusPos = Vector2Int.zero;
         private void Awake()
         {
             tilemap = tilemap != null ? tilemap : gameObject.GetComponent<Tilemap>();
+            CoordinateUtility.Initialize(tilemap);
             int width = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
             int height = tilemap.cellBounds.yMax - tilemap.cellBounds.yMin;
             foreach(Vector3Int _v in tilemap.cellBounds.allPositionsWithin)
             {
                 if(!tilemap.HasTile(_v)) continue;
-                Vector2Int logicalPos = CellToLogical(_v);
+                Vector2Int logicalPos = CoordinateUtility.CellToLogical(_v);
                 tiles[logicalPos] = new PlainTile(logicalPos, TerrainType.Plain, null);
             }
             FieldSize = new(width, height);
@@ -47,39 +49,11 @@ namespace Encounter.NightDance.Core
         private void Start()
         {
             FocusUnitService.OnFocusChangedAsObservable()
-                .Subscribe(this, (u, state)=>{state.ShowUnitActivated(u);})
+                .Subscribe(this, (u, state)=>{
+                    state.ShowUnitActivated(u);
+
+                })
                 .AddTo(ref _disposableBag);
-        }
-        /// <summary>
-        /// 논리 좌표(0,0 기준) -> 셀 좌표로 변환
-        /// </summary>
-        public Vector3Int LogicalToCell(Vector2Int logicalPos)
-        {
-            int cellX = tilemap.cellBounds.xMin + logicalPos.x;
-            int cellY = tilemap.cellBounds.yMax - logicalPos.y - 1; 
-            return new Vector3Int(cellX, cellY, 0);
-        }
-        /// <summary>
-        /// 셀 좌표 -> 논리 좌표(0,0 기준)로 변환
-        /// </summary>
-        public Vector2Int CellToLogical(Vector3Int cellPos)
-        {
-            int logicalX = cellPos.x - tilemap.cellBounds.xMin;
-            int logicalY = (tilemap.cellBounds.yMax - 1) - cellPos.y;
-            return new Vector2Int(logicalX, logicalY);
-        }
-        /// <summary>
-        /// 논리 좌표 -> 실제 월드 좌표로 변환
-        /// </summary>
-        public Vector3 GetWorldPos(Vector2Int logicalPos)
-        {
-            Vector3Int cellPos = LogicalToCell(logicalPos);
-            Vector3 worldPos = tilemap.CellToWorld(cellPos);
-            
-            worldPos.x += 0.5f;
-            worldPos.z += 0.5f; 
-            
-            return worldPos; 
         }
         /// <summary>
         /// 타일 위치에 오브젝트가 있는지 확인하는 함수
@@ -100,7 +74,7 @@ namespace Encounter.NightDance.Core
         public Vector2Int GetTilePos(Vector3 worldPos)
         {
             Vector3Int cellPos = tilemap.WorldToCell(worldPos);
-            return CellToLogical(cellPos);
+            return CoordinateUtility.CellToLogical(cellPos);
         }
         /// <summary>
         /// 실제 셀 좌표를 오프셋 보정하여 월드 좌표로 변환하는 함수(오브젝트 오프셋 미보정)
@@ -128,7 +102,7 @@ namespace Encounter.NightDance.Core
         }
         public static bool IsWithinField(Vector2Int pos)
         {
-            return pos.x >= 0 && pos.x < FieldSize.x && pos.y >= 0 && pos.y < FieldSize.y;
+            return pos.x >= 0 && pos.x < FieldSize.x && pos.y >= 0 && pos.y < FieldSize.y && tiles.TryGetValue(pos, out ITile tile);
         }
         public void SetObjectOnTile(IFieldObject fieldObject, Vector2Int pos)
         {
@@ -163,7 +137,7 @@ namespace Encounter.NightDance.Core
             };
             for (int i = 0; i < v.Length; i++)
             {
-                posArray[i] = LogicalToCell(v[i]);
+                posArray[i] = CoordinateUtility.LogicalToCell(v[i]);
                 arr[i] = targetTile;
             }
             highlightedTilemap.SetTiles(posArray, arr);

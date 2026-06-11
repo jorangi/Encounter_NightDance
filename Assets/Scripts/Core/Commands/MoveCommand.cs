@@ -24,12 +24,17 @@ namespace Encounter.NightDance.Core.Commands
         {
             _unit = unit;
             _targetPosInt = targetPos;
-            _targetPos = fieldManager.GetWorldPos(targetPos);
+            _targetPos = CoordinateUtility.GetWorldPos(targetPos);
             _startPos = unit.Pos;
             this.fieldManager = fieldManager;
         }
         public override bool CanExecute()
         {
+            if(!FieldManager.IsWithinField(_targetPosInt))
+            {
+                Debug.LogWarning($"[{_targetPosInt}]해당 위치에 타일이 존재하지 않습니다.");
+                return false;
+            }
             IFieldObject tileObject = fieldManager.GetTileObject(_targetPosInt);
             if(tileObject != null)
             {
