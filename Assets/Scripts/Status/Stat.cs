@@ -22,7 +22,8 @@ namespace Encounter.NightDance.Status
         /// <summary>
         /// 더티 플래그 true시 다시 계산
         /// </summary>
-        [SerializeField] public int Value
+        [field: SerializeField] 
+        public int Value
         {
             get
             {

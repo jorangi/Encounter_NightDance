@@ -10,6 +10,7 @@ using Encounter.NightDance.UI;
 using Encounter.NightDance.UI.Presenter;
 using Encounter.NightDance.UI.View;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Encounter.NightDance.Core.Unit
 {
@@ -18,20 +19,22 @@ namespace Encounter.NightDance.Core.Unit
     public class Unit : Prototype_TileObject, IUnitCore
     {
         [SerializeField] private MovementStrategySO _terrainCostSO;
-        [SerializeField]private UnitController _unitController;
-        [SerializeField]private UnitStat _stat;
-        private Dictionary<Type, IUnitFeature> Features {get; set;} = new();
-        [SerializeField]private UnitGaugeBarView _unitHealthView;
-        [SerializeField]private UnitGaugeBarView _unitMentalView;
+        [SerializeField] private UnitController _unitController;
+        [SerializeField] private UnitStat _stat;
+        private Dictionary<Type, IUnitFeature> Features { get; set; } = new();
+        [SerializeField] private UnitGaugeBarView _unitHealthView;
+        [SerializeField] private UnitGaugeBarView _unitMentalView;
         private UnitVitalityPresenter _unitHealthPresenter;
         private UnitMentalPresenter _unitMentalPresenter;
+        private MainAction _mainAction;
+
         public void AddFeature<T>(T feature) where T : class, IUnitFeature
         {
             Features[typeof(T)] = feature;
         }
         public T GetFeature<T>() where T : class, IUnitFeature
         {
-            if(Features.TryGetValue(typeof(T), out IUnitFeature feature))
+            if (Features.TryGetValue(typeof(T), out IUnitFeature feature))
             {
                 return feature as T;
             }
@@ -40,7 +43,7 @@ namespace Encounter.NightDance.Core.Unit
         }
         public T[] GetFeatures<T>() where T : class, IUnitFeature
         {
-            if(Features.Count == 0)
+            if (Features.Count == 0)
             {
                 Debug.LogWarning("대상에 어떤 특성도 존재하지 않습니다.");
                 return Array.Empty<T>();
@@ -50,7 +53,7 @@ namespace Encounter.NightDance.Core.Unit
         public void RemoveFeature<T>() where T : class, IUnitFeature
         {
             bool removed = Features.Remove(typeof(T));
-            if(!removed) Debug.LogWarning($"해당 {typeof(T).Name}특성이 대상에게 존재하지 않습니다.");
+            if (!removed) Debug.LogWarning($"해당 {typeof(T).Name}특성이 대상에게 존재하지 않습니다.");
             else Debug.Log($"해당 {typeof(T).Name}특성이 대상에게서 제거되었습니다.");
         }
         public void ClearFeature()
@@ -60,6 +63,7 @@ namespace Encounter.NightDance.Core.Unit
         }
         private void Awake()
         {
+            _mainAction = new MainAction();
             _unitController = _unitController != null ? _unitController : gameObject.GetComponent<UnitController>();
             _stat = _stat != null ? _stat : gameObject.GetComponent<UnitStat>();
 
@@ -89,23 +93,31 @@ namespace Encounter.NightDance.Core.Unit
             mentalFeature.Activate();
             _unitMentalPresenter = new UnitMentalPresenter(_unitMentalView, mentalFeature);
         }
-        private void Update()
+        private void OnEnable()
         {
-            if(Input.GetKeyDown(KeyCode.H))
-            {
-                GetFeature<VitalityFeature>().TakeDamage(new Core.Datas.DamageData(null, UnityEngine.Random.Range(-101, 100), Core.Datas.DamageType.Vitality, false));
-            }
-            if(Input.GetKeyDown(KeyCode.L))
-            {
-                int val = 30;
-                // Debug.Log($"경험치 {val} 획득");
-                GetFeature<LevelingFeature>()?.GainExperience(val);
-            }
+            _mainAction?.UnitControl.Enable();
+            _mainAction.UnitControl.L.performed += TestExperienceGet;
+            _mainAction.UnitControl.H.performed += TestVitalityChange;
+        }
+        private void OnDisable()
+        {
+            _mainAction?.UnitControl.Disable();
+        }
+        private void TestVitalityChange(InputAction.CallbackContext context)
+        {
+            GetFeature<VitalityFeature>().TakeDamage(new Core.Datas.DamageData(null, UnityEngine.Random.Range(-101, 100), Core.Datas.DamageType.Vitality, false));
+        }
+        private void TestExperienceGet(InputAction.CallbackContext context)
+        {
+            int val = 30;
+            // Debug.Log($"경험치 {val} 획득");
+            GetFeature<LevelingFeature>()?.GainExperience(val);
         }
         private void OnDestroy()
         {
-            _unitHealthPresenter.Dispose();    
+            _unitHealthPresenter.Dispose();
             _unitMentalPresenter.Dispose();
+            _mainAction?.Dispose();
         }
         /// <summary>
         /// 유닛 이동 메서드, transform의 위치를 업데이트

@@ -82,7 +82,7 @@ namespace Encounter.NightDance.UI.Presenter
         /// </summary>
         private void RefreshAll()
         {
-            _view.SetUnitInfo("예언의 아이", "호죽이", "용사", 1); 
+            _view.SetUnitInfo("예언의 아이", "니아", "용사", 1); 
 
             // 스탯 세팅
             if (_baseStats != null)
