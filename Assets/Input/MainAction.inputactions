@@ -809,7 +809,7 @@
                     "name": "H",
                     "type": "Button",
                     "id": "c84dfc78-cf5b-4261-9c60-a29774619bfa",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -846,6 +846,15 @@
                     "type": "Button",
                     "id": "848df72c-2c90-4c7b-8b5e-4efb2b524cb1",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QWPOEI",
+                    "type": "Button",
+                    "id": "fc3742e8-3f92-466d-bd5d-807c3a9fd890",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1003,6 +1012,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Redo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72f64f63-beaf-47bd-b52d-01cbd1cea668",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QWPOEI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
