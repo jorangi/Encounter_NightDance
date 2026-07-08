@@ -9,9 +9,13 @@ namespace Encounter.NightDance.UI
     /// </summary>
     public static class FocusUnitService
     {
-        public static IUnitCore CurrentTarget {get; private set;}
+        public static IUnitCore CurrentTarget { get; private set; }
         private readonly static DisposableBag _disposables = new();
         private readonly static ReactiveProperty<IUnitCore> _onFocusChangedSubject = new(null);
+        /// <summary>
+        /// 대상 포커스 변경 구독
+        /// </summary>
+        /// <returns></returns>
         public static Observable<IUnitCore> OnFocusChangedAsObservable() => _onFocusChangedSubject;
         /// <summary>
         /// 대상 포커스 설정, 나중에 유닛을 조종하기 위해 선택하는 시스템과 함께 준비자세?(인게이지 참조)가 추가될 경우 조건을 추가해야할 듯함
@@ -19,12 +23,12 @@ namespace Encounter.NightDance.UI
         /// <param name="unit"></param>
         public static void SetFocus(IUnitCore unit)
         {
-            if(unit == null)
+            if (unit == null)
             {
                 ClearFocus();
                 return;
             }
-            if(CurrentTarget == unit) return;
+            if (CurrentTarget == unit) return;
             CurrentTarget = unit;
             _onFocusChangedSubject?.OnNext(CurrentTarget);
         }
@@ -42,6 +46,10 @@ namespace Encounter.NightDance.UI
         private static void Dispose()
         {
             _disposables.Dispose();
+        }
+        public static void RefreshFocus()
+        {
+            _onFocusChangedSubject?.OnNext(CurrentTarget);
         }
     }
 }

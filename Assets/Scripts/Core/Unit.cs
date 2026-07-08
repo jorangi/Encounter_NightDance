@@ -9,6 +9,7 @@ using Encounter.NightDance.Status;
 using Encounter.NightDance.UI;
 using Encounter.NightDance.UI.Presenter;
 using Encounter.NightDance.UI.View;
+using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

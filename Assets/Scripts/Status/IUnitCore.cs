@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Encounter.NightDance.Core.Features;
+using R3;
 using UnityEngine;
 
 namespace Encounter.NightDance.Status
@@ -10,7 +11,8 @@ namespace Encounter.NightDance.Status
         /// <summary>
         /// 유닛의 위치, 대부분의 경우 TileObject클래스에서 구현됨
         /// </summary>
-        public Vector2Int Pos{get; set;}
+        public Vector2Int Pos { get; set; }
+        public Observable<Vector2Int> OnPosChanged { get; }
         /// <summary>
         /// 유닛이 갖는 특성을 제너릭으로 반환하는 메서드
         /// </summary>

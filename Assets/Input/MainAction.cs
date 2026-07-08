@@ -566,6 +566,15 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FocusLock"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5b97a02-e030-45d0-8b07-3f4cb4827e41"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -654,6 +663,17 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""RightHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bee874a0-10ce-4eec-98df-ee4b1a56df16"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FocusLock"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -931,15 +951,15 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                     ""name"": ""Redo"",
                     ""type"": ""Button"",
                     ""id"": ""848df72c-2c90-4c7b-8b5e-4efb2b524cb1"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""QWPOEI"",
+                    ""name"": ""Interact"",
                     ""type"": ""Button"",
-                    ""id"": ""fc3742e8-3f92-466d-bd5d-807c3a9fd890"",
+                    ""id"": ""8b6b40dd-6570-4d73-8645-150249e4701d"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1103,12 +1123,23 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""72f64f63-beaf-47bd-b52d-01cbd1cea668"",
-                    ""path"": """",
+                    ""id"": ""549d45f1-1458-40e4-a0cd-7f518d10f7f9"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""QWPOEI"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5452d74f-1cc7-4e32-8fee-51e8361895db"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1141,6 +1172,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         m_MouseControl_Scroll = m_MouseControl.FindAction("Scroll", throwIfNotFound: true);
         m_MouseControl_RightHold = m_MouseControl.FindAction("RightHold", throwIfNotFound: true);
         m_MouseControl_MiddleHold = m_MouseControl.FindAction("MiddleHold", throwIfNotFound: true);
+        m_MouseControl_FocusLock = m_MouseControl.FindAction("FocusLock", throwIfNotFound: true);
         // CreateMapControl
         m_CreateMapControl = asset.FindActionMap("CreateMapControl", throwIfNotFound: true);
         m_CreateMapControl_Brush = m_CreateMapControl.FindAction("Brush", throwIfNotFound: true);
@@ -1161,7 +1193,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         m_UnitControl_Move = m_UnitControl.FindAction("Move", throwIfNotFound: true);
         m_UnitControl_Undo = m_UnitControl.FindAction("Undo", throwIfNotFound: true);
         m_UnitControl_Redo = m_UnitControl.FindAction("Redo", throwIfNotFound: true);
-        m_UnitControl_QWPOEI = m_UnitControl.FindAction("QWPOEI", throwIfNotFound: true);
+        m_UnitControl_Interact = m_UnitControl.FindAction("Interact", throwIfNotFound: true);
     }
 
     ~@MainAction()
@@ -1404,6 +1436,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_MouseControl_Scroll;
     private readonly InputAction m_MouseControl_RightHold;
     private readonly InputAction m_MouseControl_MiddleHold;
+    private readonly InputAction m_MouseControl_FocusLock;
     /// <summary>
     /// Provides access to input actions defined in input action map "MouseControl".
     /// </summary>
@@ -1447,6 +1480,10 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "MouseControl/MiddleHold".
         /// </summary>
         public InputAction @MiddleHold => m_Wrapper.m_MouseControl_MiddleHold;
+        /// <summary>
+        /// Provides access to the underlying input action "MouseControl/FocusLock".
+        /// </summary>
+        public InputAction @FocusLock => m_Wrapper.m_MouseControl_FocusLock;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1497,6 +1534,9 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
             @MiddleHold.started += instance.OnMiddleHold;
             @MiddleHold.performed += instance.OnMiddleHold;
             @MiddleHold.canceled += instance.OnMiddleHold;
+            @FocusLock.started += instance.OnFocusLock;
+            @FocusLock.performed += instance.OnFocusLock;
+            @FocusLock.canceled += instance.OnFocusLock;
         }
 
         /// <summary>
@@ -1532,6 +1572,9 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
             @MiddleHold.started -= instance.OnMiddleHold;
             @MiddleHold.performed -= instance.OnMiddleHold;
             @MiddleHold.canceled -= instance.OnMiddleHold;
+            @FocusLock.started -= instance.OnFocusLock;
+            @FocusLock.performed -= instance.OnFocusLock;
+            @FocusLock.canceled -= instance.OnFocusLock;
         }
 
         /// <summary>
@@ -1780,7 +1823,7 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_UnitControl_Move;
     private readonly InputAction m_UnitControl_Undo;
     private readonly InputAction m_UnitControl_Redo;
-    private readonly InputAction m_UnitControl_QWPOEI;
+    private readonly InputAction m_UnitControl_Interact;
     /// <summary>
     /// Provides access to input actions defined in input action map "UnitControl".
     /// </summary>
@@ -1813,9 +1856,9 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Redo => m_Wrapper.m_UnitControl_Redo;
         /// <summary>
-        /// Provides access to the underlying input action "UnitControl/QWPOEI".
+        /// Provides access to the underlying input action "UnitControl/Interact".
         /// </summary>
-        public InputAction @QWPOEI => m_Wrapper.m_UnitControl_QWPOEI;
+        public InputAction @Interact => m_Wrapper.m_UnitControl_Interact;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1857,9 +1900,9 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
             @Redo.started += instance.OnRedo;
             @Redo.performed += instance.OnRedo;
             @Redo.canceled += instance.OnRedo;
-            @QWPOEI.started += instance.OnQWPOEI;
-            @QWPOEI.performed += instance.OnQWPOEI;
-            @QWPOEI.canceled += instance.OnQWPOEI;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         /// <summary>
@@ -1886,9 +1929,9 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
             @Redo.started -= instance.OnRedo;
             @Redo.performed -= instance.OnRedo;
             @Redo.canceled -= instance.OnRedo;
-            @QWPOEI.started -= instance.OnQWPOEI;
-            @QWPOEI.performed -= instance.OnQWPOEI;
-            @QWPOEI.canceled -= instance.OnQWPOEI;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         /// <summary>
@@ -2048,6 +2091,13 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMiddleHold(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "FocusLock" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFocusLock(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "CreateMapControl" which allows adding and removing callbacks.
@@ -2177,11 +2227,11 @@ public partial class @MainAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRedo(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "QWPOEI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnQWPOEI(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

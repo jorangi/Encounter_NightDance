@@ -51,11 +51,11 @@ public class BattleClass
         this.target = target;
         this.id = id;
         this.AssumedPOS = AssumedPOS;
-        Setup();    
+        Setup();
     }
     public void Setup()
     {
-        if(target.realData.attackSkills.Count == 0)
+        if (target.realData.attackSkills.Count == 0)
             return;
         casterData = caster.realData;
         targetData = target.realData;
@@ -66,18 +66,18 @@ public class BattleClass
         ((DataManager.ToIntArr(DataManager.Datas[target.realData.attackSkills[0]]["range"])[1] + DataManager.ToInt(DataManager.Datas[target.weapon]["rangeBonus"])) >= distance);
         int counterCount = 0;
 
-        if(id.IndexOf("NormalAttack") > -1)
+        if (id.IndexOf("NormalAttack") > -1)
         {
             attackCount++;
-        
-            int SpdDiff = (int)((casterData.Spd * Mathf.Clamp(casterData.Str / caster.weight, 0.0f, 1.0f)) - 
+
+            int SpdDiff = (int)((casterData.Spd * Mathf.Clamp(casterData.Str / caster.weight, 0.0f, 1.0f)) -
                                 (targetData.Spd * Mathf.Clamp(targetData.Str / target.weight, 0.0f, 1.0f)));
 
-            if(SpdDiff >= 5) attackCount++;
-            if(SpdDiff >= 10) attackCount++;
-            if(SpdDiff >= 20) attackCount++;
-            if(SpdDiff >= 40) attackCount++;
-            if(SpdDiff >= 80) attackCount++;
+            if (SpdDiff >= 5) attackCount++;
+            if (SpdDiff >= 10) attackCount++;
+            if (SpdDiff >= 20) attackCount++;
+            if (SpdDiff >= 40) attackCount++;
+            if (SpdDiff >= 80) attackCount++;
 
             BattleData d = new()
             {
@@ -92,9 +92,9 @@ public class BattleClass
             battleDatas.Add(d);
             totalDmg += d.dmg;
         }
-        else if(DataManager.ToInt(skillData["attackCount"]) > -1)
+        else if (DataManager.ToInt(skillData["attackCount"]) > -1)
         {
-            if(DataManager.ToInt(skillData["attackCount"]) == 0) attackCount++;
+            if (DataManager.ToInt(skillData["attackCount"]) == 0) attackCount++;
             else attackCount = DataManager.ToInt(skillData["attackCount"]);
 
             BattleData d = new()
@@ -111,20 +111,20 @@ public class BattleClass
             battleDatas.Add(d);
             totalDmg += d.dmg * attackCount;
         }
-        if(countable)
+        if (countable)
         {
             BattleData d = new();
             string counterId = targetData.attackSkills[0];
-            counterCount ++;
+            counterCount++;
 
-            int SpdDiff = (int)((targetData.Spd * Mathf.Clamp(targetData.Str / target.weight, 0.0f, 1.0f)) - 
+            int SpdDiff = (int)((targetData.Spd * Mathf.Clamp(targetData.Str / target.weight, 0.0f, 1.0f)) -
                                 (casterData.Spd * Mathf.Clamp(casterData.Str / caster.weight, 0.0f, 1.0f)));
 
             d.acc = (int)Mathf.Clamp(
             target.realData.Dex + DataManager.ToFloat(DataManager.Datas[caster.weapon]["acc"])
             - (caster.realData.Dex + caster.realData.Spd)
             , 0.0f, 100.0f);
-            d.atkCount = counterCount; 
+            d.atkCount = counterCount;
             counterAttackCount = counterCount;
 
             d.InRe = true;
@@ -133,9 +133,9 @@ public class BattleClass
 
             battleDatas.Add(d);
         }
-        if(id.IndexOf("NormalAttack") > -1)
+        if (id.IndexOf("NormalAttack") > -1)
         {
-            for(int i = 1; i < attackCount; i++)
+            for (int i = 1; i < attackCount; i++)
             {
                 BattleData d = new()
                 {
@@ -193,12 +193,12 @@ public class Tiles : MonoBehaviour
         get => focusPos;
         set
         {
-            if(focusPos != value)
+            if (focusPos != value)
             {
-                if(tileDatas[focusPos.y, focusPos.x].tileObject is Character character) character.FocusOff();
-                
-                if(tileDatas[value.y, value.x].tileObject is Character _character) _character.FocusOn();
-                if(TurnChar.group.groupName == "Player" && TurnAct == Act.SelectSkill)
+                if (tileDatas[focusPos.y, focusPos.x].tileObject is Character character) character.FocusOff();
+
+                if (tileDatas[value.y, value.x].tileObject is Character _character) _character.FocusOn();
+                if (TurnChar.group.groupName == "Player" && TurnAct == Act.SelectSkill)
                 {
                     TurnChar.SetTarget(tileDatas[value.y, value.x]);
                 }
@@ -252,20 +252,20 @@ public class Tiles : MonoBehaviour
         {
             Focus.transform.localPosition = new Vector3(FocusChar.transform.localPosition.x, FocusChar.transform.localPosition.y, Focus.transform.localPosition.z);
         }
-        for(int i = 0 ; i < PathHistory.Count; i++)
+        for (int i = 0; i < PathHistory.Count; i++)
         {
-            if(i == PathHistory.Count - 1)
+            if (i == PathHistory.Count - 1)
                 break;
         }
         ObjectAngleControl();
     }
     private void ObjectAngleControl()
     {
-        foreach(TileObject rotObject in rotObjects)
+        foreach (TileObject rotObject in rotObjects)
         {
             float deg = rotObject.flatness ? 0 : Mathf.Sign(transform.eulerAngles.z - 179) * transform.eulerAngles.x;
             float cor = rotObject is Character ? 0 : -0.3f;
-            switch(Mathf.RoundToInt(transform.eulerAngles.z)/90)
+            switch (Mathf.RoundToInt(transform.eulerAngles.z) / 90)
             {
                 case 0:
                     rotObject.transform.Find("Unit").localPosition = new Vector3(0, cor, 0.2f);
@@ -285,8 +285,8 @@ public class Tiles : MonoBehaviour
                     break;
             }
         }
-        
-        switch(Mathf.RoundToInt(transform.eulerAngles.z)/90)
+
+        switch (Mathf.RoundToInt(transform.eulerAngles.z) / 90)
         {
             case 0:
                 mainLight.transform.localRotation = Quaternion.Euler(-Mathf.Sign(transform.eulerAngles.z - 179) * transform.eulerAngles.x, 30, 0);
@@ -304,7 +304,7 @@ public class Tiles : MonoBehaviour
     }
     private void Init()
     {
-        for(int i = 0; i < RandomValue.Length; i++)
+        for (int i = 0; i < RandomValue.Length; i++)
         {
             RandomValue[i] = UnityEngine.Random.Range(0, 101);
         }
@@ -313,15 +313,15 @@ public class Tiles : MonoBehaviour
         CharacterData kana = DataManager.UnitFirstSetup("Kana");
         CharacterData herwin = DataManager.UnitFirstSetup("Herwin");
         CharacterData nia = DataManager.UnitFirstSetup("Nia");
-        fD.charDatas = new CharacterData[4]{kain, kana, herwin, nia};
-        fD.charIds = new string[4]{"Kain", "Kana", "Herwin", "Nia"};
-        fD.charPossess = new Vector2Int[4]{new(1, 1), new(5, 0), new(6, 1), new(7, 1)};
-        fD.charGroups = new string[4]{"Player", "Enemy", "Player", "Enemy"};
+        fD.charDatas = new CharacterData[4] { kain, kana, herwin, nia };
+        fD.charIds = new string[4] { "Kain", "Kana", "Herwin", "Nia" };
+        fD.charPossess = new Vector2Int[4] { new(1, 1), new(5, 0), new(6, 1), new(7, 1) };
+        fD.charGroups = new string[4] { "Player", "Enemy", "Player", "Enemy" };
         fD.MapId = "TestField";
 
         DataManager.battleFieldData.Add("TestField", fD);
         SetBattleFieldData("TestField");
-        
+
         uiCon.UnitDataUISet(DataManager.charSync["Kain"]);
         SetObject("biglightgreentree", new Vector2Int(1, 3));
         SetObject("longlightgreentree", new Vector2Int(2, 5));
@@ -361,13 +361,13 @@ public class Tiles : MonoBehaviour
         transform.eulerAngles = new(rot, 0, 0);
     }
     public void Tiling(Tile tile, Sprite sprite, bool variation)
-    {  
-        if(!variation)
+    {
+        if (!variation)
         {
             tile.tileSprite.sprite = sprite;
             return;
         }
-        
+
         int max = 11;
         string id = sprite.name[..sprite.name.LastIndexOf('_')];
         Sprite spr;
@@ -375,7 +375,7 @@ public class Tiles : MonoBehaviour
         {
             max--;
             spr = Resources.Load<Sprite>($"Images/Sprite/Tilemap/{id}_{max}");
-        }while(spr == null && max >= 0);
+        } while (spr == null && max >= 0);
         spr = Resources.Load<Sprite>($"Images/Sprite/Tilemap/{id}_{UnityEngine.Random.Range(0, max + 1)}");
         tile.tileSprite.sprite = spr;
         tile.mark.sprite = spr;
@@ -384,19 +384,19 @@ public class Tiles : MonoBehaviour
     {
         BattleFieldData fieldData = DataManager.battleFieldData[id];
         LoadMap(fieldData.MapId);
-        for(int i = 0; i < fieldData.charDatas.Count(); i++)
+        for (int i = 0; i < fieldData.charDatas.Count(); i++)
         {
             SetUnit(fieldData.charIds[i], fieldData.charDatas[i], fieldData.charGroups[i], fieldData.charPossess[i]);
         }
-        for(int i = 1; i < TurnQueue.Count; i++)
+        for (int i = 1; i < TurnQueue.Count; i++)
         {
-            for(int j = i; j < TurnQueue.Count; j++)
+            for (int j = i; j < TurnQueue.Count; j++)
             {
-                if(TurnQueue[i].oriData.Spd < TurnQueue[j].oriData.Spd ||
-                 (TurnQueue[i].oriData.Spd == TurnQueue[j].oriData.Spd && 
-                 TurnQueue[i].group.groupName != "Player" && TurnQueue[j].group.groupName == "Player" ))
+                if (TurnQueue[i].oriData.Spd < TurnQueue[j].oriData.Spd ||
+                 (TurnQueue[i].oriData.Spd == TurnQueue[j].oriData.Spd &&
+                 TurnQueue[i].group.groupName != "Player" && TurnQueue[j].group.groupName == "Player"))
                 {
-                    (TurnQueue[i],TurnQueue[j]) = (TurnQueue[j], TurnQueue[i]);
+                    (TurnQueue[i], TurnQueue[j]) = (TurnQueue[j], TurnQueue[i]);
                 }
             }
         }
@@ -407,17 +407,17 @@ public class Tiles : MonoBehaviour
         ObjectData data = new();
 
         int index = 0;
-        foreach(Transform tr in objectParent)
-            if(tr.name.IndexOf(id) > -1) index++;
+        foreach (Transform tr in objectParent)
+            if (tr.name.IndexOf(id) > -1) index++;
         GameObject unit = Instantiate(Resources.Load<GameObject>($"Prefab/Battle_Object/Object/{id}"), objectParent);
         unit.name = id + index;
         TileObject obj = unit.GetComponent<TileObject>();
-        foreach(KeyValuePair<string, object> d in DataManager.Datas[id])
+        foreach (KeyValuePair<string, object> d in DataManager.Datas[id])
         {
-            if(d.Key == "id") data.id = d.Value.ToString();
-            else if(d.Key == "HP") data.HP = DataManager.ToInt(d.Value);
-            else if(d.Key == "flatness") obj.flatness = true;
-            else if(d.Key == "block" && d.Value.ToString() == "false") obj.blockable = false;
+            if (d.Key == "id") data.id = d.Value.ToString();
+            else if (d.Key == "HP") data.HP = DataManager.ToInt(d.Value);
+            else if (d.Key == "flatness") obj.flatness = true;
+            else if (d.Key == "block" && d.Value.ToString() == "false") obj.blockable = false;
             else data.Special.Add(d.Key, d.Value.ToString());
         }
         obj.objectData = data;
@@ -427,8 +427,8 @@ public class Tiles : MonoBehaviour
     public void SetUnit(string id, CharacterData data, string group, Vector2Int pos)
     {
         int index = 0;
-        foreach(Transform tr in objectParent)
-            if(tr.name.IndexOf(id) > -1) index++;
+        foreach (Transform tr in objectParent)
+            if (tr.name.IndexOf(id) > -1) index++;
         GameObject unit = Instantiate(Resources.Load<GameObject>($"Prefab/Battle_Object/{id}"), objectParent);
         unit.name = id + index;
         Character obj = unit.GetComponent<Character>();
@@ -437,9 +437,9 @@ public class Tiles : MonoBehaviour
         obj.oriData.Char = (Character)obj;
         obj.realData = obj.oriData;
         obj.realData.CurHP = obj.oriData.HP;
-        obj.Init(id, pos); 
+        obj.Init(id, pos);
         obj.group.groupName = group == "Player" ? group : obj.id;
-        obj.group.allyGroup = new string[1]{group};
+        obj.group.allyGroup = new string[1] { group };
         obj.POS = obj.TempPOS;
         DataManager.charSync.Add(id, obj.realData);
         obj.oriData = data;
@@ -455,14 +455,14 @@ public class Tiles : MonoBehaviour
     }
     public void RemoveTurn(CharacterData charD)
     {
-        for(int i = 0; i < TurnQueue.Count; i++)
+        for (int i = 0; i < TurnQueue.Count; i++)
         {
-            if(TurnQueue[i].realData == charD)
+            if (TurnQueue[i].realData == charD)
             {
                 TurnQueue.RemoveAt(i);
                 return;
             }
-        } 
+        }
     }
     public Tile[] PathFind(Character character, Vector2Int start, Vector2Int dest, bool Flyer)
     {
@@ -480,7 +480,7 @@ public class Tiles : MonoBehaviour
         {
             for (int j = Mathf.Max(0, start.x - 1); j <= Mathf.Min(size.x - 1, start.x + 1); j++)
             {
-                bool isAlly = tileDatas[i,j].tileObject == null || Array.IndexOf(character.group.allyGroup, tileDatas[i, j].tileObject.group.groupName) > -1;
+                bool isAlly = tileDatas[i, j].tileObject == null || Array.IndexOf(character.group.allyGroup, tileDatas[i, j].tileObject.group.groupName) > -1;
                 if ((Flyer || (!tileDatas[i, j].blocked && isAlly)) &&
                  isAlly && start != new Vector2Int(j, i) &&
                   Mathf.Abs(i - start.y) + Mathf.Abs(j - start.x) == 1)
@@ -494,7 +494,7 @@ public class Tiles : MonoBehaviour
         }
         closeList.Add(tileDatas[start.y, start.x]);
         openList.Remove(tileDatas[start.y, start.x]);
-        if(openList.Count == 0)
+        if (openList.Count == 0)
             return null;
         int MinF = int.MaxValue;
         Tile selTile = null;
@@ -540,7 +540,7 @@ public class Tiles : MonoBehaviour
                             nav.Reverse();
                             return nav.ToArray();
                         }
-                        bool isAlly = tileDatas[i,j].tileObject == null || Array.IndexOf(character.group.allyGroup, tileDatas[i, j].tileObject.group.groupName) > -1;
+                        bool isAlly = tileDatas[i, j].tileObject == null || Array.IndexOf(character.group.allyGroup, tileDatas[i, j].tileObject.group.groupName) > -1;
                         if ((Flyer || (!tileDatas[i, j].blocked && isAlly)) &&
                          isAlly && start != new Vector2Int(j, i) &&
                           !closeList.Contains(tileDatas[i, j]) && tileDatas[i, j].G > 0)
@@ -605,9 +605,9 @@ public class Tiles : MonoBehaviour
         {
             for (int j = Mathf.Max(0, start.x - 1); j <= Mathf.Min(size.x - 1, start.x + 1); j++)
             {
-                if((Vector2Int)tileDatas[i, j].POS == dest) return null;
+                if ((Vector2Int)tileDatas[i, j].POS == dest) return null;
 
-                bool isAlly = tileDatas[i,j].tileObject == null || Array.IndexOf(character.group.allyGroup, tileDatas[i, j].tileObject.group.groupName) > -1;
+                bool isAlly = tileDatas[i, j].tileObject == null || Array.IndexOf(character.group.allyGroup, tileDatas[i, j].tileObject.group.groupName) > -1;
                 if ((Flyer || (!tileDatas[i, j].blocked && isAlly)) &&
                  isAlly && start != new Vector2Int(j, i) &&
                   Mathf.Abs(i - start.y) + Mathf.Abs(j - start.x) == 1)
@@ -621,7 +621,7 @@ public class Tiles : MonoBehaviour
         }
         closeList.Add(tileDatas[start.y, start.x]);
         openList.Remove(tileDatas[start.y, start.x]);
-        if(openList.Count == 0)
+        if (openList.Count == 0)
             return null;
         int MinF = int.MaxValue;
         Tile selTile = null;
@@ -667,7 +667,7 @@ public class Tiles : MonoBehaviour
                             nav.Reverse();
                             return nav.ToArray();
                         }
-                        bool isAlly = tileDatas[i,j].tileObject == null || Array.IndexOf(character.group.allyGroup, tileDatas[i, j].tileObject.group.groupName) > -1;
+                        bool isAlly = tileDatas[i, j].tileObject == null || Array.IndexOf(character.group.allyGroup, tileDatas[i, j].tileObject.group.groupName) > -1;
                         if ((Flyer || (!tileDatas[i, j].blocked && isAlly)) &&
                          isAlly && start != new Vector2Int(j, i) &&
                           !closeList.Contains(tileDatas[i, j]) && tileDatas[i, j].G > 0)
@@ -718,50 +718,50 @@ public class Tiles : MonoBehaviour
     }
     public Tile[] PathFindWithCursor(Vector2Int start, Vector2Int dest, bool Flyer)
     {
-        if(TurnAct != Act.Ready || start == dest || tileDatas[dest.y, dest.x].tileObject != null || tileDatas[dest.y, dest.x].blocked)
+        if (TurnAct != Act.Ready || start == dest || tileDatas[dest.y, dest.x].tileObject != null || tileDatas[dest.y, dest.x].blocked)
             return null;
-        if(PathHistory.Count == 0)
+        if (PathHistory.Count == 0)
         {
             Tile[] pH = PathFind(TurnChar, start, dest, Flyer);
-            if(pH == null) return null;
+            if (pH == null) return null;
             PathHistory = pH.ToList();
         }
         else
         {
             Tile[] LastPath = PathFind(TurnChar, (Vector2Int)PathHistory[^1].POS, dest, Flyer);
 
-            if(LastPath == null)
+            if (LastPath == null)
             {
                 return PathFind(TurnChar, TurnChar.POS, dest, Flyer);
             }
 
-            for(int i = 0; i < LastPath.Length; i++)
+            for (int i = 0; i < LastPath.Length; i++)
                 PathHistory.Add(LastPath[i]);
             Tile[] CharToFocus = PathFind(TurnChar, TurnChar.POS, dest, Flyer);
             List<Tile> ComparePathHistory = PathHistory;
             List<Tile> TempComparePathHistory = new();
 
-            while(ComparePathHistory.Count > CharToFocus.Length || (Vector2Int)ComparePathHistory[^1].POS != dest)
+            while (ComparePathHistory.Count > CharToFocus.Length || (Vector2Int)ComparePathHistory[^1].POS != dest)
             {
                 TempComparePathHistory.Clear();
                 ComparePathHistory.RemoveAt(ComparePathHistory.Count - 1);
-                for(int i = 0; i < ComparePathHistory.Count; i++)
+                for (int i = 0; i < ComparePathHistory.Count; i++)
                 {
                     TempComparePathHistory.Add(ComparePathHistory[i]);
                 }
-                if(ComparePathHistory.Count == 0)
+                if (ComparePathHistory.Count == 0)
                 {
                     return PathFind(TurnChar, TurnChar.POS, dest, Flyer);
                 }
                 LastPath = PathFind(TurnChar, (Vector2Int)ComparePathHistory[^1].POS, dest, Flyer);
-                for(int i = 0; i < LastPath.Length; i++)
+                for (int i = 0; i < LastPath.Length; i++)
                 {
                     ComparePathHistory.Add(LastPath[i]);
                 }
-                if(ComparePathHistory.Count > CharToFocus.Length || (Vector2Int)ComparePathHistory[^1].POS != dest)
+                if (ComparePathHistory.Count > CharToFocus.Length || (Vector2Int)ComparePathHistory[^1].POS != dest)
                 {
                     ComparePathHistory.Clear();
-                    for(int i = 0; i < TempComparePathHistory.Count; i++)
+                    for (int i = 0; i < TempComparePathHistory.Count; i++)
                     {
                         ComparePathHistory.Add(TempComparePathHistory[i]);
                     }
@@ -778,10 +778,10 @@ public class Tiles : MonoBehaviour
     //     foreach (string attackSkill in character.oriData.attackSkills)
     //     {
     //         int[] r = new int[2];
-            
+
     //         for(int i = 0 ; i < 2; i++)
     //             r[i] = DataManager.ToIntArr(DataManager.Datas[attackSkill]["range"])[i];
-            
+
     //         if (r[0] < min || min == -1)
     //             min = r[0];
     //         if (r[0] > max)
@@ -823,10 +823,10 @@ public class Tiles : MonoBehaviour
     // }
     public Tile[] MoveableRange(Character character, Vector2Int start, int movement, bool Flyer, out Tile[] atkTiles)
     {
-        List<int>openCountList = new();
-        List<int>closeCountList = new();
-        List<Vector2Int>openList = new();
-        List<Vector2Int>closeList = new();
+        List<int> openCountList = new();
+        List<int> closeCountList = new();
+        List<Vector2Int> openList = new();
+        List<Vector2Int> closeList = new();
 
         openList.Add(start);
         closeList.Add(start);
@@ -834,16 +834,16 @@ public class Tiles : MonoBehaviour
         closeCountList.Add(movement);
         do
         {
-            if(movement == 0)
+            if (movement == 0)
                 break;
             int m = openCountList[^1];
-            while(m > 0 && openList.Count > 0)
+            while (m > 0 && openList.Count > 0)
             {
                 Vector2Int vec = openList[^1];
-                if(openList.Contains(vec))
+                if (openList.Contains(vec))
                 {
                     int index = openList.IndexOf(vec);
-                    if(openCountList[index] > m)
+                    if (openCountList[index] > m)
                     {
                         m = openCountList[index];
                     }
@@ -854,22 +854,22 @@ public class Tiles : MonoBehaviour
                 bool Recall = false;
                 openCountList.RemoveAt(openCountList.Count - 1);
                 openList.RemoveAt(openList.Count - 1);
-                for(int i = Mathf.Max(0, vec.x - 1); i <= Mathf.Min(size.x - 1, vec.x + 1); i++)
+                for (int i = Mathf.Max(0, vec.x - 1); i <= Mathf.Min(size.x - 1, vec.x + 1); i++)
                 {
-                    for(int j = Mathf.Max(0, vec.y - 1); j <= Mathf.Min(size.y - 1, vec.y + 1); j++)
+                    for (int j = Mathf.Max(0, vec.y - 1); j <= Mathf.Min(size.y - 1, vec.y + 1); j++)
                     {
-                        Vector2Int v = new (i, j);
+                        Vector2Int v = new(i, j);
                         bool blockedObject = tileDatas[j, i].blocked && tileDatas[j, i].tileObject != null;
 
-                        if(Mathf.Abs(i - vec.x) + Mathf.Abs(j - vec.y) == 0 || Mathf.Abs(i - vec.x) + Mathf.Abs(j - vec.y) > 1 ||
-                           (blockedObject && (!Flyer || Array.IndexOf(character.group.allyGroup, tileDatas[j, i].tileObject.group.groupName) == -1)) || 
+                        if (Mathf.Abs(i - vec.x) + Mathf.Abs(j - vec.y) == 0 || Mathf.Abs(i - vec.x) + Mathf.Abs(j - vec.y) > 1 ||
+                           (blockedObject && (!Flyer || Array.IndexOf(character.group.allyGroup, tileDatas[j, i].tileObject.group.groupName) == -1)) ||
                            (tileDatas[j, i].blocked && !Flyer) || openList.Contains(v))
                             continue;
 
-                        if(closeList.Contains(v))
+                        if (closeList.Contains(v))
                         {
                             int q = closeList.IndexOf(v);
-                            if(m > 0 && closeCountList[q] < m)
+                            if (m > 0 && closeCountList[q] < m)
                             {
                                 Recall = true;
                                 closeList.RemoveAt(q);
@@ -878,7 +878,7 @@ public class Tiles : MonoBehaviour
                                 openList.Add(v);
                             }
                         }
-                        else if(m > 0)
+                        else if (m > 0)
                         {
                             openCountList.Add(m);
                             openList.Add(v);
@@ -892,10 +892,10 @@ public class Tiles : MonoBehaviour
                 }
                 closeList.Add(vec);
                 closeCountList.Add(m + 1);
-                if(openList.Count == 0 || (Recall && openCount != openList.Count + 1))
+                if (openList.Count == 0 || (Recall && openCount != openList.Count + 1))
                     break;
             }
-        }while(openList.Count > 0);
+        } while (openList.Count > 0);
 
 
         int min = -1;
@@ -903,10 +903,10 @@ public class Tiles : MonoBehaviour
         foreach (string attackSkill in character.oriData.attackSkills)
         {
             int[] r = new int[2];
-            
-            for(int i = 0 ; i < 2; i++)
+
+            for (int i = 0; i < 2; i++)
                 r[i] = DataManager.ToIntArr(DataManager.Datas[attackSkill]["range"])[i];
-            
+
             if (r[0] < min || min == -1)
                 min = r[0];
             if (r[0] > max)
@@ -914,22 +914,22 @@ public class Tiles : MonoBehaviour
 
             max += DataManager.ToInt(DataManager.Datas[TurnChar.weapon]["rangeBonus"]);
         }
-        if(min == -1)
+        if (min == -1)
             min = 0;
-        
+
         Tile[] close = new Tile[closeList.Count];
         List<Tile> AtkTiles = new();
-        for(int i = 0; i < closeList.Count; i++)
+        for (int i = 0; i < closeList.Count; i++)
         {
             Vector2Int v = closeList[i];
             close[i] = tileDatas[v.y, v.x];
-            foreach(Tile aT in CalcAttackableTile(character, v, min, max))
+            foreach (Tile aT in CalcAttackableTile(character, v, min, max))
             {
-                if(!AtkTiles.Contains(aT))
+                if (!AtkTiles.Contains(aT))
                     AtkTiles.Add(aT);
             }
         }
-        
+
         atkTiles = AtkTiles.ToArray();
         return close;
     }
@@ -953,12 +953,12 @@ public class Tiles : MonoBehaviour
     public Vector3 TilePos(Vector3Int pos)
     {
         Vector2 boxSize = new(size.x - 1, size.y - 1);
-        return new Vector3(-boxSize.x / 2 + pos.x, boxSize.y / 2 - pos.y, - 0.51f * pos.z);
+        return new Vector3(-boxSize.x / 2 + pos.x, boxSize.y / 2 - pos.y, -0.51f * pos.z);
     }
     public Vector3 TilePos(Vector2Int pos)
     {
         Vector2 boxSize = new(size.x - 1, size.y - 1);
-        if(tileDatas[pos.y, pos.x] != null)
+        if (tileDatas[pos.y, pos.x] != null)
             return new Vector3(-boxSize.x / 2 + pos.x, boxSize.y / 2 - pos.y, tileDatas[pos.y, pos.x].POS.z);
         return new Vector3(-boxSize.x / 2 + pos.x, boxSize.y / 2 - pos.y, 0);
     }
@@ -973,7 +973,7 @@ public class Tiles : MonoBehaviour
             arr = (string[])DataManager.Datas[id]["unitBonus"];
         if (arr.Length > 0)
         {
-            foreach(string unitBonus in arr)
+            foreach (string unitBonus in arr)
                 UnitBonusDamage *= target.UnitBonus.IndexOf(unitBonus) > -1 ? UnitBonusDamage == 1.0f ? 2.0f : 1.5f : 1.0f;
         }
         return dmgType switch
@@ -987,23 +987,23 @@ public class Tiles : MonoBehaviour
     public void TurnStart()
     {
         uiCon.CheckerClear();
-        for(int i = 0; i < Units.Count; i++)
+        for (int i = 0; i < Units.Count; i++)
         {
-            for(int j = i + 1; j < Units.Count; j++)
+            for (int j = i + 1; j < Units.Count; j++)
             {
-                if(Units[i].realData.Spd < Units[j].realData.Spd || 
+                if (Units[i].realData.Spd < Units[j].realData.Spd ||
                   (Units[i].realData.Spd == Units[j].realData.Spd && Units[j].group.groupName == "Player" && Units[i].group.groupName != "Player") ||
-                  (Units[i].realData.Spd == Units[j].realData.Spd && 
-                  Array.IndexOf(Units[j].group.allyGroup, "Player") > - 1 && Array.IndexOf(Units[j].group.allyGroup, "Player") == -1))
+                  (Units[i].realData.Spd == Units[j].realData.Spd &&
+                  Array.IndexOf(Units[j].group.allyGroup, "Player") > -1 && Array.IndexOf(Units[j].group.allyGroup, "Player") == -1))
                 {
                     (Units[i], Units[j]) = (Units[j], Units[i]);
                 }
             }
         }
-        for(int i = 0; i < Units.Count; i++)
+        for (int i = 0; i < Units.Count; i++)
         {
             Character character = Units[i];
-            if((character.id == "Kain" || character.id == "Kana") && character.group.groupName == "Player")
+            if ((character.id == "Kain" || character.id == "Kana") && character.group.groupName == "Player")
             {
                 AddTurn(0, character);
             }
@@ -1018,19 +1018,19 @@ public class Tiles : MonoBehaviour
         TurnChar.TurnStart();
         Focus.transform.localPosition = new Vector3(TurnChar.transform.localPosition.x, TurnChar.transform.localPosition.y, TurnChar.transform.localPosition.z - 0.05f);
         uiCon.SyncTurnQueue();
-        foreach(TileObject obj in Units)
+        foreach (TileObject obj in Units)
         {
-            if(obj is Character character)
+            if (obj is Character character)
             {
                 character.FindTarget();
                 character.ShowTargettingArrow();
             }
             SpriteRenderer sp = obj.transform.Find("Mark").GetComponent<SpriteRenderer>();
-            if(TurnChar.group == obj.group)
+            if (TurnChar.group == obj.group)
                 sp.color = Color.white;
-            else if(Array.IndexOf(TurnChar.group.allyGroup, obj.group) > -1)
+            else if (Array.IndexOf(TurnChar.group.allyGroup, obj.group) > -1)
                 sp.color = Color.green;
-            else if(Array.IndexOf(TurnChar.group.allyGroup, obj.group) == -1)
+            else if (Array.IndexOf(TurnChar.group.allyGroup, obj.group) == -1)
                 sp.color = Color.red;
         }
         JudgeEternal();
@@ -1054,9 +1054,9 @@ public class Tiles : MonoBehaviour
     }
     public void DeadUnit(TileObject tileObject)
     {
-        if(tileObject is Character character)
+        if (tileObject is Character character)
         {
-            if(character.id.ToLower() == "kain")
+            if (character.id.ToLower() == "kain")
             {
                 //주인공 유닛 사망 처리
                 Time.timeScale = 0.0f;
@@ -1066,9 +1066,9 @@ public class Tiles : MonoBehaviour
         }
         rotObjects.Remove(tileObject);
         Tile t = tileDatas[tileObject.TempPOS.y, tileObject.TempPOS.x];
-        t.justTileObject = null; 
-        t.tileObject = null; 
-        t.TempTileObject = null; 
+        t.justTileObject = null;
+        t.tileObject = null;
+        t.TempTileObject = null;
         t.blocked = false;
         tileObject.gameObject.SetActive(false);
     }
@@ -1079,7 +1079,7 @@ public class Tiles : MonoBehaviour
         {
             for (int j = target.POS.x - max_range; j < target.POS.x + max_range; j++)
             {
-                if(tileDatas[i, j].tileObject != null && Mathf.Abs(i - target.POS.y) + Mathf.Abs(j - target.POS.x) >= min_range && Mathf.Abs(i - target.POS.y) + Mathf.Abs(j - target.POS.x) <= max_range )
+                if (tileDatas[i, j].tileObject != null && Mathf.Abs(i - target.POS.y) + Mathf.Abs(j - target.POS.x) >= min_range && Mathf.Abs(i - target.POS.y) + Mathf.Abs(j - target.POS.x) <= max_range)
                 {
                     result.Add(tileDatas[i, j].tileObject);
                 }
@@ -1097,13 +1097,13 @@ public class Tiles : MonoBehaviour
                 if (Mathf.Abs(i - pos.y) + Mathf.Abs(j - pos.x) <= max && Mathf.Abs(i - pos.y) + Mathf.Abs(j - pos.x) >= min)
                 {
                     Tile tile = tileDatas[i, j];
-                    if(tile.tileObject == null || tile.tileObject is not Character != character)
+                    if (tile.tileObject == null || tile.tileObject is not Character != character)
                     {
                         t.Add(tile);
                     }
                     else
                     {
-                        if(character.POS != character.TempPOS) t.Add(tile);
+                        if (character.POS != character.TempPOS) t.Add(tile);
                         else continue;
                     }
                 }
@@ -1126,19 +1126,19 @@ public class Tiles : MonoBehaviour
                 if (Mathf.Abs(i - pos.y) + Mathf.Abs(j - pos.x) <= max && Mathf.Abs(i - pos.y) + Mathf.Abs(j - pos.x) >= min)
                 {
                     Tile tile = tileDatas[i, j];
-                    if(tile.tileObject == null || tile.tileObject is not Character != character && 
+                    if (tile.tileObject == null || tile.tileObject is not Character != character &&
                     skillData["target"].ToString() == "enemy" && Array.IndexOf(character.group.allyGroup, tile.tileObject.group.groupName) == -1)
                     {
                         t.Add(tile);
                     }
                     else
                     {
-                        if(character.POS != character.TempPOS && 
+                        if (character.POS != character.TempPOS &&
                             skillData["target"].ToString() == "ally" && Array.IndexOf(character.group.allyGroup, tile.tileObject.group.groupName) > -1)
-                            {
-                                t.Add(tile);
-                            }
-                        else 
+                        {
+                            t.Add(tile);
+                        }
+                        else
                             continue;
                     }
                 }
@@ -1157,7 +1157,7 @@ public class Tiles : MonoBehaviour
         Vector2Int cPOS = battleClass.caster.TempPOS;
         Vector2Int tPOS = battleClass.target.TempPOS;
         float diff;
-        switch(Mathf.RoundToInt(transform.eulerAngles.z)/90)
+        switch (Mathf.RoundToInt(transform.eulerAngles.z) / 90)
         {
             case 0:
                 diff = cPOS.x - tPOS.x;
@@ -1166,24 +1166,24 @@ public class Tiles : MonoBehaviour
                 break;
             case 1:
                 diff = cPOS.y - tPOS.y;
-                cS.flipX = diff == 0 ?  cS.flipX : cPOS.y - tPOS.y > 0;
-                tS.flipX = diff == 0 ?  tS.flipX : cPOS.y - tPOS.y < 0;
+                cS.flipX = diff == 0 ? cS.flipX : cPOS.y - tPOS.y > 0;
+                tS.flipX = diff == 0 ? tS.flipX : cPOS.y - tPOS.y < 0;
                 break;
             case 2:
                 diff = cPOS.x - tPOS.x;
-                cS.flipX = diff == 0 ?  cS.flipX : cPOS.x - tPOS.x < 0;
-                tS.flipX = diff == 0 ?  tS.flipX : cPOS.x - tPOS.x > 0;
+                cS.flipX = diff == 0 ? cS.flipX : cPOS.x - tPOS.x < 0;
+                tS.flipX = diff == 0 ? tS.flipX : cPOS.x - tPOS.x > 0;
                 break;
             case 3:
                 diff = cPOS.y - tPOS.y;
-                cS.flipX = diff == 0 ?  cS.flipX : cPOS.y - tPOS.y < 0;
-                tS.flipX = diff == 0 ?  tS.flipX : cPOS.y - tPOS.y > 0;
+                cS.flipX = diff == 0 ? cS.flipX : cPOS.y - tPOS.y < 0;
+                tS.flipX = diff == 0 ? tS.flipX : cPOS.y - tPOS.y > 0;
                 break;
         }
 
         battleClass.caster.ActStart();
         battleClass.target.ActStart();
-        if(battleClass.battleDatas.Count > 0)
+        if (battleClass.battleDatas.Count > 0)
         {
             battleClass.caster.BattleStart();
             yield return null;
@@ -1191,98 +1191,98 @@ public class Tiles : MonoBehaviour
             yield return null;
         }
         else
-            RandCount ++;
+            RandCount++;
 
-        for(int i = 0; i < battleClass.battleDatas.Count; i++)
+        for (int i = 0; i < battleClass.battleDatas.Count; i++)
         {
-            if(battleClass.caster.realData.CurHP <= 0 || battleClass.target.realData.CurHP <= 0)
+            if (battleClass.caster.realData.CurHP <= 0 || battleClass.target.realData.CurHP <= 0)
                 break;
-            if(battleClass.battleDatas[i].InRe && battleClass.battleDatas[i].acc >= RandomValue[RandCount++])
+            if (battleClass.battleDatas[i].InRe && battleClass.battleDatas[i].acc >= RandomValue[RandCount++])
             {
                 battleClass.casterData.CurHP -= battleClass.battleDatas[i].dmg;
                 battleClass.target.Attack();
                 battleClass.caster.Hit();
             }
-            else if(!battleClass.battleDatas[i].InRe&& battleClass.battleDatas[i].acc >= RandomValue[RandCount++])
+            else if (!battleClass.battleDatas[i].InRe && battleClass.battleDatas[i].acc >= RandomValue[RandCount++])
             {
                 battleClass.targetData.CurHP -= battleClass.battleDatas[i].dmg;
                 battleClass.caster.Attack();
                 battleClass.target.Hit();
             }
-            RandCount ++;
+            RandCount++;
             yield return null;
         }
-        
-        if(battleClass.battleDatas.Count > 0)
+
+        if (battleClass.battleDatas.Count > 0)
         {
-            if(battleClass.caster.realData.CurHP > 0)
+            if (battleClass.caster.realData.CurHP > 0)
                 battleClass.caster.BattleEnd();
             yield return null;
-            if(battleClass.target.realData.CurHP > 0)
+            if (battleClass.target.realData.CurHP > 0)
                 battleClass.target.BattleEnd();
             yield return null;
-        } 
-        
-        if(battleClass.caster.realData.CurHP > 0)
+        }
+
+        if (battleClass.caster.realData.CurHP > 0)
             battleClass.caster.ActEnd();
         yield return null;
-        if(battleClass.target.realData.CurHP > 0)
+        if (battleClass.target.realData.CurHP > 0)
             battleClass.target.ActEnd();
         yield return null;
-        
+
         battleClass.caster.SetHPBar(battleClass.caster.realData.CurHP);
         battleClass.caster.SetPrevHPBar(battleClass.caster.realData.CurHP);
         battleClass.target.SetHPBar(battleClass.target.realData.CurHP);
         battleClass.target.SetPrevHPBar(battleClass.target.realData.CurHP);
 
-        foreach(Tile t in TurnChar.AttackRange)
+        foreach (Tile t in TurnChar.AttackRange)
         {
             SetTileState(t, TileState.BlankTile);
         }
-        foreach(Tile t in TurnChar.AttackableTiles)
+        foreach (Tile t in TurnChar.AttackableTiles)
         {
             SetTileState(t, TileState.BlankTile);
         }
         RemoveTurn(TurnChar.realData);
-        if(TurnQueue.Count == 0)
+        if (TurnQueue.Count == 0)
             TurnStart();
         TurnChar = TurnQueue[0];
     }
     public void ActEnd()
     {
-        foreach(Tile t in TurnChar.AttackRange)
+        foreach (Tile t in TurnChar.AttackRange)
         {
             SetTileState(t, TileState.BlankTile);
         }
-        foreach(Tile t in TurnChar.AttackableTiles)
+        foreach (Tile t in TurnChar.AttackableTiles)
         {
             SetTileState(t, TileState.BlankTile);
         }
         TurnChar.ActEnd();
         RemoveTurn(TurnChar.realData);
-        if(TurnQueue.Count == 0)
+        if (TurnQueue.Count == 0)
             TurnStart();
         TurnChar = TurnQueue[0];
     }
     public void TurnCharChange()
     {
         TurnAct = Act.Ready;
-        if(uiCon.Preview != null)
+        if (uiCon.Preview != null)
             uiCon.Preview.CasterPreview.Data = TurnChar;
-        if(TurnChar.group.groupName != "Player")
+        if (TurnChar.group.groupName != "Player")
         {
             StartCoroutine(TurnChar.DecisionAct());
         }
         else
         {
             TurnChar.AttackRange = new Tile[0];
-            
+
             TurnChar.MoveableTiles = MoveableRange(TurnChar, TurnChar.POS, TurnChar.movement, false, out TurnChar.AttackableTiles);
-            foreach(Tile _t in TurnChar.AttackableTiles)
+            foreach (Tile _t in TurnChar.AttackableTiles)
                 SetTileState(_t, TileState.RedTile);
-            foreach(Tile _t in TurnChar.MoveableTiles)
+            foreach (Tile _t in TurnChar.MoveableTiles)
                 SetTileState(_t, TileState.BlueTile);
-            if(GameManager.Inst.ControlType == ControlType.WithMouse)
+            if (GameManager.Inst.ControlType == ControlType.WithMouse)
                 GameManager.Inst.inputManager.MouseFocusSprite.enabled = true;
             else
                 GameManager.Inst.inputManager.FocusSprite.enabled = true;
@@ -1295,9 +1295,9 @@ public class Tiles : MonoBehaviour
     }
     public void ShowEnemiesRange()
     {
-        foreach(Character unit in Units)
+        foreach (Character unit in Units)
         {
-            if(Array.IndexOf(TurnChar.group.allyGroup, unit.group.groupName) > -1) continue;
+            if (Array.IndexOf(TurnChar.group.allyGroup, unit.group.groupName) > -1) continue;
 
             Tile[] t = UnitRange(unit, out Tile[] atkT);
 
@@ -1310,49 +1310,49 @@ public class Tiles : MonoBehaviour
     }
     public void ShowEnemyRange(Character unit)
     {
-        if(unit.group.groupName == "Player") return;
+        if (unit.group.groupName == "Player") return;
         _ = UnitRange(unit, out Tile[] atkT);
 
         Tile __t = tileDatas[unit.POS.y, unit.POS.x];
-        if(__t.CheckRange.Contains(unit))
+        if (__t.CheckRange.Contains(unit))
         {
             __t.CheckRange.Remove(unit);
-            if(__t.CheckRange.Count == 0)
-                __t.selectedUnitSprite.color = new Color(0, 0, 0, 0);    
+            if (__t.CheckRange.Count == 0)
+                __t.selectedUnitSprite.color = new Color(0, 0, 0, 0);
         }
         else
         {
             __t.CheckRange.Add(unit);
-            __t.selectedUnitSprite.color = new Color(0.913f, 0.352f, 0.352f, 0.6f); 
+            __t.selectedUnitSprite.color = new Color(0.913f, 0.352f, 0.352f, 0.6f);
         }
 
-        foreach(Tile _t in atkT)
+        foreach (Tile _t in atkT)
         {
-            if(_t.CheckRange.Contains(unit))
+            if (_t.CheckRange.Contains(unit))
             {
                 _t.CheckRange.Remove(unit);
-                if(_t.CheckRange.Count == 0)
-                    _t.selectedUnitSprite.color = new Color(0, 0, 0, 0);    
+                if (_t.CheckRange.Count == 0)
+                    _t.selectedUnitSprite.color = new Color(0, 0, 0, 0);
             }
             else
             {
                 _t.CheckRange.Add(unit);
-                _t.selectedUnitSprite.color = new Color(0.913f, 0.352f, 0.352f, 0.6f); 
+                _t.selectedUnitSprite.color = new Color(0.913f, 0.352f, 0.352f, 0.6f);
             }
         }
     }
     public void SetTempTileObj(TileObject ind, TileObject obj, Vector2Int pos)
     {
-        if(ind == null || tileDatas[pos.y, pos.x].TempTileObject != null && tileDatas[pos.y, pos.x].TempTileObject != ind) return;
+        if (ind == null || tileDatas[pos.y, pos.x].TempTileObject != null && tileDatas[pos.y, pos.x].TempTileObject != ind) return;
         tileDatas[pos.y, pos.x].TempTileObject = obj;
         tileDatas[pos.y, pos.x].TempTileObject = obj != null && obj.blockable ? obj : null;
         tileDatas[pos.y, pos.x].blocked = obj != null && obj.blockable;
     }
     public void AllUnitRecalcRange(params Character[] exclude)
     {
-        foreach(Character character in Units)
+        foreach (Character character in Units)
         {
-            if(Array.IndexOf(exclude, character) > -1) continue;
+            if (Array.IndexOf(exclude, character) > -1) continue;
             character.MoveableTiles = MoveableRange(character, character.POS, character.movement, false, out character.AttackableTiles);
             character.FindTarget();
         }
@@ -1367,19 +1367,19 @@ public class Tiles : MonoBehaviour
         Sprite SelSprite;
         bool EnableVariation = false;
 
-        for(int i = mapData.mapTileDatas.Count - 1; i >= 0; i--)
+        for (int i = mapData.mapTileDatas.Count - 1; i >= 0; i--)
         {
-            for(int j = 0; j < mapData.mapTileDatas[i].Count; j++)
+            for (int j = 0; j < mapData.mapTileDatas[i].Count; j++)
             {
                 SelSprite = Resources.Load<Sprite>($"Images/Sprite/Tilemap/{mapData.mapTileDatas[i][j].tileName}");
                 EnableVariation = mapData.mapTileDatas[i][j].enableVariation;
-                if(j == mapData.mapTileDatas[i].Count - 1)
+                if (j == mapData.mapTileDatas[i].Count - 1)
                 {
                     Tile t = tileDatas[mapData.mapTileDatas[i][j].y, mapData.mapTileDatas[i][j].x];
                     Tiling(t, SelSprite, EnableVariation);
                 }
                 else
-                    for(int x = mapData.mapTileDatas[i][j].x; x < mapData.mapTileDatas[i][j + 1].x; x++)
+                    for (int x = mapData.mapTileDatas[i][j].x; x < mapData.mapTileDatas[i][j + 1].x; x++)
                     {
                         Tile t = tileDatas[mapData.mapTileDatas[i][j].y, x];
                         Tiling(t, SelSprite, EnableVariation);
@@ -1389,45 +1389,45 @@ public class Tiles : MonoBehaviour
     }
     private void JudgeEternal()
     {
-        if(Units.Count == 2 && Array.IndexOf(Units[0].group.allyGroup, Units[1].group.groupName) == -1)
+        if (Units.Count == 2 && Array.IndexOf(Units[0].group.allyGroup, Units[1].group.groupName) == -1)
         {
             Character playable = null;
             Character nonpl = null;
-            foreach(Character unit in Units)
+            foreach (Character unit in Units)
             {
-                if(unit.group.groupName == "Player")
+                if (unit.group.groupName == "Player")
                     playable = unit;
                 else
                     nonpl = unit;
             }
             bool plAttackable = false;
-            bool nonplAttackable = false; 
-            foreach(string attackSkill in playable.realData.attackSkills)
+            bool nonplAttackable = false;
+            foreach (string attackSkill in playable.realData.attackSkills)
             {
-                if(plAttackable) break;
+                if (plAttackable) break;
                 BattleClass battleClass = new(playable, nonpl, attackSkill);
-                foreach(BattleData d in battleClass.battleDatas)
+                foreach (BattleData d in battleClass.battleDatas)
                 {
-                    if(d.InRe) plAttackable = plAttackable ? plAttackable : d.acc > 0 && d.dmg > 0;
+                    if (d.InRe) plAttackable = plAttackable ? plAttackable : d.acc > 0 && d.dmg > 0;
                     else nonplAttackable = nonplAttackable ? nonplAttackable : d.acc > 0 && d.dmg > 0;
                 }
             }
-            foreach(string attackSkill in nonpl.realData.attackSkills)
+            foreach (string attackSkill in nonpl.realData.attackSkills)
             {
-                if(nonplAttackable) break;
+                if (nonplAttackable) break;
                 BattleClass battleClass = new(nonpl, playable, attackSkill);
-                foreach(BattleData d in battleClass.battleDatas)
+                foreach (BattleData d in battleClass.battleDatas)
                 {
-                    if(d.InRe) nonplAttackable = nonplAttackable ? nonplAttackable : d.acc > 0 && d.dmg > 0;
+                    if (d.InRe) nonplAttackable = nonplAttackable ? nonplAttackable : d.acc > 0 && d.dmg > 0;
                     else plAttackable = plAttackable ? plAttackable : d.acc > 0 && d.dmg > 0;
                 }
             }
-            if(!plAttackable && !nonplAttackable) EternalCurse();
+            if (!plAttackable && !nonplAttackable) EternalCurse();
         }
     }
     private void EternalCurse()
     {
-        foreach(Character unit in Units)
+        foreach (Character unit in Units)
         {
             unit.realData.CurHP -= 30;
         }

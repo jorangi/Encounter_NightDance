@@ -27,7 +27,7 @@ namespace Encounter.NightDance.Core
         [SerializeField] private Tilemap highlightedTilemap;
         [SerializeField] private TileBase attackableTile;
         [SerializeField] private TileBase movableTile;
-        public static Vector2Int FieldSize{private set; get;}
+        public static Vector2Int FieldSize { private set; get; }
         private readonly Dictionary<Vector2Int, IFieldObject> objectOnField = new();
         private static Dictionary<Vector2Int, ITile> tiles = new();
         private DisposableBag _disposableBag = new();
@@ -38,9 +38,9 @@ namespace Encounter.NightDance.Core
             CoordinateUtility.Initialize(tilemap);
             int width = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
             int height = tilemap.cellBounds.yMax - tilemap.cellBounds.yMin;
-            foreach(Vector3Int _v in tilemap.cellBounds.allPositionsWithin)
+            foreach (Vector3Int _v in tilemap.cellBounds.allPositionsWithin)
             {
-                if(!tilemap.HasTile(_v)) continue;
+                if (!tilemap.HasTile(_v)) continue;
                 Vector2Int logicalPos = CoordinateUtility.CellToLogical(_v);
                 tiles[logicalPos] = new PlainTile(logicalPos, TerrainType.Plain, null);
             }
@@ -49,9 +49,9 @@ namespace Encounter.NightDance.Core
         private void Start()
         {
             FocusUnitService.OnFocusChangedAsObservable()
-                .Subscribe(this, (u, state)=>{
+                .Subscribe(this, (u, state) =>
+                {
                     state.ShowUnitActivated(u);
-
                 })
                 .AddTo(ref _disposableBag);
         }
@@ -62,7 +62,7 @@ namespace Encounter.NightDance.Core
         /// <returns></returns>
         public IFieldObject GetTileObject(Vector2Int pos)
         {
-            if(objectOnField.TryGetValue(pos, out IFieldObject objectOnTile))
+            if (objectOnField.TryGetValue(pos, out IFieldObject objectOnTile))
             {
                 return objectOnTile;
             }
@@ -106,20 +106,22 @@ namespace Encounter.NightDance.Core
         }
         public void SetObjectOnTile(IFieldObject fieldObject, Vector2Int pos)
         {
-            if(IsWithinField(pos))
+            if (IsWithinField(pos))
             {
-                if(GetTileObject(pos) == null)
+                if (GetTileObject(pos) == null)
                 {
+                    SetTiles(new[] { fieldObject.Pos }, TileState.Normal);
                     objectOnField[fieldObject.Pos] = null;
                     objectOnField[pos] = fieldObject;
                     tiles[pos].Occupant = fieldObject;
+                    SetTiles(new[] { pos }, TileState.Attackable);
                 }
                 else Debug.LogWarning($"[{pos}]이미 해당 위치에 {fieldObject}가 존재합니다.");
             }
         }
         public static ITile GetTile(Vector2Int pos)
         {
-            if(tiles.TryGetValue(pos, out ITile tile))
+            if (tiles.TryGetValue(pos, out ITile tile))
             {
                 return tile;
             }
@@ -142,16 +144,22 @@ namespace Encounter.NightDance.Core
             }
             highlightedTilemap.SetTiles(posArray, arr);
         }
+        /// <summary>
+        /// 해당 유닛이 선택되었을 때, 이동가능한 범위와 공격가능한 범위를 하이라이트 해주는 함수
+        /// </summary>
+        /// <param name="unitCore"></param>
         public void ShowUnitActivated(IUnitCore unitCore)
         {
-            if(unitCore == null)return;
+            if (unitCore == null) return;
             IBaseStats baseStats = unitCore.GetFeature<IBaseStats>();
             IMovable movable = unitCore.GetFeature<WalkingFeature>();
             Dictionary<Vector2Int, int> moveRange = PathFinder.GetMoveRange(unitCore.Pos, baseStats.Mobility.Value, movable._movementStrategy);
-            foreach(Vector2Int v in moveRange.Keys)
+            foreach (Vector2Int v in moveRange.Keys)
             {
-                SetTiles(new Vector2Int[]{v}, TileState.Movable);
+                SetTiles(new[] { v }, TileState.Movable);
             }
+            SetTiles(new Vector2Int[] { unitCore.Pos }, TileState.Attackable);
+            //TODO: 공격범위를 표시하게끔 해야함
         }
     }
 }

@@ -480,6 +480,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "FocusLock",
+                    "type": "Button",
+                    "id": "a5b97a02-e030-45d0-8b07-3f4cb4827e41",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -568,6 +577,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "RightHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bee874a0-10ce-4eec-98df-ee4b1a56df16",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FocusLock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -845,15 +865,15 @@
                     "name": "Redo",
                     "type": "Button",
                     "id": "848df72c-2c90-4c7b-8b5e-4efb2b524cb1",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "QWPOEI",
+                    "name": "Interact",
                     "type": "Button",
-                    "id": "fc3742e8-3f92-466d-bd5d-807c3a9fd890",
+                    "id": "8b6b40dd-6570-4d73-8645-150249e4701d",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1017,12 +1037,23 @@
                 },
                 {
                     "name": "",
-                    "id": "72f64f63-beaf-47bd-b52d-01cbd1cea668",
-                    "path": "",
+                    "id": "549d45f1-1458-40e4-a0cd-7f518d10f7f9",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "QWPOEI",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5452d74f-1cc7-4e32-8fee-51e8361895db",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

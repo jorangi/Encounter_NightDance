@@ -10,11 +10,15 @@ namespace Encounter.NightDance.Core
         /// <summary>
         /// 오브젝트의 월드 transform 좌표
         /// </summary>
-        public Vector2 WorldPos{get; set;}
+        public Vector2 WorldPos { get; set; }
         /// <summary>
         /// 오브젝트의 타일 기준 좌표
         /// </summary>
-        public Vector2Int Pos{get; set;}
+        public Vector2Int Pos { get; set; }
+        public Destination GetCurrentDestination { get; }
+        public void SetDestination(IFieldObject target);
+        public void SetDestination(Vector2Int pos);
+        public void ClearDestination();
         public string ToString();
     }
 }
