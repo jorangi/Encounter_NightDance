@@ -13,8 +13,8 @@ namespace Encounter.NightDance.Core
         [SerializeField] private Transform Focus;
         [SerializeField] private Transform FocusUnit;
         private CommandInvoker commandInvoker;
-        [SerializeField] private Unit.Unit turnedUnit;
-        [SerializeField] private Unit.Unit testUnit2;
+        [SerializeField] private Unit turnedUnit;
+        [SerializeField] private Unit testUnit2;
         [SerializeField] private FieldManager fieldManager;
         private Vector2Int v = Vector2Int.zero; //테스트용
         private MainAction _mainAction;
@@ -22,7 +22,7 @@ namespace Encounter.NightDance.Core
         private void Awake()
         {
             _mainAction = new();
-            routeRenderer = routeRenderer != null ? routeRenderer : FindAnyObjectByType<RouteRenderer>();
+            routeRenderer ??= FindAnyObjectByType<RouteRenderer>();
         }
         private void Start()
         {
@@ -69,7 +69,7 @@ namespace Encounter.NightDance.Core
             turnedUnit.SetDestination(CameraService.CameraController.Pos);
             ProcessUnitMoveSchedules(turnedUnit);
         }
-        private void ProcessUnitMoveSchedules(Unit.Unit unit)
+        private void ProcessUnitMoveSchedules(Unit unit)
         {
             if (unit == null || !unit.HasDestination) return;
             Vector2Int targetPos = unit.GetCurrentDestination.Value;
@@ -88,7 +88,6 @@ namespace Encounter.NightDance.Core
             {
                 unit.ClearDestination();
             }
-            // FocusUnitService.RefreshFocus();
             (CameraService.CameraController as CameraController).RefreshFocus();
         }
     }

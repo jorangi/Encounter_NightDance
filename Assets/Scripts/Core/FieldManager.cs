@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Encounter.NightDance.Character;
 using Encounter.NightDance.Core.Features;
 using Encounter.NightDance.Map;
 using Encounter.NightDance.Status;
 using Encounter.NightDance.UI;
 using R3;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using VContainer;
 
 namespace Encounter.NightDance.Core
 {
@@ -32,9 +35,16 @@ namespace Encounter.NightDance.Core
         private static Dictionary<Vector2Int, ITile> tiles = new();
         private DisposableBag _disposableBag = new();
         private Vector2Int cachedFocusPos = Vector2Int.zero;
+        [SerializeField] private GameObject unitPrefab;
+        private UnitFactory unitFactory;
+        [Inject]
+        public void Construct(UnitFactory unitFactory)
+        {
+            this.unitFactory = unitFactory;
+        }
         private void Awake()
         {
-            tilemap = tilemap != null ? tilemap : gameObject.GetComponent<Tilemap>();
+            tilemap ??= gameObject.GetComponent<Tilemap>();
             CoordinateUtility.Initialize(tilemap);
             int width = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
             int height = tilemap.cellBounds.yMax - tilemap.cellBounds.yMin;

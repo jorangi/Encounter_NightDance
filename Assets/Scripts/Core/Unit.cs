@@ -13,7 +13,7 @@ using R3;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Encounter.NightDance.Core.Unit
+namespace Encounter.NightDance.Core
 {
     [RequireComponent(typeof(UnitController))]
     [RequireComponent(typeof(UnitStat))]
@@ -28,7 +28,7 @@ namespace Encounter.NightDance.Core.Unit
         private UnitVitalityPresenter _unitHealthPresenter;
         private UnitMentalPresenter _unitMentalPresenter;
         private MainAction _mainAction;
-
+        private bool _isInitialized = false;
         public void AddFeature<T>(T feature) where T : class, IUnitFeature
         {
             Features[typeof(T)] = feature;
@@ -64,10 +64,20 @@ namespace Encounter.NightDance.Core.Unit
         }
         private void Awake()
         {
-            _mainAction = new MainAction();
-            _unitController = _unitController != null ? _unitController : gameObject.GetComponent<UnitController>();
             _stat = _stat != null ? _stat : gameObject.GetComponent<UnitStat>();
+            if (_stat != null && _stat.BaseData != null)
+            {
+                _stat.Initialize(_stat.BaseData);
+            }
 
+        }
+        public void Initialize(UnitData data)
+        {
+            if (_isInitialized) return;
+            _isInitialized = true;
+            _mainAction = new();
+
+            _unitController = _unitController != null ? _unitController : gameObject.GetComponent<UnitController>();
             WalkingFeature walkingFeature = new(_unitController, new WalkingStrategy(MovementStrategyContainer.GetStrategySO(MovementType.Walking)));
             AddFeature(walkingFeature);
 

@@ -1,5 +1,5 @@
 using System;
-using Encounter.NightDance.Core.Unit;
+using Encounter.NightDance.Core;
 using UnityEngine;
 
 namespace Encounter.NightDance.Core.Commands
@@ -9,7 +9,7 @@ namespace Encounter.NightDance.Core.Commands
     /// </summary>
     public class MoveCommand : CommandBase
     {
-        private readonly Unit.Unit _unit;
+        private readonly Unit _unit;
         private readonly Vector3 _targetPos;
         private readonly Vector2Int _startPos;
         private readonly Vector2Int _targetPosInt;
@@ -20,7 +20,7 @@ namespace Encounter.NightDance.Core.Commands
         /// <param name="unit"></param>
         /// <param name="fieldManager"></param>
         /// <param name="targetPos"></param>
-        public MoveCommand(Unit.Unit unit, FieldManager fieldManager, Vector2Int targetPos)
+        public MoveCommand(Unit unit, FieldManager fieldManager, Vector2Int targetPos)
         {
             _unit = unit;
             _targetPosInt = targetPos;

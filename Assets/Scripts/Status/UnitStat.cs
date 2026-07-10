@@ -26,5 +26,9 @@ namespace Encounter.NightDance.Status
         [Header("기본 정보")]
         [SerializeField] protected UnitData baseData;
         public UnitData BaseData => baseData;
+        public void Initialize(UnitData data)
+        {
+            baseData = data;
+        }
     }
 }

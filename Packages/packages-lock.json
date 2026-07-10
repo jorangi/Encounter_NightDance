@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.antigravity.ide": {
+      "version": "https://github.com/billythekidz/UnityAntigravityIDE.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3520075082911bf236ade261e544078a3f9bed65"
+    },
     "com.community.antigravity-unity": {
       "version": "https://github.com/usmanbutt-dev/antigravity-unity.git",
       "depth": 0,
@@ -216,29 +223,6 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       }
     },
-    "com.unity.render-pipelines.high-definition": {
-      "version": "17.5.0",
-      "depth": 0,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.modules.video": "1.0.0",
-        "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.imageconversion": "1.0.0",
-        "com.unity.modules.physics": "1.0.0",
-        "com.unity.render-pipelines.core": "17.5.0",
-        "com.unity.shadergraph": "17.5.0",
-        "com.unity.visualeffectgraph": "17.5.0",
-        "com.unity.render-pipelines.high-definition-config": "17.5.0"
-      }
-    },
-    "com.unity.render-pipelines.high-definition-config": {
-      "version": "17.5.0",
-      "depth": 1,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.render-pipelines.core": "17.5.0"
-      }
-    },
     "com.unity.render-pipelines.universal": {
       "version": "17.5.0",
       "depth": 0,
@@ -345,15 +329,6 @@
         "com.unity.modules.physics": "1.0.0"
       }
     },
-    "com.unity.visualeffectgraph": {
-      "version": "17.5.0",
-      "depth": 1,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.shadergraph": "17.5.0",
-        "com.unity.render-pipelines.core": "17.5.0"
-      }
-    },
     "com.unity.visualscripting": {
       "version": "1.9.11",
       "depth": 0,
@@ -363,6 +338,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "jp.hadashikick.vcontainer": {
+      "version": "1.19.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
