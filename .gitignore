@@ -7,7 +7,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-[Aa]ssets/Packages/
+#[Aa]ssets/Packages/
 [Aa]ssets/Packages.meta
 [Aa]ssets/NuGet.config
 [Aa]ssets/NuGet.config.meta
