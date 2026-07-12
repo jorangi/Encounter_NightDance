@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Encounter.NightDance.Core
 {
+    /// <summary>
+    /// 최소힙 구현 클래스
+    /// </summary>
     public class MinHeap<T> where T : IComparable<T>
     {
         private const int ROOTINDEX = 1;
@@ -11,6 +14,11 @@ namespace Encounter.NightDance.Core
         public MinHeap()
         {
             heap.Add(default(T));
+        }
+        public void Clear()
+        {
+            heap.Clear();
+            heap.Add(default);
         }
         public void Push(T item)
         {

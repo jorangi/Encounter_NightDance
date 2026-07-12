@@ -58,16 +58,16 @@
     "com.unity.modules.vehicles": "1.0.0",
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "com.cysharp.messagepipe": "1.8.2",
+    "com.cysharp.messagepipe.vcontainer": "1.8.2"
   },
   "scopedRegistries": [
     {
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
-        "com.cysharp.r3",
-        "com.cysharp.unitask",
-        "com.cysharp.zstring",
+        "com.cysharp",
         "jp.hadashikick.vcontainer"
       ]
     }

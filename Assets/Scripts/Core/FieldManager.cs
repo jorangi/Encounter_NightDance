@@ -163,7 +163,8 @@ namespace Encounter.NightDance.Core
             if (unitCore == null) return;
             IBaseStats baseStats = unitCore.GetFeature<IBaseStats>();
             IMovable movable = unitCore.GetFeature<WalkingFeature>();
-            Dictionary<Vector2Int, int> moveRange = PathFinder.GetMoveRange(unitCore.Pos, baseStats.Mobility.Value, movable._movementStrategy);
+            Dictionary<Vector2Int, int> moveRange = new();
+            PathFinder.GetMoveRange(unitCore.Pos, baseStats.Mobility.Value, movable._movementStrategy, moveRange);
             foreach (Vector2Int v in moveRange.Keys)
             {
                 SetTiles(new[] { v }, TileState.Movable);

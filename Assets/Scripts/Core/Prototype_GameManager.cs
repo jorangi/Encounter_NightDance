@@ -6,12 +6,13 @@ using UnityEngine.InputSystem;
 using System;
 using Encounter.NightDance.Core.Features;
 using Encounter.NightDance.Status;
+using VContainer;
 namespace Encounter.NightDance.Core
 {
     public class Prototype_GameManager : MonoBehaviour
     {
         [SerializeField] private Transform Focus;
-        [SerializeField] private Transform FocusUnit;
+        [SerializeField] private Transform FocusUnit;        
         private CommandInvoker commandInvoker;
         [SerializeField] private Unit turnedUnit;
         [SerializeField] private Unit testUnit2;
@@ -19,6 +20,11 @@ namespace Encounter.NightDance.Core
         private Vector2Int v = Vector2Int.zero; //테스트용
         private MainAction _mainAction;
         [SerializeField] private RouteRenderer routeRenderer;
+        [Inject]
+        public void Construct(CommandInvoker commandInvoker)
+        {
+            this.commandInvoker = commandInvoker;
+        }
         private void Awake()
         {
             _mainAction = new();
@@ -26,9 +32,7 @@ namespace Encounter.NightDance.Core
         }
         private void Start()
         {
-
             Focus.transform.position = FocusUnit.transform.position;
-            commandInvoker = new CommandInvoker();
             commandInvoker.ExecuteCommand(new MoveCommand(turnedUnit, fieldManager, new Vector2Int(7, 10)));
             commandInvoker.ExecuteCommand(new MoveCommand(testUnit2, fieldManager, new Vector2Int(1, 0)));
             FocusUnitService.SetFocus(turnedUnit);
@@ -36,7 +40,7 @@ namespace Encounter.NightDance.Core
         private void OnEnable()
         {
             _mainAction?.UnitControl.Enable();
-            _mainAction.UnitControl.Move.performed += MoveForText;
+            _mainAction.UnitControl.Move.performed += MoveForTest;
             _mainAction.UnitControl.Undo.performed += Undo;
             _mainAction.UnitControl.Redo.performed += Redo;
             _mainAction.UnitControl.Interact.performed += InteractForTest;
@@ -44,12 +48,12 @@ namespace Encounter.NightDance.Core
         private void OnDisable()
         {
             _mainAction?.UnitControl.Disable();
-            _mainAction.UnitControl.Move.performed -= MoveForText;
+            _mainAction.UnitControl.Move.performed -= MoveForTest;
             _mainAction.UnitControl.Undo.performed -= Undo;
             _mainAction.UnitControl.Redo.performed -= Redo;
             _mainAction.UnitControl.Interact.performed -= InteractForTest;
         }
-        private void MoveForText(InputAction.CallbackContext context)
+        private void MoveForTest(InputAction.CallbackContext context)
         {
             var dir = context.ReadValue<Vector2>();
             Vector2Int clampedPos = FieldManager.ClampToField(turnedUnit.Pos.x + (int)dir.x, turnedUnit.Pos.y - (int)dir.y);

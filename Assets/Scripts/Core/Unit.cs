@@ -71,6 +71,10 @@ namespace Encounter.NightDance.Core
             }
 
         }
+        /// <summary>
+        /// 유닛을 초기화하는 메서드
+        /// </summary>
+        /// <param name="data">유닛 데이터</param>
         public void Initialize(UnitData data)
         {
             if (_isInitialized) return;
@@ -113,6 +117,8 @@ namespace Encounter.NightDance.Core
         private void OnDisable()
         {
             _mainAction?.UnitControl.Disable();
+            _mainAction.UnitControl.L.performed -= TestExperienceGet;
+            _mainAction.UnitControl.H.performed -= TestVitalityChange;
         }
         private void TestVitalityChange(InputAction.CallbackContext context)
         {

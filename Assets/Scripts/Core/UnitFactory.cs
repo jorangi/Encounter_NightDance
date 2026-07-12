@@ -18,7 +18,7 @@ namespace Encounter.NightDance.Character
         {
             _container = container;
         }
-        public Unit Create(GameObject prefab, UnitData data, Vector2Int pos)
+        public Unit Create(GameObject prefab, UnitData data)
         {
             if (prefab == null)
             {

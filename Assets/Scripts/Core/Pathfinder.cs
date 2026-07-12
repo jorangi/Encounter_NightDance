@@ -13,21 +13,62 @@ namespace Encounter.NightDance.Core
     /// </summary>
     public static class PathFinder
     {
-        private class PathFinderNode : IComparable<PathFinderNode>
+        /// <summary>
+        /// 경로 탐색에 필요한 정보를 담고 있는 노드 구조체
+        /// </summary>
+        private struct PathFinderNode : IComparable<PathFinderNode>
         {
+            /// <summary>
+            /// 노드의 위치
+            /// </summary>
             public Vector2Int Position { get; set; }
-            public PathFinderNode Parent { get; set; }
+            /// <summary>
+            /// 노드의 부모 노드 위치(구조체로 변경하면서 reference 대신 value type을 사용하기 위해 변경)
+            /// </summary>
+            public Vector2Int Parent {get; set;}
+            /// <summary>
+            /// 부모 노드로부터 해당 노드까지 오는데 사용된 이동력
+            /// </summary>
             public int G { get; set; }
+            /// <summary>
+            /// 해당 노드에서 목표 지점까지 가는데 사용될 휴리스틱 값
+            /// </summary>
             public int H { get; set; }
-            public int F => G + H;
+            /// <summary>
+            /// F = G + H
+            /// </summary>
+            public readonly int F => G + H;
+            /// <summary>
+            /// 해당 노드로 들어온 방향
+            /// </summary>
             public Vector2Int IncomingDir { get; set; }
-            public PathFinderNode(Vector2Int pos, PathFinderNode pa)
+            /// <summary>
+            /// 생성자
+            /// </summary>
+            /// <param name="pos">노드의 위치</param>
+            /// <param name="pa">부모 노드</param>
+            public PathFinderNode(Vector2Int pos, PathFinderNode? pa)
             {
                 this.Position = pos;
-                this.Parent = pa;
-                this.IncomingDir = pa != null ? (pos - pa.Position) : Vector2Int.zero;
+                this.G = 0;
+                this.H = 0;
+                if(pa.HasValue)
+                {
+                    this.Parent = pa.Value.Position;
+                    this.IncomingDir = Parent != -Vector2Int.one ? (pos - this.Parent) : Vector2Int.zero;
+                }
+                else
+                {
+                    this.Parent = -Vector2Int.one;
+                    this.IncomingDir = Vector2Int.zero;
+                }
             }
-            public int CompareTo(PathFinderNode other)
+            /// <summary>
+            /// 최소 힙 정렬을 위한 비교 메서드, F값을 기준으로 비교하며, F값이 같으면 H값을 기준으로 비교함
+            /// </summary>
+            /// <param name="other">비교 대상 노드</param>
+            /// <returns></returns>
+            public readonly int CompareTo(PathFinderNode other)
             {
                 int compare = this.F.CompareTo(other.F);
                 if (compare == 0)
@@ -36,33 +77,47 @@ namespace Encounter.NightDance.Core
                 }
                 return compare;
             }
-        }
-        /// <summary>
-        /// 시작 지점에서 이동 가능한 범위를 계산하는 메서드, 반환의 key는 좌표, value는 남는 이동력
-        /// </summary>
-        /// <param name="start"></param>
-        /// <param name="movement"></param>
-        /// <param name="strategy"></param>
-        /// <returns></returns>
-        public static Dictionary<Vector2Int, int> GetMoveRange(Vector2Int start, int movement, IMovementStrategy strategy)
-        {
-            Queue<(Vector2Int, int)> openSet = new(); //튜플로 좌표와 남은 이동력을 함께 저장
-            Dictionary<Vector2Int, int> closeSet = new();
-            Vector2Int[] direction = new Vector2Int[]
+            /// <summary>
+            /// 부모 노드를 설정하는 메서드
+            /// </summary>
+            /// <param name="parent">부모 노드</param>
+            public void SetParent(PathFinderNode parent)
             {
-                Vector2Int.up,
-                Vector2Int.down,
-                Vector2Int.left,
-                Vector2Int.right
-            };
-            openSet.Enqueue((start, movement));
-            closeSet.Add(start, movement);
+                Parent = parent.Position;
+            }
+        }
+        
+        private static readonly List<Vector2Int> path = new();
+        private static readonly MinHeap<PathFinderNode> openList = new();
+        private static readonly HashSet<(Vector2Int, Vector2Int)> closeList = new();
+        private static readonly Dictionary<(Vector2Int, Vector2Int), PathFinderNode> allNodes = new();
+        private static readonly Vector2Int[] direction = new Vector2Int[]
+        {
+            Vector2Int.up,
+            Vector2Int.down,
+            Vector2Int.left,
+            Vector2Int.right
+        };
+        private static readonly MinHeap<(int, Vector2Int)> openSet = new();
+        /// <summary>
+        /// 시작 지점에서 이동 가능한 범위를 계산하는 메서드, 반환의 key는 좌표, value는 남는 이동력 + 1, 최소힙은 낭비가 심한 것부터 탐색하기에 이동력을 -로 취해 가장 이동력이 적은 것부터 탐색하는 원래 의도에 맞게끔 수정
+        /// </summary>
+        /// <param name="start">시작 지점</param>
+        /// <param name="movement">이동력</param>
+        /// <param name="strategy">이동 전략</param>
+        /// <param name="resultDic">결과 저장 딕셔너리, 기존 함수 내 변수들을 외부 static으로 변경하였기 때문에 매개변수로 원본을 전달</param>
+        public static void GetMoveRange(Vector2Int start, int movement, IMovementStrategy strategy, Dictionary<Vector2Int, int> resultDic)
+        {
+            openSet.Clear();
+            resultDic.Clear();
+            openSet.Push((-movement, start));
+            resultDic.Add(start, movement);
             while (openSet.Count > 0)
             {
-                (Vector2Int, int) current = openSet.Dequeue();
-                Vector2Int currentPos = current.Item1;
-                int currentMovement = current.Item2;
-                if (closeSet[currentPos] > currentMovement) continue;//이미 이득을 본 경우 무시
+                (int, Vector2Int) current = openSet.Pop();
+                int currentMovement = -current.Item1;
+                Vector2Int currentPos = current.Item2;
+                if (resultDic[currentPos] > currentMovement) continue;//이미 이득을 본 경우 무시
                 foreach (Vector2Int dir in direction)
                 {
                     Vector2Int neighbor = currentPos + dir;
@@ -72,14 +127,13 @@ namespace Encounter.NightDance.Core
                     int cost = strategy.Calc(neighborTile);//이동 전략에 따른 이동 비용 계산
                     int remainingMovement = currentMovement - cost;
                     if (remainingMovement < 0) continue; //이동력이 부족하면 무시
-                    if (!closeSet.ContainsKey(neighbor) || closeSet[neighbor] < remainingMovement)
+                    if (!resultDic.ContainsKey(neighbor) || resultDic[neighbor] < remainingMovement)
                     {
-                        closeSet[neighbor] = remainingMovement; //더 적은 이동력으로 갱신
-                        openSet.Enqueue((neighbor, remainingMovement)); //탐색할 위치와 남은 이동력을 큐에 추가
+                        resultDic[neighbor] = remainingMovement; //더 적은 이동력으로 갱신
+                        openSet.Push((-remainingMovement, neighbor)); //탐색할 위치와 남은 이동력을 큐에 추가
                     }
                 }
             }
-            return closeSet;
         }
         /// <summary>
         /// A* 탐색 알고리즘으로 길 찾는 알고리즘
@@ -87,34 +141,28 @@ namespace Encounter.NightDance.Core
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        public static List<Vector2Int> GetPath(Vector2Int start, Vector2Int end, IMovementStrategy strategy, List<Vector2Int> previousPath = null)
+        public static void GetPath(Vector2Int start, Vector2Int end, IMovementStrategy strategy, List<Vector2Int> resultPath, List<Vector2Int> previousPath = null)
         {
             //필요한 정보: 셀 좌표, 셀의 이동 비용, 이동 불가능여부?
-            MinHeap<PathFinderNode> openList = new();
-            HashSet<Vector2Int> closeList = new();
-            Dictionary<Vector2Int, PathFinderNode> allNodes = new();
-            Vector2Int[] direction = new Vector2Int[]
-            {
-                Vector2Int.up,
-                Vector2Int.down,
-                Vector2Int.left,
-                Vector2Int.right
-            };
+            openList.Clear();
+            closeList.Clear();
+            allNodes.Clear();
             PathFinderNode startNode = new(start, null)
             {
                 G = 0,
                 H = GetHeuristic(start, end)
             };
             openList.Push(startNode);
-            allNodes.Add(start, startNode);
+            allNodes.Add((start, Vector2Int.zero), startNode);
             while (openList.Count > 0)
             {
                 PathFinderNode current = openList.Pop();
                 if (current.Position == end)
                 {
-                    return RetracePath(current);
+                    RetracePath(current, allNodes, resultPath);
+                    return;
                 }
-                if (!closeList.Add(current.Position))
+                if (!closeList.Add((current.Position, current.IncomingDir)))
                 {
                     continue;
                 }
@@ -127,7 +175,7 @@ namespace Encounter.NightDance.Core
                     if (cost >= 999) continue;
 
                     int moveCost = cost * 1000;
-                    if (current.Parent != null)
+                    if (current.Parent != -Vector2Int.one)
                     {
                         Vector2Int moveDir = neighborPos - current.Position;
                         if (moveDir != current.IncomingDir)
@@ -141,58 +189,76 @@ namespace Encounter.NightDance.Core
                     }
 
                     int newCost = current.G + moveCost;
-                    if (closeList.Contains(neighborPos))
+                    if (closeList.Contains((neighborPos, dir)))
                     {
-                        if (allNodes.TryGetValue(neighborPos, out PathFinderNode closedNode))
+                        if (allNodes.TryGetValue((neighborPos, dir), out PathFinderNode closedNode))
                         {
                             if (newCost < closedNode.G)
                             {
-                                closeList.Remove(neighborPos);
-                                closedNode.Parent = current;
+                                closeList.Remove((neighborPos, dir));
+                                closedNode.Parent = current.Position;
                                 closedNode.G = newCost;
                                 closedNode.IncomingDir = neighborPos - current.Position;
                                 openList.Push(closedNode);
+                                allNodes[(neighborPos, dir)] = closedNode;
                             }
                         }
                         continue;
                     }
-                    if (!allNodes.TryGetValue(neighborPos, out PathFinderNode neighborNode))
+                    if (!allNodes.TryGetValue((neighborPos, dir), out PathFinderNode neighborNode))
                     {
                         neighborNode = new(neighborPos, current)
                         {
                             G = newCost,
                             H = GetHeuristic(neighborPos, end)
                         };
-                        allNodes.Add(neighborPos, neighborNode);
+                        allNodes.Add((neighborPos, dir), neighborNode);
                         openList.Push(neighborNode);
                     }
                     else if (newCost < neighborNode.G)
                     {
-                        neighborNode.Parent = current;
+                        neighborNode.Parent = current.Position;
                         neighborNode.G = newCost;
-                        neighborNode.IncomingDir = neighborPos - current.Position;
+                        neighborNode.IncomingDir = dir;
                         openList.Push(neighborNode);
+                        allNodes[(neighborPos, dir)] = neighborNode;
                     }
                 }
             }
-            return null;
         }
+        /// <summary>
+        /// 맨해튼 거리를 이용하여 휴리스틱 값을 계산하는 메서드
+        /// </summary>
+        /// <param name="stdPos">시작 지점</param>
+        /// <param name="endPos">끝 지점</param>
+        /// <returns></returns>
         private static int GetHeuristic(Vector2Int stdPos, Vector2Int endPos)
         {
             int dx = Mathf.Abs(stdPos.x - endPos.x);
             int dy = Mathf.Abs(stdPos.y - endPos.y);
             return (dx + dy) * 1000;
         }
-        private static List<Vector2Int> RetracePath(PathFinderNode node)
+        /// <summary>
+        /// 경로 추적 메서드
+        /// </summary>
+        /// <param name="node">현재 노드</param>
+        /// <param name="allNodes">모든 노드 딕셔너리</param>
+        /// <param name="resultPath">결과 경로 리스트</param>
+        private static void RetracePath(PathFinderNode node, Dictionary<(Vector2Int, Vector2Int), PathFinderNode> allNodes, List<Vector2Int> resultPath)
         {
-            List<Vector2Int> path = new();
-            while (node != null)
+            Vector2Int currentPos = node.Position;
+            Vector2Int currentDir = node.IncomingDir;
+            while (currentPos != -Vector2Int.one)
             {
-                path.Add(node.Position);
-                node = node.Parent;
+                resultPath.Add(currentPos);
+                if(allNodes.TryGetValue((currentPos, currentDir), out PathFinderNode currentNode))
+                {
+                    currentDir = currentNode.IncomingDir;
+                    currentPos = currentNode.Parent;
+                }
+                else break;
             }
-            path.Reverse();
-            return path;
+            resultPath.Reverse();
         }
     }
 }

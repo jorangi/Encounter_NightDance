@@ -15,7 +15,7 @@ using Encounter.NightDance.Status;
 public class RouteRenderer : MonoBehaviour
 {
     [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private readonly Tilemap tilemap;
     private Vector2Int unitPos = Vector2Int.zero;
     private DisposableBag disposableBag = new();
 
@@ -25,7 +25,7 @@ public class RouteRenderer : MonoBehaviour
 
     private void Awake()
     {
-        lineRenderer = lineRenderer != null ? lineRenderer : GetComponent<LineRenderer>();
+        lineRenderer ??= GetComponent<LineRenderer>();
     }
     private void Start()
     {
@@ -51,25 +51,19 @@ public class RouteRenderer : MonoBehaviour
         }
 
         var cameraController = CameraService.CameraController as CameraController;
-        if (cameraController != null)
-        {
-            cameraController.OnFocusPosChanged
+        cameraController?.OnFocusPosChanged
                 .Subscribe(this, (pos, state) =>
                 {
                     state.UpdatePath(pos);
                 })
                 .AddTo(ref disposableBag);
-        }
     }
     /// <summary>
     /// 이동 전략을 초기화
     /// </summary>
     private void InitializeStrategy()
     {
-        if (walkingStrategy == null)
-        {
-            walkingStrategy = new WalkingStrategy(MovementStrategyContainer.GetStrategySO(MovementType.Walking));
-        }
+        walkingStrategy ??= new WalkingStrategy(MovementStrategyContainer.GetStrategySO(MovementType.Walking));
     }
     /// <summary>
     /// 경로 초기화
@@ -155,12 +149,12 @@ public class RouteRenderer : MonoBehaviour
             return;
         }
 
-        if (currentPath[currentPath.Count - 1] == targetPos)
+        if (currentPath[^1] == targetPos)
         {
             return;
         }
 
-        if (currentPath.Count > 1 && currentPath[currentPath.Count - 2] == targetPos)
+        if (currentPath.Count > 1 && currentPath[^2] == targetPos)
         {
             currentPath.RemoveAt(currentPath.Count - 1);
             RenderPath(currentPath);
@@ -168,7 +162,7 @@ public class RouteRenderer : MonoBehaviour
         }
 
         // 경로 연장 (인접하고 중복 방문하지 않은 경우)
-        Vector2Int lastPos = currentPath[currentPath.Count - 1];
+        Vector2Int lastPos = currentPath[^1];
         bool isAdjacent = Mathf.Abs(lastPos.x - targetPos.x) + Mathf.Abs(lastPos.y - targetPos.y) == 1;
         bool alreadyVisited = currentPath.Contains(targetPos);
         if (isAdjacent && !alreadyVisited)
@@ -176,7 +170,8 @@ public class RouteRenderer : MonoBehaviour
             List<Vector2Int> tempPath = new(currentPath) { targetPos };
             int trajectoryCost = CalculatePathCost(tempPath);
 
-            var optimalPath = PathFinder.GetPath(unitPos, targetPos, walkingStrategy);
+            List<Vector2Int> optimalPath = new();
+            PathFinder.GetPath(unitPos, targetPos, walkingStrategy, optimalPath);
             int optimalCost = CalculatePathCost(optimalPath);
 
             // 궤적 비용이 최적 경로 비용과 같거나 더 저렴하면 궤적 유지
@@ -189,7 +184,8 @@ public class RouteRenderer : MonoBehaviour
         }
 
         // 비효율 경로이거나 순간이동한 경우 A* 최적 경로로 덮어쓰기
-        var newOptimalPath = PathFinder.GetPath(unitPos, targetPos, walkingStrategy);
+        List<Vector2Int> newOptimalPath = new();
+        PathFinder.GetPath(unitPos, targetPos, walkingStrategy, newOptimalPath);
         if (newOptimalPath != null)
         {
             currentPath = newOptimalPath;
