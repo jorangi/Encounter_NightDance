@@ -35,7 +35,6 @@ namespace Encounter.NightDance.Core
         private static Dictionary<Vector2Int, ITile> tiles = new();
         private DisposableBag _disposableBag = new();
         private Vector2Int cachedFocusPos = Vector2Int.zero;
-        [SerializeField] private GameObject unitPrefab;
         private UnitFactory unitFactory;
         [Inject]
         public void Construct(UnitFactory unitFactory)

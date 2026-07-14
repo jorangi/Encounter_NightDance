@@ -7,6 +7,10 @@ using System;
 using Encounter.NightDance.Core.Features;
 using Encounter.NightDance.Status;
 using VContainer;
+using System.Collections.Generic;
+using MessagePipe;
+using Encounter.NightDance.Core.Event;
+using Encounter.NightDance.Core.Event.Payload;
 namespace Encounter.NightDance.Core
 {
     public class Prototype_GameManager : MonoBehaviour
@@ -15,15 +19,22 @@ namespace Encounter.NightDance.Core
         [SerializeField] private Transform FocusUnit;        
         private CommandInvoker commandInvoker;
         [SerializeField] private Unit turnedUnit;
+        [SerializeField] private UnitData turnedUnitData;
         [SerializeField] private Unit testUnit2;
-        [SerializeField] private FieldManager fieldManager;
+        [SerializeField] private UnitData testUnit2Data;
+
         private Vector2Int v = Vector2Int.zero; //테스트용
         private MainAction _mainAction;
         [SerializeField] private RouteRenderer routeRenderer;
+         private IPublisher<EventContext> _eventPublisher;
+         private BattleCommandFactory _battleCommandFactory;
+         private CommandInvoker _commandInvoker;
         [Inject]
-        public void Construct(CommandInvoker commandInvoker)
+        public void Construct(IPublisher<EventContext> eventPublisher, CommandInvoker commandInvoker, BattleCommandFactory battleCommandFactory)
         {
-            this.commandInvoker = commandInvoker;
+            _eventPublisher = eventPublisher;
+            _commandInvoker = commandInvoker;
+            _battleCommandFactory = battleCommandFactory;
         }
         private void Awake()
         {
@@ -33,9 +44,21 @@ namespace Encounter.NightDance.Core
         private void Start()
         {
             Focus.transform.position = FocusUnit.transform.position;
-            commandInvoker.ExecuteCommand(new MoveCommand(turnedUnit, fieldManager, new Vector2Int(7, 10)));
-            commandInvoker.ExecuteCommand(new MoveCommand(testUnit2, fieldManager, new Vector2Int(1, 0)));
-            FocusUnitService.SetFocus(turnedUnit);
+            var testUnitSpawnContext = new EventContext
+            {
+                Source = null,
+                Target = null,
+                payload = new UnitSpawnPayload
+                {
+                    data = turnedUnitData,
+                    position = new Vector2Int(7, 10)
+                }
+            };
+            _eventPublisher.Publish(testUnitSpawnContext);
+            //유닛 스폰테스트
+            // commandInvoker.ExecuteCommand(_commandFactory.CreateMoveCommand(turnedUnit, new Vector2Int(7, 10)));
+            // commandInvoker.ExecuteCommand(_commandFactory.CreateMoveCommand(testUnit2, new Vector2Int(1, 0)));
+            
         }
         private void OnEnable()
         {
@@ -58,7 +81,7 @@ namespace Encounter.NightDance.Core
             var dir = context.ReadValue<Vector2>();
             Vector2Int clampedPos = FieldManager.ClampToField(turnedUnit.Pos.x + (int)dir.x, turnedUnit.Pos.y - (int)dir.y);
             v = clampedPos;
-            commandInvoker.ExecuteCommand(new MoveCommand(turnedUnit, fieldManager, clampedPos));
+            commandInvoker.ExecuteCommand(_battleCommandFactory.CreateMoveCommand(turnedUnit, clampedPos));
         }
         private void Undo(InputAction.CallbackContext context)
         {
@@ -85,9 +108,10 @@ namespace Encounter.NightDance.Core
                 return;
             }
             int movement = unit.GetFeature<IBaseStats>().Mobility.Value;
+            unit.GetCurrentDestination.totalDistance = path.Count;
             Vector2Int clampedTarget = path[Mathf.Min(path.Count - 1, movement)];
-            MoveCommand moveCommand = new(unit, fieldManager, clampedTarget);
-            commandInvoker.ExecuteCommand(moveCommand);
+            List<Vector2Int> clampedPath = path.GetRange(0, movement + 1);
+            commandInvoker.ExecuteCommand(_battleCommandFactory.CreateMoveCommand(unit, clampedTarget, clampedPath));
             if (unit.Pos == targetPos)
             {
                 unit.ClearDestination();

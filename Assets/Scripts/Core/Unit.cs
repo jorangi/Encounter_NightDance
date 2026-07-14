@@ -29,6 +29,10 @@ namespace Encounter.NightDance.Core
         private UnitMentalPresenter _unitMentalPresenter;
         private MainAction _mainAction;
         private bool _isInitialized = false;
+        private void Awake()
+        {
+            _mainAction = new();
+        }
         public void AddFeature<T>(T feature) where T : class, IUnitFeature
         {
             Features[typeof(T)] = feature;
@@ -62,15 +66,6 @@ namespace Encounter.NightDance.Core
             Features.Clear();
             Debug.Log("대상의 모든 특성이 제거되었습니다.");
         }
-        private void Awake()
-        {
-            _stat = _stat != null ? _stat : gameObject.GetComponent<UnitStat>();
-            if (_stat != null && _stat.BaseData != null)
-            {
-                _stat.Initialize(_stat.BaseData);
-            }
-
-        }
         /// <summary>
         /// 유닛을 초기화하는 메서드
         /// </summary>
@@ -79,24 +74,28 @@ namespace Encounter.NightDance.Core
         {
             if (_isInitialized) return;
             _isInitialized = true;
-            _mainAction = new();
 
-            _unitController = _unitController != null ? _unitController : gameObject.GetComponent<UnitController>();
+            _stat ??= GetComponent<UnitStat>();
+            _stat?.Initialize(data);
+
+            _unitController ??= GetComponent<UnitController>();
             WalkingFeature walkingFeature = new(_unitController, new WalkingStrategy(MovementStrategyContainer.GetStrategySO(MovementType.Walking)));
             AddFeature(walkingFeature);
 
-            BaseStatFeature baseStat = new(_stat.BaseData);
+            BaseStatFeature baseStat = new(data);
             AddFeature<IBaseStats>(baseStat);
 
             LevelingFeature levelingFeature = new(this);
             levelingFeature.Activate();
             AddFeature(levelingFeature);
 
-            VitalityFeature vitalityFeature = new(new ObjectHealth(_stat.BaseData.MaxVitality), new Stat(_stat.BaseData.GrowthVitality));
+            VitalityFeature vitalityFeature = new(new ObjectHealth(data.MaxVitality), new Stat(data.GrowthVitality));
             AddFeature(vitalityFeature);
 
-            MentalFeature mentalFeature = new(new ObjectMental(_stat.BaseData.MaxMental), new Stat(_stat.BaseData.GrowthMental));
+            MentalFeature mentalFeature = new(new ObjectMental(data.MaxMental), new Stat(data.GrowthMental));
             AddFeature(mentalFeature);
+
+            FocusUnitService.SetFocus(this);
         }
         private void Start()
         {

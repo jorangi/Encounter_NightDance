@@ -22,6 +22,9 @@ namespace Encounter.NightDance.Core
             isTarget = false;
         }
         public Vector2Int Value => (isTarget && target != null) ? target.Pos : pos;
+        public int RemainingDistance => totalDistance - passedDistance;
+        public int totalDistance = 0;
+        public int passedDistance = 0;
     }
     /// <summary>
     /// 필드 상의 오브젝트를 나타내는 컴포넌트 클래스

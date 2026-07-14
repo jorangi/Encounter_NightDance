@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Encounter.NightDance.Core;
+using Encounter.NightDance.Core.Event;
+using Encounter.NightDance.Core.Event.Payload;
+using MessagePipe;
 using UnityEngine;
 
 namespace Encounter.NightDance.Core.Commands
@@ -14,19 +18,23 @@ namespace Encounter.NightDance.Core.Commands
         private readonly Vector2Int _startPos;
         private readonly Vector2Int _targetPosInt;
         private readonly FieldManager fieldManager;
+        private readonly IPublisher<EventContext> _eventPublisher;
+        private readonly List<Vector2Int> _path;
         /// <summary>
         /// 이동 명령 커맨드 생성자 - TODO: 필드 매니저를 받지 않고 좌표만 받아서 처리하게끔 수정
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="fieldManager"></param>
         /// <param name="targetPos"></param>
-        public MoveCommand(Unit unit, FieldManager fieldManager, Vector2Int targetPos)
+        public MoveCommand(Unit unit, FieldManager fieldManager, Vector2Int targetPos, IPublisher<EventContext> publisher, List<Vector2Int> path = null)
         {
             _unit = unit;
             _targetPosInt = targetPos;
             _targetPos = CoordinateUtility.GetWorldPos(targetPos);
             _startPos = unit.Pos;
             this.fieldManager = fieldManager;
+            _eventPublisher = publisher;
+            _path = path;
         }
         public override bool CanExecute()
         {
@@ -49,6 +57,25 @@ namespace Encounter.NightDance.Core.Commands
             fieldManager.SetObjectOnTile(_unit, _targetPosInt);
             _unit.MoveTo(_targetPos);
             _unit.SetPos(_targetPosInt);
+            _unit.GetCurrentDestination.passedDistance += _path.Count;
+            var context = new EventContext
+            {
+                Source = _unit,
+                Target = null,
+                payload = new MovePayload
+                {
+                    distance = _path.Count,
+                    origin = _startPos,
+                    destination = _targetPosInt
+                }
+            };
+            _eventPublisher.Publish(context);
+        }
+        public override void Undo()
+        {
+            fieldManager.SetObjectOnTile(_unit, _startPos);
+            _unit.MoveTo(CoordinateUtility.GetWorldPos(_startPos));
+            _unit.SetPos(_startPos);
         }
         public override void Redo() => Execute();
     }
