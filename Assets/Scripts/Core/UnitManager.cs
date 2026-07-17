@@ -22,13 +22,15 @@ namespace Encounter.NightDance.Core
         private readonly GameObject _unitPrefab;
         private readonly UnitFactory _unitFactory;
         private readonly CommandInvoker _commandInvoker;
+        private readonly BattleCommandFactory _battleCommandFactory;
         private readonly UnitCommandFactory _unitCommandFactory;
         [Inject]
-        public UnitManager(UnitFactory unitFactory, GameObject unitPrefab, ISubscriber<EventContext> eventSubscriber, CommandInvoker commandInvoker, UnitCommandFactory unitCommandFactory)
+        public UnitManager(UnitFactory unitFactory, GameObject unitPrefab, ISubscriber<EventContext> eventSubscriber, CommandInvoker commandInvoker, BattleCommandFactory battleCommandFactory, UnitCommandFactory unitCommandFactory)
         {
             _unitFactory = unitFactory;
             _unitPrefab = unitPrefab;
             _commandInvoker = commandInvoker;
+            _battleCommandFactory = battleCommandFactory;
             _unitCommandFactory = unitCommandFactory;
             _subscription = eventSubscriber.Subscribe(context =>
             {
@@ -90,8 +92,8 @@ namespace Encounter.NightDance.Core
         /// <param name="pos">생성할 유닛 위치</param>
         public EntityId SpawnUnit(UnitData data, Vector2Int pos, ReactiveProperty<Unit> spawnedUnit)
         {
-            var command = _unitCommandFactory.CreateUnitSpawnCommand(data, pos, spawnedUnit);
-            _commandInvoker.ExecuteCommand(command);
+            var spawnUnitCommand = _unitCommandFactory.CreateUnitSpawnCommand(data, pos, spawnedUnit);
+            _commandInvoker.ExecuteCommand(spawnUnitCommand);
             // TODO: IFactionFeature 완성하고 풀것
             // if (spawnedUnit.Value.GetFeature<IFactionFeature>().IsPlayable())
             // {
@@ -102,6 +104,8 @@ namespace Encounter.NightDance.Core
             //     _uncontrollableUnits.Add(spawnedUnit.Value);
             // }
             var id = spawnedUnit.Value.gameObject.GetEntityId();
+            var placeUnitCommand = _battleCommandFactory.CreateMoveCommand(spawnedUnit.Value, pos);
+            _commandInvoker.ExecuteCommand(placeUnitCommand);
             _unitOnField.Add(spawnedUnit.Value, pos, id);
             return id;
         }

@@ -17,7 +17,7 @@ namespace Encounter.NightDance.Core
     {
         [SerializeField] private Transform Focus;
         [SerializeField] private Transform FocusUnit;        
-        private CommandInvoker commandInvoker;
+        private CommandInvoker _commandInvoker;
         [SerializeField] private Unit turnedUnit;
         [SerializeField] private UnitData turnedUnitData;
         [SerializeField] private Unit testUnit2;
@@ -28,7 +28,6 @@ namespace Encounter.NightDance.Core
         [SerializeField] private RouteRenderer routeRenderer;
          private IPublisher<EventContext> _eventPublisher;
          private BattleCommandFactory _battleCommandFactory;
-         private CommandInvoker _commandInvoker;
         [Inject]
         public void Construct(IPublisher<EventContext> eventPublisher, CommandInvoker commandInvoker, BattleCommandFactory battleCommandFactory)
         {
@@ -79,17 +78,18 @@ namespace Encounter.NightDance.Core
         private void MoveForTest(InputAction.CallbackContext context)
         {
             var dir = context.ReadValue<Vector2>();
+            if(dir == Vector2.zero) return;
             Vector2Int clampedPos = FieldManager.ClampToField(turnedUnit.Pos.x + (int)dir.x, turnedUnit.Pos.y - (int)dir.y);
             v = clampedPos;
-            commandInvoker.ExecuteCommand(_battleCommandFactory.CreateMoveCommand(turnedUnit, clampedPos));
+            _commandInvoker.ExecuteCommand(_battleCommandFactory.CreateMoveCommand(turnedUnit, clampedPos));
         }
         private void Undo(InputAction.CallbackContext context)
         {
-            commandInvoker.Undo();
+            _commandInvoker.Undo();
         }
         private void Redo(InputAction.CallbackContext context)
         {
-            commandInvoker.Redo();
+            _commandInvoker.Redo();
         }
         private void InteractForTest(InputAction.CallbackContext context)
         {
@@ -111,7 +111,7 @@ namespace Encounter.NightDance.Core
             unit.GetCurrentDestination.totalDistance = path.Count;
             Vector2Int clampedTarget = path[Mathf.Min(path.Count - 1, movement)];
             List<Vector2Int> clampedPath = path.GetRange(0, movement + 1);
-            commandInvoker.ExecuteCommand(_battleCommandFactory.CreateMoveCommand(unit, clampedTarget, clampedPath));
+            _commandInvoker.ExecuteCommand(_battleCommandFactory.CreateMoveCommand(unit, clampedTarget, clampedPath));
             if (unit.Pos == targetPos)
             {
                 unit.ClearDestination();

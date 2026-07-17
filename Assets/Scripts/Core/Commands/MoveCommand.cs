@@ -34,7 +34,7 @@ namespace Encounter.NightDance.Core.Commands
             _startPos = unit.Pos;
             this.fieldManager = fieldManager;
             _eventPublisher = publisher;
-            _path = path;
+            _path = path ?? new List<Vector2Int>();
         }
         public override bool CanExecute()
         {

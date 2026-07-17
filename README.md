@@ -813,3 +813,8 @@ Unit은 UnitController와 UnitStat을 갖고있는데, UnitController는 말 그
 
 하나하나 정리하니 확실히 내용이 많긴 하네.👍🏻<br>
 빌드하면 젠킨스가 자동 빌드하는데 그거 확인해봐야겠다.
+
+### 2026-07-17
+- InputAction에 GamePad를 직접 입력하던것을 D-Pad, Left Stick으로 변경했다.
+- UI 배치를 조정했다.
+- 게임매니저에 `BattleCommandFactory`를 주입하고 `_commandInvoker`와 `commandInvoker`를 잘못 병기하여 생긴 오류를 수정하였다.
